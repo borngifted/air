@@ -36,7 +36,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
   text-transform:uppercase;color:var(--muted)}
 .nlinks a{text-decoration:none;transition:color .18s}
 .nlinks a:hover{color:var(--air-bright)}
-@media(max-width:800px){.nlinks{display:none}}
+@media(max-width:800px){.nlinks a{display:none}.nlinks{gap:0}}
 
 /* ---- hero ---- */
 header.hero{position:relative;min-height:88vh;display:flex;align-items:center;overflow:hidden}
@@ -256,6 +256,7 @@ label{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase
 .plan-grid input:focus,.plan-grid select:focus{outline:none;border-color:var(--air-bright)}
 .plan-btns{display:flex;gap:10px;flex-wrap:wrap}
 /* ---- hands ---- */
+@media(max-width:700px){.hands-card{right:10px;bottom:calc(10px + env(safe-area-inset-bottom));width:150px}.hands-view{width:150px;height:112px}}
 .hands-toggle{background:none;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:11px;letter-spacing:.12em;padding:7px 14px;cursor:pointer;font-family:var(--f);font-weight:700;transition:all .15s}
 .hands-toggle:hover{border-color:var(--air-bright);color:var(--air-bright)}
 .hands-toggle.on{background:var(--air-lime);border-color:var(--air-lime);color:var(--air-green)}
