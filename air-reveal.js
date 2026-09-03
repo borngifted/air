@@ -40,7 +40,7 @@
       h.parentNode.insertBefore(line, h);
     }
     /* grid cards inside get their own finer stagger once the section is in */
-    var cards = wrap.querySelectorAll(".qa .q, .course .ls, .doors .door, .plat a, .cases .case-c");
+    var cards = wrap.querySelectorAll(".qa .q, .course .ls, .doors .door, .plat a, .cases .case-c, .beats .beat");
     cards.forEach(function (c, i) {
       c.classList.add("reveal-card");
       c.style.setProperty("--cd", (i * 70) + "ms");

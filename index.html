@@ -15,7 +15,7 @@ body{background:var(--air-green);color:var(--air-pale);font-family:var(--f);font
 .wrap{max-width:880px;margin:0 auto;padding:0 22px}
 a{color:var(--air-bright)}
 :focus-visible{outline:3px solid var(--air-lime);outline-offset:3px;border-radius:2px}
-header{position:relative;min-height:88vh;display:flex;align-items:center;overflow:hidden;border-bottom:1px solid var(--line)}
+header{position:relative;min-height:88vh;display:flex;align-items:center;overflow:hidden}
 header video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.22}
 header .veil{position:absolute;inset:0;background:radial-gradient(110% 90% at 50% 40%,rgba(19,42,36,.3),rgba(19,42,36,.92) 80%)}
 header .inner{position:relative;width:100%;max-width:1200px;margin:0 auto;padding:48px 0 56px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px}
@@ -26,7 +26,11 @@ h1 em{color:var(--air-lime);}
 .lede{color:var(--muted);font-size:clamp(16px,2vw,20px);max-width:52ch}
 .lede b{color:var(--air-pale)}
 @media(prefers-reduced-motion:reduce){header video{display:none}}
-section{padding:64px 0;border-bottom:1px solid var(--line)}
+section{padding:76px 0;border-bottom:1px solid var(--line);position:relative}
+#plain{border-top:none;margin-top:-8vh;padding-top:14vh;
+  background:linear-gradient(180deg,transparent 0%,var(--air-green) 22%)}
+#plain::before{content:"";position:absolute;top:-2px;left:50%;transform:translateX(-50%);
+  width:1px;height:12vh;background:linear-gradient(180deg,transparent,var(--air-bright));opacity:.5}
 h2{font-size:clamp(24px,3.8vw,36px);font-weight:800;letter-spacing:-.022em;margin-bottom:14px;text-wrap:balance}
 .plain{display:grid;gap:14px;max-width:62ch}
 .plain p{color:var(--muted)}
@@ -50,6 +54,20 @@ h2{font-size:clamp(24px,3.8vw,36px);font-weight:800;letter-spacing:-.022em;margi
 .door .go:hover{transform:translateY(-2px);background:var(--air-lime)}
 .door .err{font-size:13px;color:#ff9b93;min-height:1.2em}
 footer{padding:44px 0 60px;color:var(--muted);font-size:13.5px;text-align:center}
+
+
+
+/* ---- editorial beats ---- */
+.beats{display:flex;flex-direction:column;gap:52px;max-width:760px;margin-top:10px}
+.beat{display:grid;grid-template-columns:64px 1fr;gap:8px 24px;align-items:start}
+.beat-n{grid-row:1/3;font-family:var(--f);font-size:34px;font-weight:800;color:var(--air-bright);
+  line-height:1;opacity:.5;font-variant-numeric:tabular-nums}
+.beat-lead{font-size:clamp(22px,3.4vw,32px);line-height:1.2;font-weight:700;letter-spacing:-.02em;
+  color:var(--air-pale);text-wrap:balance}
+.beat-lead em{color:var(--air-lime);font-style:normal}
+.beat-body{color:var(--muted);font-size:17px;line-height:1.6;max-width:56ch}
+.beat-mantra{font-size:19px;color:var(--air-pale);font-weight:600;border-left:2px solid var(--air-lime);padding-left:16px}
+@media(max-width:640px){.beat{grid-template-columns:1fr;gap:6px}.beat-n{grid-row:auto}}
 
 /* ---- scroll reveals + dynamic section intros ---- */
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.22,.9,.24,1) var(--d,0ms),transform .7s cubic-bezier(.22,.9,.24,1) var(--d,0ms)}
@@ -84,18 +102,29 @@ footer{padding:44px 0 60px;color:var(--muted);font-size:13.5px;text-align:center
   </div>
 </header>
 
-<section><div class="wrap">
+<section id="plain"><div class="wrap">
   <h2>What is this, in plain words?</h2>
-  <div class="plain">
-    <p><b>AI tools are everywhere, and most advice is noise.</b> Learn twelve apps. Master
-      the magic prompts. Keep up or fall behind. That noise makes people feel late to
-      something they never signed up for.</p>
-    <p><b>AIR flips it.</b> You don't start with a tool — you start with something you
-      actually want to make, for a real person. Then you use AI the way a director uses a
-      camera crew: give clear directions, look hard at what comes back, keep what's good,
-      fix what's wrong, and finish.</p>
-    <p><b>The goal of everything here is one sentence:</b> clear the air, un-clutter the
-      mindset, communicate with intention.</p>
+  <div class="beats">
+    <article class="beat">
+      <span class="beat-n">01</span>
+      <p class="beat-lead">AI tools are everywhere, and most advice is <em>noise</em>.</p>
+      <p class="beat-body">Learn twelve apps. Master the magic prompts. Keep up or fall
+        behind. That noise makes people feel late to something they never signed up for.</p>
+    </article>
+    <article class="beat">
+      <span class="beat-n">02</span>
+      <p class="beat-lead">AIR <em>flips it</em>.</p>
+      <p class="beat-body">You don't start with a tool — you start with something you
+        actually want to make, for a real person. Then you use AI the way a director uses a
+        camera crew: give clear directions, look hard at what comes back, keep what's good,
+        fix what's wrong, and finish.</p>
+    </article>
+    <article class="beat">
+      <span class="beat-n">03</span>
+      <p class="beat-lead">The goal of everything here is <em>one sentence</em>.</p>
+      <p class="beat-body beat-mantra">Clear the air. Un-clutter the mindset.
+        Communicate with intention.</p>
+    </article>
   </div>
   <div class="qa">
     <div class="q"><b>What will I actually do?</b><p>Eight short lessons, each one ends with
