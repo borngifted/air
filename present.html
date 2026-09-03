@@ -225,6 +225,18 @@ section>.wrap{position:relative;z-index:1}
 .sec-bg~.wrap h2,.sec-bg~.wrap .sublede,.stage-copy,.hero .inner{text-shadow:0 1px 14px rgba(13,30,25,.7)}
 @media(prefers-reduced-motion:reduce){.sec-bg{display:none}}
 
+
+/* ---- scroll reveals + dynamic section intros ---- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.22,.9,.24,1) var(--d,0ms),transform .7s cubic-bezier(.22,.9,.24,1) var(--d,0ms)}
+.reveal.in{opacity:1;transform:none}
+.reveal-card{opacity:0;transform:translateY(30px) scale(.98);transition:opacity .6s cubic-bezier(.22,.9,.24,1) var(--cd,0ms),transform .6s cubic-bezier(.22,.9,.24,1) var(--cd,0ms)}
+.reveal-card.in{opacity:1;transform:none}
+.sec-intro{margin:0 0 12px;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--air-bright);font-weight:800;overflow:hidden}
+.sec-intro span{display:inline-block;position:relative}
+.sec-intro span::after{content:"";position:absolute;inset:0;background:var(--air-green);transform:scaleX(1);transform-origin:right;transition:transform .7s cubic-bezier(.76,0,.24,1) .15s}
+.sec-intro.in span::after{transform:scaleX(0)}
+@media(prefers-reduced-motion:reduce){.reveal,.reveal-card{opacity:1;transform:none}.sec-intro span::after{display:none}}
+
 /* ---- practice widgets ---- */
 .widget{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:26px 24px;margin-bottom:18px;display:flex;flex-direction:column;gap:14px}
 .widget header{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
@@ -686,6 +698,7 @@ footer a{color:var(--air-bright)}
 </script>
 <script src="air-mark.js"></script>
 <script src="air-extras.js"></script>
+<script src="air-reveal.js"></script>
 <script src="air-hands.js"></script>
 </body>
 </html>

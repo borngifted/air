@@ -50,6 +50,18 @@ h2{font-size:clamp(24px,3.8vw,36px);font-weight:800;letter-spacing:-.022em;margi
 .door .go:hover{transform:translateY(-2px);background:var(--air-lime)}
 .door .err{font-size:13px;color:#ff9b93;min-height:1.2em}
 footer{padding:44px 0 60px;color:var(--muted);font-size:13.5px;text-align:center}
+
+/* ---- scroll reveals + dynamic section intros ---- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.22,.9,.24,1) var(--d,0ms),transform .7s cubic-bezier(.22,.9,.24,1) var(--d,0ms)}
+.reveal.in{opacity:1;transform:none}
+.reveal-card{opacity:0;transform:translateY(30px) scale(.98);transition:opacity .6s cubic-bezier(.22,.9,.24,1) var(--cd,0ms),transform .6s cubic-bezier(.22,.9,.24,1) var(--cd,0ms)}
+.reveal-card.in{opacity:1;transform:none}
+.sec-intro{margin:0 0 12px;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--air-bright);font-weight:800;overflow:hidden}
+.sec-intro span{display:inline-block;position:relative}
+.sec-intro span::after{content:"";position:absolute;inset:0;background:var(--air-green);transform:scaleX(1);transform-origin:right;transition:transform .7s cubic-bezier(.76,0,.24,1) .15s}
+.sec-intro.in span::after{transform:scaleX(0)}
+@media(prefers-reduced-motion:reduce){.reveal,.reveal-card{opacity:1;transform:none}.sec-intro span::after{display:none}}
+
 </style>
 </head>
 <body>
@@ -160,5 +172,6 @@ footer{padding:44px 0 60px;color:var(--muted);font-size:13.5px;text-align:center
   document.getElementById("f-code").addEventListener("keydown",function(e){if(e.key==="Enter")fEnter();});
 })();
 </script>
+<script src="air-reveal.js"></script>
 </body>
 </html>
