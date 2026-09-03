@@ -77,7 +77,7 @@
     titleEl.innerHTML = L.title;
     lineEl.textContent = L.line;
     numEl.textContent = L.num;
-    dot.style.left = (n / (N - 1)) * 100 + "%";
+    if (!dot.classList.contains("hand")) dot.style.left = (n / (N - 1)) * 100 + "%";
     dot.setAttribute("aria-valuenow", n);
     dot.setAttribute("aria-valuetext", L.kicker);
     stops.forEach(function (s, i) { s.classList.toggle("past", i <= n); });
@@ -143,7 +143,20 @@
   });
   hero.style.cursor = "pointer";
 
+  /* continuous drive: the dot follows a float position (hand tracking),
+     the lesson switches when the rounded stop changes */
+  function setPos(p) {
+    p = Math.max(0, Math.min(N - 1, p));
+    dot.classList.add("hand");
+    dot.style.left = (p / (N - 1)) * 100 + "%";
+    var n = Math.round(p);
+    if (n !== cur) setLesson(n, true);
+    else dot.style.left = (p / (N - 1)) * 100 + "%"; /* keep gliding between stops */
+  }
+  function releasePos() { dot.classList.remove("hand"); if (cur >= 0) dot.style.left = (cur / (N - 1)) * 100 + "%"; }
+
   setLesson(0);
   /* public hook — the HANDS module and widgets drive the same playhead */
-  window.AIR = { setLesson: setLesson, lessons: N, current: function(){ return cur; } };
+  window.AIR = { setLesson: setLesson, setPos: setPos, releasePos: releasePos,
+                 lessons: N, current: function(){ return cur; } };
 })();

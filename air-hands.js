@@ -61,8 +61,9 @@
     }
   }
 
-  /* wrist height (0 bottom .. 1 top of camera view) → absolute lesson
-     position, EMA-smoothed, with a dwell so it doesn't jitter between stops */
+  /* the dot follows your hand: hand X (mirrored, matching the preview) maps
+     straight onto the playhead track. Move your hand left↔right and the dot
+     glides with it; stops switch as you cross them. */
   var lastVideoTime = -1, smoothed = -1, lastSeen = 0;
 
   function loop(now) {
@@ -72,19 +73,24 @@
       var res = landmarker.detectForVideo(video, now);
       var hand = res.landmarks && res.landmarks[0];
       if (hand) {
-        var wrist = hand[0];
-        /* top of view = lesson 8, bottom = intro; margins so ends are reachable */
-        var p = Math.max(0, Math.min(1, (0.88 - wrist.y) / 0.72));
+        /* palm center (avg of wrist + middle-mcp) is steadier than the wrist */
+        var cx = (hand[0].x + hand[9].x) / 2;
+        var mx = 1 - cx; /* mirror so moving right moves the dot right */
+        var p = Math.max(0, Math.min(1, (mx - 0.12) / 0.76));
         var N = (window.AIR ? window.AIR.lessons : 9) - 1;
         var target = p * N;
-        smoothed = smoothed < 0 ? target : smoothed + (target - smoothed) * 0.18;
-        if (window.AIR) window.AIR.setLesson(Math.round(smoothed));
+        smoothed = smoothed < 0 ? target : smoothed + (target - smoothed) * 0.45;
+        if (window.AIR) window.AIR.setPos(smoothed);
         lastSeen = now;
-        setStatus("TRACKING · raise / lower your hand");
+        setStatus("TRACKING · move your hand left and right");
         drawDots(hand);
       } else {
         drawDots(null);
-        if (now - lastSeen > NO_HAND_MS) setStatus("NO HAND — show your palm");
+        if (now - lastSeen > NO_HAND_MS) {
+          setStatus("NO HAND — show your palm");
+          if (window.AIR && window.AIR.releasePos) window.AIR.releasePos();
+          smoothed = -1;
+        }
       }
     }
     rafId = requestAnimationFrame(loop);
@@ -117,7 +123,7 @@
     dots.width = view.clientWidth; dots.height = view.clientHeight;
     lastVideoTime = -1; smoothed = -1; lastSeen = performance.now();
     running = true;
-    setStatus("SHOW YOUR PALM");
+    setStatus("SHOW YOUR PALM · move it left–right");
     rafId = requestAnimationFrame(loop);
   }
 
@@ -126,6 +132,7 @@
     cancelAnimationFrame(rafId);
     stopStream();
     removeCard();
+    if (window.AIR && window.AIR.releasePos) window.AIR.releasePos();
   }
 
   function setToggle(on) {

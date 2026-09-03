@@ -176,3 +176,20 @@
     });
   }
 })();
+
+/* ---- section video atmosphere: play only in view, respect data saver ---- */
+(function () {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (navigator.connection && navigator.connection.saveData) return;
+  var vids = document.querySelectorAll("[data-secvid]");
+  if (!vids.length || !("IntersectionObserver" in window)) return;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      var v = en.target;
+      if (en.isIntersecting) {
+        v.play().then(function () { v.classList.add("playing"); }).catch(function () {});
+      } else { v.pause(); v.classList.remove("playing"); }
+    });
+  }, { rootMargin: "120px" });
+  vids.forEach(function (v) { io.observe(v); });
+})();

@@ -159,7 +159,7 @@ label{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase
 .idot:hover,.idot.drag{background:radial-gradient(circle at 34% 30%,#ecffa1,var(--air-lime) 62%);
   box-shadow:0 6px 30px rgba(216,255,69,.5);cursor:grabbing}
 .idot:focus-visible{outline:3px solid var(--air-lime);outline-offset:4px}
-.idot.drag{transition:background .2s,box-shadow .2s}
+.idot.drag,.idot.hand{transition:background .2s,box-shadow .2s}
 .stage-copy{position:relative;text-align:center;margin-top:34px;display:flex;flex-direction:column;
   gap:10px;align-items:center}
 .stage-kicker{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--air-bright);font-weight:700}
@@ -213,6 +213,16 @@ label{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase
   text-transform:uppercase;color:var(--muted)}
 
 
+
+
+/* ---- section video atmosphere ---- */
+section{position:relative}
+.sec-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.sec-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s}
+.sec-bg video.playing{opacity:.11}
+.sec-veil{position:absolute;inset:0;background:linear-gradient(180deg,var(--air-green) 0%,rgba(19,42,36,.72) 18%,rgba(19,42,36,.72) 82%,var(--air-green) 100%)}
+section>.wrap{position:relative;z-index:1}
+@media(prefers-reduced-motion:reduce){.sec-bg{display:none}}
 
 /* ---- practice widgets ---- */
 .widget{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:26px 24px;margin-bottom:18px;display:flex;flex-direction:column;gap:14px}
@@ -345,7 +355,7 @@ footer a{color:var(--air-bright)}
 <main id="main">
 
 
-<section id="practice"><div class="wrap">
+<section id="practice"><div class="sec-bg" aria-hidden="true"><video muted loop playsinline preload="none" data-secvid><source src="media/sec/practice.mp4" type="video/mp4"></video><div class="sec-veil"></div></div><div class="wrap">
   <div class="eyebrow">Practice — everything stays in your browser</div>
   <h2>Try the moves. Nothing leaves this page.</h2>
   <p class="sublede">Five working exercises from the course. <b>No account, no payment, no email
@@ -449,7 +459,7 @@ footer a{color:var(--air-bright)}
 
 </div></section>
 
-<section id="resources"><div class="wrap">
+<section id="resources"><div class="sec-bg" aria-hidden="true"><video muted loop playsinline preload="none" data-secvid><source src="media/sec/resources.mp4" type="video/mp4"></video><div class="sec-veil"></div></div><div class="wrap">
   <div class="eyebrow">Keep learning · open resources</div>
   <h2>You don't need every tool.<br>You need a purpose and a process.</h2>
   <div class="plat">
@@ -461,7 +471,7 @@ footer a{color:var(--air-bright)}
   <p class="wnote" style="margin-top:22px">Free community learning. No account, payment, or email required.</p>
 </div></section>
 
-<section id="start"><div class="wrap">
+<section id="start"><div class="sec-bg" aria-hidden="true"><video muted loop playsinline preload="none" data-secvid><source src="media/sec/start.mp4" type="video/mp4"></video><div class="sec-veil"></div></div><div class="wrap">
   <div class="eyebrow">Experience 00 — twenty minutes, no tools</div>
   <h2>What are you actually trying to make?</h2>
   <p class="sublede">Below is the noise most people carry. <b>Tap anything that is
@@ -504,7 +514,7 @@ footer a{color:var(--air-bright)}
   </div>
 </div></section>
 
-<section id="mission"><div class="wrap">
+<section id="mission"><div class="sec-bg" aria-hidden="true"><video muted loop playsinline preload="none" data-secvid><source src="media/sec/mission.mp4" type="video/mp4"></video><div class="sec-veil"></div></div><div class="wrap">
   <div class="eyebrow">Why AIR exists</div>
   <h2>Change how people approach AI —<br>not which buttons they press.</h2>
   <p class="sublede"><b>Clear the air. Un-clutter the mindset. Communicate with intention.</b>
@@ -516,7 +526,7 @@ footer a{color:var(--air-bright)}
     models, logo-led design systems — with the seams left visible so you learn to see them.</p>
 </div></section>
 
-<section id="lessons"><div class="wrap">
+<section id="lessons"><div class="sec-bg" aria-hidden="true"><video muted loop playsinline preload="none" data-secvid><source src="media/sec/course.mp4" type="video/mp4"></video><div class="sec-veil"></div></div><div class="wrap">
   <div class="eyebrow">The course · eight lessons</div>
   <h2>One journey. Eight moves.<br>Real workflows, seams visible.</h2>
   <p class="sublede">No certificates, no tests, no grades — <b>each lesson ends with something
