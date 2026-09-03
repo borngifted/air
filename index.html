@@ -128,6 +128,24 @@ label{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase
 .out.show{display:block}
 .out .q{color:var(--air-lime);font-weight:700}
 
+
+/* ---- film demo ---- */
+.film{display:grid;grid-template-columns:minmax(240px,340px) 1fr;gap:30px;align-items:start;margin-bottom:34px}
+.vfilm{width:100%;aspect-ratio:9/16;background:var(--deep);border:1px solid var(--line);border-radius:8px;display:block}
+.filmside{display:flex;flex-direction:column;gap:14px;padding-top:6px}
+.filmside h3{font-size:20px;font-weight:700;letter-spacing:-.012em}
+.filmside p{color:var(--muted);font-size:15.5px;max-width:52ch}
+@media(max-width:720px){.film{grid-template-columns:1fr}.vfilm{max-width:340px;margin:0 auto}}
+.pieces{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px}
+.pc{margin:0;display:flex;flex-direction:column;gap:6px}
+.pc video{width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--deep);border:1px solid var(--line);border-radius:5px;cursor:pointer;display:block}
+.pc.t video{border-style:dashed;border-color:var(--air-bright)}
+.pc figcaption{font-size:11px;color:var(--muted);letter-spacing:.04em}
+.pc figcaption b{color:var(--air-pale)}
+.pc.t figcaption b{color:var(--air-bright)}
+.pieces-note{margin-top:16px;font-size:14px;color:var(--muted);max-width:64ch}
+.pieces-note b{color:var(--air-lime)}
+
 /* ---- case grid ---- */
 .cases{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:1px;
   background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden}
@@ -168,7 +186,7 @@ footer a{color:var(--air-bright)}
 </svg> AIR</a>
   <div class="nlinks">
     <a href="#start">Start</a><a href="#levels">Levels</a>
-    <a href="#experiences">Experiences</a><a href="#proof">Proof</a>
+    <a href="#experiences">Experiences</a><a href="#watch">Watch</a><a href="#proof">Proof</a>
   </div>
 </div></nav>
 
@@ -276,6 +294,45 @@ footer a{color:var(--air-bright)}
         person. Not a folder — a link.</p></div>
       <span class="case">Demo Reel · Affirm&#39;</span></a>
   </div>
+</div></section>
+
+
+<section id="watch"><div class="wrap">
+  <div class="eyebrow">Watch — made with the AIR method</div>
+  <h2>Four ideas, one continuous breath.</h2>
+  <p class="sublede">Generated with Seedance 2.5 using the start-frame / end-frame chaining
+    method from the <a href="https://borngifted.github.io/affirmations/" target="_blank" rel="noopener" style="color:var(--air-bright)">Affirm&#39; project</a>:
+    each clip begins on the exact frame the previous one ended.
+    <b>Clutter &rarr; stillness &rarr; making &rarr; the world.</b></p>
+
+  <div class="film">
+    <video controls playsinline preload="metadata" poster="media/poster-v2-9x16.jpg" class="vfilm">
+      <source src="media/air-chain-v2-9x16.mp4" type="video/mp4">
+      Your browser can&#39;t play this video. <a href="media/air-chain-9x16.mp4">Download it instead.</a>
+    </video>
+    <div class="filmside">
+      <h3>The chain, exposed</h3>
+      <p>Each clip was generated <b style="color:var(--air-pale)">starting from the exact final frame of
+         the one before it</b>, so the person, light and world carry through. Below is the
+         first attempt in pieces &mdash; four independent clips joined by interpolated
+         transitions. Kept on purpose: comparing the two versions <em>is</em> the lesson.</p>
+      <a class="btn btn-ghost" href="media/air-chain-v2-16x9.mp4">16:9 version &darr;</a>
+      <a class="btn btn-ghost" href="media/air-chain-9x16.mp4">First attempt, seams and all &darr;</a>
+    </div>
+  </div>
+
+  <div class="pieces" aria-label="The seven clips that make up the film">
+    <figure class="pc"><video muted loop playsinline preload="none" poster="media/p-clip-1-clutter.jpg" onclick="this.paused?this.play():this.pause()"><source src="media/clip-1-clutter.mp4" type="video/mp4"></video><figcaption><b>1 · Clutter</b> generated</figcaption></figure>
+    <figure class="pc t"><video muted loop playsinline preload="none" poster="media/p-trans-1.jpg" onclick="this.paused?this.play():this.pause()"><source src="media/trans-1.mp4" type="video/mp4"></video><figcaption><b>&rarr;</b> end-frame &rarr; start-frame</figcaption></figure>
+    <figure class="pc"><video muted loop playsinline preload="none" poster="media/p-clip-2-stillness.jpg" onclick="this.paused?this.play():this.pause()"><source src="media/clip-2-stillness.mp4" type="video/mp4"></video><figcaption><b>2 · Stillness</b> generated</figcaption></figure>
+    <figure class="pc t"><video muted loop playsinline preload="none" poster="media/p-trans-2.jpg" onclick="this.paused?this.play():this.pause()"><source src="media/trans-2.mp4" type="video/mp4"></video><figcaption><b>&rarr;</b> end-frame &rarr; start-frame</figcaption></figure>
+    <figure class="pc"><video muted loop playsinline preload="none" poster="media/p-clip-3-making.jpg" onclick="this.paused?this.play():this.pause()"><source src="media/clip-3-making.mp4" type="video/mp4"></video><figcaption><b>3 · Making</b> generated</figcaption></figure>
+    <figure class="pc t"><video muted loop playsinline preload="none" poster="media/p-trans-3.jpg" onclick="this.paused?this.play():this.pause()"><source src="media/trans-3.mp4" type="video/mp4"></video><figcaption><b>&rarr;</b> end-frame &rarr; start-frame</figcaption></figure>
+    <figure class="pc"><video muted loop playsinline preload="none" poster="media/p-clip-4-world.jpg" onclick="this.paused?this.play():this.pause()"><source src="media/clip-4-world.mp4" type="video/mp4"></video><figcaption><b>4 · The world</b> generated</figcaption></figure>
+  </div>
+  <p class="pieces-note">Tap any piece to play it. This is <b>Challenge the Result</b> in practice:
+     look closely and you&#39;ll find the seams &mdash; identity drifting between clips, morphing in the
+     transitions, gibberish text on the poster. Seeing them is the skill AIR teaches.</p>
 </div></section>
 
 <section id="proof"><div class="wrap">
