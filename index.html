@@ -145,11 +145,14 @@ footer{padding:44px 0 60px;color:var(--muted);font-size:13.5px;text-align:center
 
   /* Facilitator door: a curtain, not a lock — the deck itself is public.
      Code check runs locally; change CODE below to rotate it. */
-  var CODE="CLEARTHEAIR";
+  /* only a SHA-256 hash lives here — the code itself is not in this file */
+  var CODE_HASH="bacfe494bb979db2739b7374a80f472fb3d18ddbf1ff9e0b9658d8fec3a5606f";
   var fgo=document.getElementById("f-go");
-  function fEnter(){
+  async function fEnter(){
     var c=document.getElementById("f-code").value.trim().toUpperCase();
-    if(c!==CODE){document.getElementById("f-err").textContent="That's not the session code.";return;}
+    var buf=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(c));
+    var hex=[...new Uint8Array(buf)].map(function(b){return b.toString(16).padStart(2,"0")}).join("");
+    if(hex!==CODE_HASH){document.getElementById("f-err").textContent="That's not the session code.";return;}
     try{sessionStorage.setItem("air-facilitator","1");}catch(e){}
     location.href="present.html";
   }
