@@ -1,29 +1,36 @@
-/* AIR — scroll-scrubbed film hero
-   Method from Affirm' (borngifted/affirmations): clips generated with
-   Seedance 2.5 start→end-frame chaining, extracted to webp frame sequences,
-   scrubbed on a <canvas> indexed by scroll progress. The film IS the
-   presentation — copy beats are keyed to frame ranges. */
+/* AIR — the eight lessons as a scroll-scrubbed journey
+   Method from Affirm' (borngifted/affirmations): 8 still anchors generated in
+   the AIR brand world, joined by 7 Seedance 2.5 start→end-frame morphs,
+   extracted to webp frames and scrubbed on a canvas by scroll. The scroll
+   rests on each lesson, then carries you to the next. */
 
 (function () {
   var MOBILE = matchMedia("(max-width: 720px)").matches;
   var DIR = MOBILE ? "frames-m" : "frames";
-  var CLIPS = 4, PER = 61, TOTAL = CLIPS * PER; /* 244 */
+  var SEGS = 7, PER = 49, HOLD = 16;
   var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* The presentation, keyed to the film's four acts (61 frames each). */
-  var BEATS = [
-    { at: 0,   act: "ACT 1 · THE CLUTTER", text: "You've been told to learn twelve tools." },
-    { at: 20,  act: "ACT 1 · THE CLUTTER", text: "Automate everything. Get certified. Keep up." },
-    { at: 42,  act: "ACT 1 · THE CLUTTER", text: "The noise isn't readiness. It's the opposite." },
-    { at: 61,  act: "ACT 2 · THE CLEARING", text: "Stop. Breathe." },
-    { at: 80,  act: "ACT 2 · THE CLEARING", text: "<em>Clear the air.</em>" },
-    { at: 100, act: "ACT 2 · THE CLEARING", text: "What are you actually trying to make?" },
-    { at: 122, act: "ACT 3 · THE MAKING", text: "Start with a person, not a prompt." },
-    { at: 142, act: "ACT 3 · THE MAKING", text: "Make it. Then make it clear." },
-    { at: 162, act: "ACT 3 · THE MAKING", text: "Challenge the result — judgment is the work." },
-    { at: 183, act: "ACT 4 · THE WORLD", text: "Finish one thing." },
-    { at: 203, act: "ACT 4 · THE WORLD", text: "<em>Put it in the world.</em>" },
-    { at: 224, act: "ACT 4 · THE WORLD", text: "Explore. Create. Build." },
+  /* timeline: hold anchor 1, morph, hold anchor 2, morph, … hold anchor 8 */
+  var timeline = []; /* each entry: [segIndex(1-based), frameIndex(1-based)] */
+  var anchors = [];  /* timeline positions where each lesson rests */
+  for (var s = 1; s <= SEGS; s++) {
+    anchors.push(timeline.length);
+    for (var h = 0; h < HOLD; h++) timeline.push([s, 1]);
+    for (var f = 2; f <= PER; f++) timeline.push([s, f]);
+  }
+  anchors.push(timeline.length);
+  for (var h2 = 0; h2 < HOLD + 8; h2++) timeline.push([SEGS, PER]);
+  var TOTAL = timeline.length;
+
+  var LESSONS = [
+    { act: "LESSON 1 · CLEAR THE AIR",        text: "Move from fear, hype and overload to <em>one meaningful goal</em>." },
+    { act: "LESSON 2 · SEE THE POSSIBILITY",  text: "Understand what makes finished work useful." },
+    { act: "LESSON 3 · CHOOSE YOUR MISSION",  text: "Name the person, the problem, the outcome." },
+    { act: "LESSON 4 · DIRECT THE MACHINE",   text: "Speak like a creative director — not a magic-prompt hunter." },
+    { act: "LESSON 5 · MAKE IT CLEAR",        text: "Let hierarchy, contrast and space do the talking." },
+    { act: "LESSON 6 · CHALLENGE THE RESULT", text: "Critique, verify, question, improve. <em>Judgment is the work.</em>" },
+    { act: "LESSON 7 · BUILD YOUR WAY",       text: "Turn what worked into your own repeatable workflow." },
+    { act: "LESSON 8 · PUT IT IN THE WORLD",  text: "Complete something real. <em>Let someone use it.</em>" },
   ];
 
   var canvas = document.getElementById("film-canvas");
@@ -36,39 +43,40 @@
   var hintEl = document.getElementById("scrub-hint");
 
   /* ---------- frames ---------- */
-  var frames = new Array(TOTAL);
-  function src(i) {
-    var clip = Math.floor(i / PER) + 1;
-    var n = (i % PER) + 1;
-    return DIR + "/clip" + clip + "/f" + String(n).padStart(4, "0") + ".webp";
+  var cache = {}; /* "s/f" -> Image */
+  function key(t) { return t[0] + "/" + t[1]; }
+  function src(t) {
+    return DIR + "/t" + t[0] + "/f" + String(t[1]).padStart(4, "0") + ".webp";
   }
-  function load(i, cb) {
-    if (frames[i]) return;
+  function load(t, cb) {
+    var k = key(t);
+    if (cache[k]) return;
     var img = new Image();
-    img.onload = function () { frames[i] = img; if (cb) cb(); };
-    img.src = src(i);
+    img.onload = function () { cache[k] = img; if (cb) cb(); };
+    img.src = src(t);
   }
-  /* first frame immediately, then everything in the background */
-  load(0, function () { drawn = -1; requestDraw(); });
-  var qi = 0;
+  load(timeline[0], function () { drawn = -1; requestDraw(); });
+  var qi = 0, inflight = 0;
   (function pump() {
-    var inflight = 0;
     while (qi < TOTAL && inflight < 6) {
-      (function (i) { if (!frames[i]) { inflight++; load(i, function(){ inflight--; }); } })(qi++);
+      (function (t) {
+        var k = key(t);
+        if (!cache[k]) { inflight++; load(t, function () { inflight--; }); }
+      })(timeline[qi++]);
     }
     if (qi < TOTAL) setTimeout(pump, 60);
   })();
 
   function nearest(i) {
-    if (frames[i]) return frames[i];
+    if (cache[key(timeline[i])]) return cache[key(timeline[i])];
     for (var d = 1; d < TOTAL; d++) {
-      if (frames[i - d]) return frames[i - d];
-      if (frames[i + d]) return frames[i + d];
+      if (i - d >= 0 && cache[key(timeline[i - d])]) return cache[key(timeline[i - d])];
+      if (i + d < TOTAL && cache[key(timeline[i + d])]) return cache[key(timeline[i + d])];
     }
     return null;
   }
 
-  /* ---------- draw (cover, no letterbox → no background conflict) ---------- */
+  /* ---------- draw: cover, never letterbox ---------- */
   function size() {
     var dpr = Math.min(devicePixelRatio || 1, 2);
     canvas.width = Math.round(canvas.clientWidth * dpr);
@@ -83,34 +91,33 @@
     if (!img) return;
     var cw = canvas.width, ch = canvas.height;
     var s = Math.max(cw / img.width, ch / img.height);
-    var w = img.width * s, hgt = img.height * s;
-    ctx.drawImage(img, (cw - w) / 2, (ch - hgt) / 2, w, hgt);
+    var w = img.width * s, hh = img.height * s;
+    ctx.drawImage(img, (cw - w) / 2, (ch - hh) / 2, w, hh);
     drawn = i;
   }
 
-  /* ---------- beats ---------- */
+  /* ---------- lesson beats ---------- */
   var beat = -1;
   function setBeat(b) {
     if (b === beat) return;
     beat = b;
-    var B = BEATS[b];
-    actEl.textContent = B.act;
+    var L = LESSONS[b];
+    actEl.textContent = L.act;
     numEl.textContent = String(b + 1).padStart(2, "0");
-    quoteEl.innerHTML = B.text.split(/\s+/).map(function (w) {
+    quoteEl.innerHTML = L.text.split(/\s+/).map(function (w) {
       return '<span class="w">' + w + "</span>";
     }).join(" ");
-    var ws = quoteEl.querySelectorAll(".w");
-    ws.forEach(function (w, i) {
+    quoteEl.querySelectorAll(".w").forEach(function (w, i) {
       setTimeout(function () { w.classList.add("on"); }, 40 + i * 55);
     });
   }
-  function beatFor(f) {
+  function beatFor(i) {
     var b = 0;
-    for (var i = 0; i < BEATS.length; i++) if (f >= BEATS[i].at) b = i;
-    return b;
+    for (var k2 = 0; k2 < anchors.length; k2++) if (i >= anchors[k2]) b = k2;
+    return Math.min(b, LESSONS.length - 1);
   }
 
-  /* ---------- scroll → frame ---------- */
+  /* ---------- scroll → timeline ---------- */
   var target = 0, current = 0, raf = null;
   function onScroll() {
     var r = section.getBoundingClientRect();
@@ -122,20 +129,18 @@
   }
   function requestDraw() {
     if (raf) return;
-    raf = requestAnimationFrame(function step() {
+    raf = requestAnimationFrame(function () {
       raf = null;
       current += (target - current) * (reduced ? 1 : 0.22);
       if (Math.abs(target - current) < 0.4) current = target;
       var i = Math.round(current);
       if (i !== drawn) draw(i);
       setBeat(beatFor(i));
-      if (i !== target && Math.abs(target - current) >= 0.4) requestDraw();
+      if (Math.abs(target - current) >= 0.4) requestDraw();
     });
   }
   addEventListener("scroll", onScroll, { passive: true });
 
-  if (reduced) { /* static: show one frame per beat as the page flows */
-    section.style.height = "auto";
-  }
+  if (reduced) section.style.height = "auto";
   size(); onScroll(); setBeat(0);
 })();
