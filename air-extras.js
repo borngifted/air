@@ -187,9 +187,16 @@
     entries.forEach(function (en) {
       var v = en.target;
       if (en.isIntersecting) {
-        v.play().then(function () { v.classList.add("playing"); }).catch(function () {});
+        if (v.readyState === 0) v.load();
+        var p = v.play();
+        if (p) p.then(function () { v.classList.add("playing"); })
+               .catch(function () { setTimeout(function () {
+                 v.play().then(function(){ v.classList.add("playing"); }).catch(function(){}); }, 600); });
       } else { v.pause(); v.classList.remove("playing"); }
     });
   }, { rootMargin: "120px" });
-  vids.forEach(function (v) { io.observe(v); });
+  vids.forEach(function (v) {
+    v.addEventListener("playing", function () { v.classList.add("playing"); });
+    io.observe(v);
+  });
 })();

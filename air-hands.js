@@ -79,7 +79,7 @@
         var p = Math.max(0, Math.min(1, (mx - 0.12) / 0.76));
         var N = (window.AIR ? window.AIR.lessons : 9) - 1;
         var target = p * N;
-        smoothed = smoothed < 0 ? target : smoothed + (target - smoothed) * 0.45;
+        smoothed = smoothed < 0 ? target : smoothed + (target - smoothed) * 0.62;
         if (window.AIR) window.AIR.setPos(smoothed);
         lastSeen = now;
         setStatus("TRACKING · move your hand left and right");
