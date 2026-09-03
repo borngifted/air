@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIR — AI Readiness</title>
+<meta name="description" content="AIR — AI Readiness, sponsored by Digi2U.org. Clear the air. Un-clutter the mindset. Communicate with intention.">
+<meta name="theme-color" content="#132a24">
+<style>
+:root{
+  --air-green:#132a24; --air-pale:#f7fff8; --air-bright:#18C98B; --air-lime:#D8FF45;
+  --deep:#0d1e19; --panel:#1a352d; --panel2:#214237; --line:#2b5044;
+  --muted:#9fbdb1;
+  --f: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--air-green);color:var(--air-pale);font-family:var(--f);
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--air-lime);outline-offset:3px;border-radius:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{position:fixed;left:16px;top:16px;z-index:200;background:var(--air-lime);
+  color:var(--air-green);padding:12px 18px;border-radius:6px;font-weight:700}
+
+/* ---- nav ---- */
+nav{position:sticky;top:0;z-index:60;background:rgba(19,42,36,.9);
+  backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.brandbar{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.16em;
+  font-size:12px;text-transform:uppercase}
+.brandbar .mark{width:34px;height:auto}
+.nlinks{display:flex;gap:24px;font-size:12.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted)}
+.nlinks a{text-decoration:none;transition:color .18s}
+.nlinks a:hover{color:var(--air-bright)}
+@media(max-width:800px){.nlinks a{display:none}.nlinks{gap:0}}
+
+/* ---- hero ---- */
+header.hero{position:relative;min-height:88vh;display:flex;align-items:center;overflow:hidden}
+.hero .field{position:absolute;inset:0;background:
+  radial-gradient(900px 480px at 14% 6%,rgba(24,201,139,.16),transparent 62%),
+  radial-gradient(700px 420px at 86% 92%,rgba(216,255,69,.09),transparent 64%)}
+.hero .inner{position:relative;padding:90px 0 76px;width:100%}
+.hero .mark{width:min(240px,42vw);height:auto;margin-bottom:30px;display:block}
+.kicker{font-size:11.5px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--air-bright);margin-bottom:20px;font-weight:600}
+h1{font-size:clamp(42px,8.4vw,96px);line-height:.95;font-weight:800;
+  letter-spacing:-.035em;margin-bottom:24px;text-wrap:balance}
+h1 em{font-style:italic;color:var(--air-lime)}
+.hero p.lede{font-size:clamp(17px,2.1vw,21px);color:var(--muted);max-width:56ch;margin-bottom:34px}
+.hero p.lede b{color:var(--air-pale);font-weight:600}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 26px;border-radius:999px;
+  font-weight:700;font-size:14.5px;text-decoration:none;border:1px solid transparent;
+  transition:transform .16s,background .16s,border-color .16s;cursor:pointer;font-family:var(--f)}
+.btn-go{background:var(--air-bright);color:var(--air-green)}
+.btn-go:hover{background:var(--air-lime);transform:translateY(-2px)}
+.btn-ghost{border-color:var(--line);color:var(--air-pale);background:none}
+.btn-ghost:hover{border-color:var(--air-bright);color:var(--air-bright);transform:translateY(-2px)}
+
+/* ---- ticker ---- */
+.ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:var(--deep);overflow:hidden;padding:13px 0}
+.trun{display:flex;gap:40px;white-space:nowrap;animation:sl 30s linear infinite;
+  font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.trun b{color:var(--air-bright);font-weight:700}
+@keyframes sl{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ---- sections ---- */
+section{padding:88px 0;border-bottom:1px solid var(--line)}
+.eyebrow{display:flex;align-items:center;gap:13px;font-size:11px;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--air-bright);margin-bottom:16px;font-weight:600}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--line)}
+h2{font-size:clamp(28px,4.6vw,46px);line-height:1.05;font-weight:800;
+  letter-spacing:-.028em;margin-bottom:18px;text-wrap:balance}
+.sublede{color:var(--muted);max-width:64ch;font-size:17.5px;margin-bottom:42px}
+.sublede b{color:var(--air-pale);font-weight:600}
+
+/* ---- three levels ---- */
+.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.lvl{background:var(--panel);padding:28px 24px;display:flex;flex-direction:column;gap:10px}
+.lvl .dot{width:13px;height:13px;border-radius:50%}
+.lvl.e .dot{background:var(--air-bright)}
+.lvl.c .dot{background:var(--air-lime)}
+.lvl.b .dot{background:var(--air-pale)}
+.lvl h3{font-size:20px;font-weight:700;letter-spacing:-.012em}
+.lvl p{color:var(--muted);font-size:15px}
+
+/* ---- experience picker ---- */
+.exps{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.exp{display:grid;grid-template-columns:56px 1fr auto;gap:20px;align-items:center;
+  padding:24px 6px;border-bottom:1px solid var(--line);text-decoration:none;
+  transition:background .18s,padding-left .18s}
+.exp:hover,.exp:focus-visible{background:var(--panel);padding-left:16px}
+.exp .num{font-size:13px;font-weight:800;color:var(--air-bright);letter-spacing:.06em}
+.exp h3{font-size:19.5px;font-weight:700;letter-spacing:-.012em;margin-bottom:5px}
+.exp p{color:var(--muted);font-size:15px;max-width:56ch}
+.exp .case{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);white-space:nowrap;border:1px solid var(--line);
+  padding:5px 11px;border-radius:999px}
+@media(max-width:760px){.exp{grid-template-columns:44px 1fr}.exp .case{display:none}}
+
+/* ---- interactive: clear the air ---- */
+.clearbox{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:32px}
+.clutter{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0 26px;min-height:52px}
+.tag{background:var(--panel2);border:1px solid var(--line);color:var(--muted);
+  font-size:13.5px;padding:8px 15px;border-radius:999px;cursor:pointer;
+  transition:opacity .3s,transform .3s,background .18s,color .18s;font-family:var(--f)}
+.tag:hover{background:var(--line);color:var(--air-pale)}
+.tag.gone{opacity:.16;text-decoration:line-through;transform:scale(.94)}
+.tag.keep{background:var(--air-bright);color:var(--air-green);border-color:var(--air-bright);font-weight:600}
+.counter{font-size:13px;color:var(--muted);margin-bottom:8px}
+.counter b{color:var(--air-lime);font-weight:700}
+.sentence{margin-top:26px;padding-top:24px;border-top:1px solid var(--line)}
+label{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--air-bright);margin-bottom:10px;font-weight:600}
+.fill{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:18px;line-height:2.2}
+.fill input{background:var(--deep);border:none;border-bottom:2px solid var(--air-bright);
+  color:var(--air-pale);font-size:17px;padding:7px 10px;min-width:170px;flex:1;
+  font-family:var(--f);border-radius:3px 3px 0 0}
+.fill input:focus{outline:none;border-bottom-color:var(--air-lime);background:var(--panel2)}
+.out{margin-top:26px;padding:22px;background:var(--deep);border-left:3px solid var(--air-lime);
+  border-radius:0 5px 5px 0;font-size:18.5px;line-height:1.55;display:none}
+.out.show{display:block}
+.out .q{color:var(--air-lime);font-weight:700}
+
+
+
+/* ---- the mark IS the interface ---- */
+.stage-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.2;pointer-events:none}
+.stage-veil{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 42%,rgba(19,42,36,.25) 0%,rgba(19,42,36,.86) 78%);pointer-events:none}
+@media(prefers-reduced-motion:reduce){.stage-video{display:none}}
+
+.markstage{min-height:100vh;min-height:100dvh;position:relative;display:flex;flex-direction:column;
+  justify-content:center;overflow:hidden;border-bottom:1px solid var(--line);padding:76px 22px 64px}
+.stage-top{position:absolute;top:76px;left:0;right:0;display:flex;justify-content:space-between;
+  padding:14px 22px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
+.stage-brand{color:var(--air-bright)}
+.stage-meta{color:var(--muted)}
+.stage-scene{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.scenemark{position:absolute;width:280%;left:-90%;top:-40%;opacity:.07;
+  transition:transform 900ms cubic-bezier(.22,.9,.24,1),opacity 900ms}
+.stage-mark{position:relative;width:min(760px,88vw);margin:0 auto}
+.heromark{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 60px rgba(0,0,0,.35))}
+.heromark .zone{cursor:pointer}
+.dot-track{position:absolute;left:6%;right:6%;top:44%;height:44px}
+.dot-stops{position:absolute;left:0;right:0;top:50%;height:2px;background:linear-gradient(90deg,transparent,var(--line-2),transparent)}
+.dot-stops i{position:absolute;top:50%;width:6px;height:6px;border-radius:50%;
+  background:var(--line-2);transform:translate(-50%,-50%);transition:background .2s}
+.dot-stops i.past{background:var(--air-bright)}
+.idot{position:absolute;top:50%;width:46px;height:46px;border-radius:50%;border:none;
+  background:radial-gradient(circle at 34% 30%,#5fe9c2,var(--air-bright) 62%);cursor:grab;
+  transform:translate(-50%,-50%);box-shadow:0 6px 26px rgba(24,201,139,.45);
+  transition:left 420ms cubic-bezier(.22,.9,.24,1),background .2s,box-shadow .2s;touch-action:none}
+.idot:hover,.idot.drag{background:radial-gradient(circle at 34% 30%,#ecffa1,var(--air-lime) 62%);
+  box-shadow:0 6px 30px rgba(216,255,69,.5);cursor:grabbing}
+.idot:focus-visible{outline:3px solid var(--air-lime);outline-offset:4px}
+.idot.drag,.idot.hand{transition:background .2s,box-shadow .2s}
+.stage-copy{position:relative;text-align:center;margin-top:34px;display:flex;flex-direction:column;
+  gap:10px;align-items:center}
+.stage-kicker{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--air-bright);font-weight:700}
+.stage-title{font-size:clamp(30px,5.6vw,58px);line-height:1.02;font-weight:800;letter-spacing:-.03em;
+  max-width:18ch;text-wrap:balance;font-style:italic}
+.stage-title em{color:var(--air-lime);font-style:italic}
+.stage-line{color:var(--muted);font-size:clamp(15px,1.9vw,18px);max-width:52ch}
+.stage-count{font-size:11px;letter-spacing:.2em;color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums}
+.stage-hint{position:absolute;bottom:16px;left:0;right:0;text-align:center;font-size:10px;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.wipe .stage-copy{animation:wipein 520ms cubic-bezier(.22,.9,.24,1)}
+@keyframes wipein{from{clip-path:polygon(0 0,36% 0,16% 100%,0 100%);opacity:.4;transform:translateX(14px) }
+  to{clip-path:polygon(0 0,120% 0,100% 100%,0 100%);opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.wipe .stage-copy{animation:none}.scenemark{transition:none}.idot{transition:background .2s,box-shadow .2s}}
+@media(max-width:700px){.dot-track{top:46%}.idot{width:38px;height:38px}}
+/* ---- film demo ---- */
+.film{display:grid;grid-template-columns:minmax(240px,340px) 1fr;gap:30px;align-items:start;margin-bottom:34px}
+.vfilm{width:100%;aspect-ratio:9/16;background:var(--deep);border:1px solid var(--line);border-radius:8px;display:block}
+.filmside{display:flex;flex-direction:column;gap:14px;padding-top:6px}
+.filmside h3{font-size:20px;font-weight:700;letter-spacing:-.012em}
+.filmside p{color:var(--muted);font-size:15.5px;max-width:52ch}
+@media(max-width:720px){.film{grid-template-columns:1fr}.vfilm{max-width:340px;margin:0 auto}}
+.pieces{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px}
+.pc{margin:0;display:flex;flex-direction:column;gap:6px}
+.pc video{width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--deep);border:1px solid var(--line);border-radius:5px;cursor:pointer;display:block}
+.pc.t video{border-style:dashed;border-color:var(--air-bright)}
+.pc figcaption{font-size:11px;color:var(--muted);letter-spacing:.04em}
+.pc figcaption b{color:var(--air-pale)}
+.pc.t figcaption b{color:var(--air-bright)}
+.pieces-note{margin-top:16px;font-size:14px;color:var(--muted);max-width:64ch}
+.pieces-note b{color:var(--air-lime)}
+
+/* ---- case grid ---- */
+.cases{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.case-c{background:var(--panel);padding:24px 22px;display:flex;flex-direction:column;gap:9px;
+  min-height:186px;text-decoration:none;transition:background .18s}
+.case-c:hover{background:var(--panel2)}
+.case-c b{font-size:16.5px;font-weight:700}
+.case-c span{color:var(--muted);font-size:14.5px}
+.case-c .live{margin-top:auto;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--air-bright);font-weight:600}
+
+/* ---- stats ---- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.s{background:var(--panel);padding:26px 18px;text-align:center}
+.s b{display:block;font-size:36px;font-weight:800;color:var(--air-lime);
+  letter-spacing:-.02em;line-height:1}
+.s span{display:block;margin-top:8px;font-size:10.5px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted)}
+
+
+
+
+/* ---- section video atmosphere ---- */
+section{position:relative}
+.sec-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.sec-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s}
+.sec-bg video.playing{opacity:.34}
+.sec-veil{position:absolute;inset:0;background:linear-gradient(180deg,var(--air-green) 0%,rgba(19,42,36,.45) 20%,rgba(19,42,36,.45) 80%,var(--air-green) 100%)}
+section>.wrap{position:relative;z-index:1}
+@media(prefers-reduced-motion:reduce){.sec-bg{display:none}}
+
+/* ---- practice widgets ---- */
+.widget{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:26px 24px;margin-bottom:18px;display:flex;flex-direction:column;gap:14px}
+.widget header{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.widget .wnum{font-size:12px;font-weight:800;color:var(--air-bright)}
+.widget h3{font-size:20px;font-weight:800;letter-spacing:-.015em;font-style:italic}
+.wtag{margin-left:auto;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.wlede{color:var(--muted);font-size:15px;max-width:64ch}
+.wlede .dim{opacity:.75;font-size:13px}
+.wnote{color:var(--muted);font-size:14.5px}
+.wnote b{color:var(--air-lime)}
+.pulse-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.pg{background:var(--panel2);padding:16px;display:flex;flex-direction:column;gap:8px}
+.pg b{font-size:12px;letter-spacing:.14em;color:var(--air-pale)}
+.pg span{font-size:13.5px;color:var(--muted)}
+.pg .opts{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.pill{background:var(--deep);border:1px solid var(--line);color:var(--muted);font-size:12.5px;padding:7px 13px;border-radius:999px;cursor:pointer;font-family:var(--f);transition:all .15s}
+.pill:hover{border-color:var(--air-bright);color:var(--air-pale)}
+.pill.on{background:var(--air-bright);border-color:var(--air-bright);color:var(--air-green);font-weight:700}
+.loop{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.lp{background:var(--panel2);padding:16px;display:flex;flex-direction:column;gap:6px}
+.lp b{font-size:12.5px;color:var(--air-bright);letter-spacing:.06em}
+.lp span{font-size:13.5px;color:var(--muted)}
+.sort-task{font-size:clamp(17px,2.4vw,22px);font-weight:700;font-style:italic;letter-spacing:-.01em}
+.sort-btns{display:flex;gap:8px;flex-wrap:wrap}
+.sort-fb{font-size:14px;color:var(--muted);min-height:1.5em}
+.sort-fb b{color:var(--air-lime)}
+.brief-toggles{display:flex;gap:8px;flex-wrap:wrap}
+.brief-out{background:var(--deep);border-left:3px solid var(--air-bright);padding:16px 18px;border-radius:0 4px 4px 0;font-size:15px;line-height:1.7;color:var(--air-pale)}
+.wsm{padding:9px 18px;font-size:13px}
+.sample{border-left:3px solid var(--line-2);padding:12px 16px;color:var(--air-pale);font-style:italic;font-size:15px}
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px}
+.rv{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:14px;text-align:left;cursor:pointer;font-family:var(--f);display:flex;flex-direction:column;gap:6px;transition:all .15s}
+.rv b{font-size:12px;letter-spacing:.14em;color:var(--air-pale)}
+.rv span{font-size:13px;color:var(--muted)}
+.rv.done{border-color:var(--air-bright)}
+.rv.done b{color:var(--air-bright)}
+.plan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.plan-grid label{display:flex;flex-direction:column;gap:6px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--air-bright);font-weight:700}
+.plan-grid input,.plan-grid select{background:var(--deep);border:1px solid var(--line);border-radius:4px;color:var(--air-pale);padding:11px 12px;font-size:15px;font-family:var(--f)}
+.plan-grid input:focus,.plan-grid select:focus{outline:none;border-color:var(--air-bright)}
+.plan-btns{display:flex;gap:10px;flex-wrap:wrap}
+/* ---- hands ---- */
+@media(max-width:700px){.hands-card{right:10px;bottom:calc(10px + env(safe-area-inset-bottom));width:150px}.hands-view{width:150px;height:112px}}
+.hands-toggle{background:none;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:11px;letter-spacing:.12em;padding:7px 14px;cursor:pointer;font-family:var(--f);font-weight:700;transition:all .15s}
+.hands-toggle:hover{border-color:var(--air-bright);color:var(--air-bright)}
+.hands-toggle.on{background:var(--air-lime);border-color:var(--air-lime);color:var(--air-green)}
+.hands-card{position:fixed;right:16px;bottom:16px;z-index:120;background:var(--panel);border:1px solid var(--air-bright);border-radius:8px;overflow:hidden;width:200px;box-shadow:0 14px 44px rgba(0,0,0,.5)}
+.hands-card.hands-error{border-color:#c25}
+.hands-view{position:relative;width:200px;height:150px;background:var(--deep)}
+.hands-video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.hands-dots{position:absolute;inset:0}
+.hands-status{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:8px 10px;font-weight:700}
+
+/* ---- course detail ---- */
+.course{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.ls{background:var(--panel);padding:26px 24px;display:flex;flex-direction:column;gap:12px}
+.ls header{display:flex;align-items:baseline;gap:12px}
+.ls .num{font-size:12px;font-weight:800;color:var(--air-bright);letter-spacing:.06em}
+.ls h3{font-size:20px;font-weight:800;letter-spacing:-.015em;font-style:italic}
+.ls-m{color:var(--air-pale);font-size:15px;font-weight:600}
+.ls-w{color:var(--muted);font-size:14px;line-height:1.6}
+.ls-w em{color:var(--air-lime);font-style:italic}
+.ls ul{list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+.ls li{font-size:13.5px;color:var(--muted)}
+.ls li b{color:var(--air-bright);font-weight:700;letter-spacing:.04em}
+
+footer{padding:56px 0 70px;color:var(--muted);font-size:13.5px}
+footer .fw{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+footer b{color:var(--air-pale)}
+footer a{color:var(--air-bright)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<nav><div class="wrap">
+  <a class="brandbar" href="index.html" style="text-decoration:none"><svg class="mark" viewBox="0 0 2048 2048" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AIR">
+<path fill="var(--air-pale)" d="M661.29,1588.41c48.02-15.76,104.27-41.72,139.57-78.38,15.26-15.85,34.64-51.71,46.74-71.86l64.54-106.98,343.52-569.99,100.45-166.21c34.67-56.14,49.37-92.82,114.8-121.37,18.04-7.77,37.15-12.79,56.68-14.89,16.88-1.77,41.24-1.09,58.75-1.08l94.65.04,303.07-.02c-27.3,47.33-58.2,96.8-86.61,143.65l-148.46,245-66.61,110.14c-12.48,20.77-31.73,55.4-46.51,72.19-24.92,28.49-57.68,49.01-94.19,59-10.6,2.86-20.42,4.45-31.25,5.9,27.69,30.93,38.88,65.77,20.43,106.05-8.17,17.84-20.69,36.25-30.99,53.18-17.02,27.74-33.85,55.59-50.49,83.56-6.4,10.54-20.6,30.76-23.11,41.63-1.96,8.68.33,17.78,6.18,24.49,6.25,7.09,15.2,9.07,24.26,9.1,29.01.1,58.17-.23,87.18-.31l157.82.28-38.39,63.16c-8.59,14.14-17.35,29.48-27.15,42.67-25.27,34.03-64.4,57.51-105.35,67.49-34.4,8.37-77,5.97-113.16,5.92l-131.87-.32-73,.33c-13.22.08-26.08.49-39.67-.23-36.22-1.92-57.77-41.56-46.11-74.06,4.26-11.88,13.36-25.36,20.02-36.44l30.38-50.53,115.19-190.96c16.63-27.6,71.21-93.32-1.08-97.13-15.76-.83-32.9.02-48.8.08l-162.63,267.86-40.81,67.12c-7.01,11.56-14.27,23.26-21.15,34.88-29.43,49.73-86.27,74.08-141.9,78.72-8.72,1.75-34.46,1.14-44.61,1.13l-80.97-.12-58.82.03c-8.25,0-26.22.46-33.7-.78l-.16-.99,3.33-.94Z"/>
+<path fill="var(--air-green)" d="M1551.56,629.8c25.82-.17,76.83-8.57,82.84,22.3,3.77,19.35-12.11,39.25-21.76,54.96-10.74,17.32-21.36,34.72-31.87,52.18l-131.36,217.5h-22.94s-84.85-.22-84.85-.22c54.25-94.09,113.66-186.05,168.88-279.66,13.07-22.14,26.94-45.67,41.06-67.06Z"/>
+<path fill="var(--air-pale)" d="M63.3,1587.19c82.43-45.61,107.51-99.31,153.6-176.19l98.48-164.29,325.97-542.32,69.67-116.28c32.46-54.05,48.74-91.31,110.51-117.55,15.21-6.33,31.27-10.39,47.66-12.06,15.91-1.47,39.75-.82,56.15-.8l95.17.08,309.38-.18c-50.19,85.44-103.68,171.71-155.28,256.47l-287.76,472.75-142.27,233.96-41.11,67.73c-30.31,49.82-50.12,81.54-110.97,97.17-9.3,2.4-18.82,3.87-28.41,4.39-8.79,1.84-36.65,1.05-47.61,1l-81.76-.09h-62.1c-7.14.03-29.3.61-34.93-.6l.28-1.07,4.06-.97c46.85-15.61,98.3-41.42,133.11-76.99,12.06-12.32,34.4-51.52,44.85-68.84l66.36-110,55.83-92.4c13.14-21.73,39.16-53.77,31.53-78.57-8.48-27.57-55.8-19.62-79.65-19.56l-165.15,273.65-41.74,69.55c-11.16,18.81-18.7,36.48-34.32,52.62-23.63,24.41-53.21,38.05-85.61,46.42-31.21,8.07-59.36,6.59-91.06,6.57l-70.58-.2c-9.15-.04-32.48-.72-40.54.15-1.74-.13-3.4-.39-5.14-.63l-.07-.92,3.46-2Z"/>
+<path fill="var(--air-green)" d="M904.8,631.45c27.19-.17,96.42-10.02,79.06,39.39-2.87,8.18-15.13,26.56-20.06,34.67l-34.94,57.55-129.23,213.54-24.19.14c-27.72.23-55.45.08-83.17-.46,46.97-80.63,97.82-163.19,146.24-243.16l42.26-70.08c5.73-9.51,11.95-20.18,18.17-29.47,1.5-2.25,2.87-1.77,5.86-2.13Z"/>
+<path fill="var(--air-green)" d="M1111.16,1112.84l-13.29,28.47c-13.05-.23-26.33,1.06-35.86,1.08l-165.15,273.65-41.74,69.55c-11.16,18.81-18.7,36.48-34.32,52.62-23.62,24.41-53.21,38.05-85.6,46.42-31.21,8.07-59.36,6.59-91.06,6.57l-70.58-.2c-9.15-.04-32.48-.72-40.53.15-1.74-.13-3.4-.39-5.14-.63l-.07-.92,3.45-2c82.43-45.61,107.51-99.31,153.6-176.19l98.48-164.29,146.08-243.04c-2.69,57.03,29.66,115.37,97.01,123.24,34.85,4.07,63.02-1.98,84.72-14.48Z"/>
+<path fill="var(--air-green)" d="M1148.76,1032.35c-3.36,16.71-10.43,32.55-21.33,45.66-19.81,23.87-52.29,38.71-98.08,33.36-80.64-9.42-103.35-102.41-67.98-160.42,11.48-18.81,29.06-33.94,52.75-41.35,3.6-1.14,7.35-2.08,11.23-2.84,23.35-4.54,43.56-3.02,60.54,2.84,50.85,17.52,72.72,73.87,62.87,122.75Z"/>
+</svg> AIR</a>
+  <div class="nlinks">
+    <a href="#film">Journey</a><a href="#start">Try it</a><a href="#levels">Levels</a>
+    <a href="#lessons">Lessons</a><a href="#practice">Practice</a><a href="#portal">Portal</a><button class="hands-toggle" id="hands-toggle" aria-pressed="false" title="Conduct the lessons with your hand — webcam, processed locally"><span id="hands-label">HANDS OFF</span></button>
+  </div>
+</div></nav>
+
+<section class="markstage" id="film" aria-label="The AIR mark — the interface to the eight lessons">
+  <div class="stage-top">
+    <span class="stage-brand">DIGI2U.ORG</span>
+    <span class="stage-meta">Free community course · 8 lessons</span>
+  </div>
+  <video class="stage-video" autoplay muted loop playsinline preload="metadata" poster="media/bg-poster.jpg" aria-hidden="true">
+    <source src="media/bg.mp4" type="video/mp4">
+  </video>
+  <div class="stage-veil" aria-hidden="true"></div>
+  <div class="stage-scene" id="scene" aria-hidden="true">
+    <svg class="scenemark" id="scenemark" viewBox="0 0 2048 2048" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="var(--air-pale)" d="M661.29,1588.41c48.02-15.76,104.27-41.72,139.57-78.38,15.26-15.85,34.64-51.71,46.74-71.86l64.54-106.98,343.52-569.99,100.45-166.21c34.67-56.14,49.37-92.82,114.8-121.37,18.04-7.77,37.15-12.79,56.68-14.89,16.88-1.77,41.24-1.09,58.75-1.08l94.65.04,303.07-.02c-27.3,47.33-58.2,96.8-86.61,143.65l-148.46,245-66.61,110.14c-12.48,20.77-31.73,55.4-46.51,72.19-24.92,28.49-57.68,49.01-94.19,59-10.6,2.86-20.42,4.45-31.25,5.9,27.69,30.93,38.88,65.77,20.43,106.05-8.17,17.84-20.69,36.25-30.99,53.18-17.02,27.74-33.85,55.59-50.49,83.56-6.4,10.54-20.6,30.76-23.11,41.63-1.96,8.68.33,17.78,6.18,24.49,6.25,7.09,15.2,9.07,24.26,9.1,29.01.1,58.17-.23,87.18-.31l157.82.28-38.39,63.16c-8.59,14.14-17.35,29.48-27.15,42.67-25.27,34.03-64.4,57.51-105.35,67.49-34.4,8.37-77,5.97-113.16,5.92l-131.87-.32-73,.33c-13.22.08-26.08.49-39.67-.23-36.22-1.92-57.77-41.56-46.11-74.06,4.26-11.88,13.36-25.36,20.02-36.44l30.38-50.53,115.19-190.96c16.63-27.6,71.21-93.32-1.08-97.13-15.76-.83-32.9.02-48.8.08l-162.63,267.86-40.81,67.12c-7.01,11.56-14.27,23.26-21.15,34.88-29.43,49.73-86.27,74.08-141.9,78.72-8.72,1.75-34.46,1.14-44.61,1.13l-80.97-.12-58.82.03c-8.25,0-26.22.46-33.7-.78l-.16-.99,3.33-.94Z"/>
+<path fill="var(--air-green)" d="M1551.56,629.8c25.82-.17,76.83-8.57,82.84,22.3,3.77,19.35-12.11,39.25-21.76,54.96-10.74,17.32-21.36,34.72-31.87,52.18l-131.36,217.5h-22.94s-84.85-.22-84.85-.22c54.25-94.09,113.66-186.05,168.88-279.66,13.07-22.14,26.94-45.67,41.06-67.06Z"/>
+<path fill="var(--air-pale)" d="M63.3,1587.19c82.43-45.61,107.51-99.31,153.6-176.19l98.48-164.29,325.97-542.32,69.67-116.28c32.46-54.05,48.74-91.31,110.51-117.55,15.21-6.33,31.27-10.39,47.66-12.06,15.91-1.47,39.75-.82,56.15-.8l95.17.08,309.38-.18c-50.19,85.44-103.68,171.71-155.28,256.47l-287.76,472.75-142.27,233.96-41.11,67.73c-30.31,49.82-50.12,81.54-110.97,97.17-9.3,2.4-18.82,3.87-28.41,4.39-8.79,1.84-36.65,1.05-47.61,1l-81.76-.09h-62.1c-7.14.03-29.3.61-34.93-.6l.28-1.07,4.06-.97c46.85-15.61,98.3-41.42,133.11-76.99,12.06-12.32,34.4-51.52,44.85-68.84l66.36-110,55.83-92.4c13.14-21.73,39.16-53.77,31.53-78.57-8.48-27.57-55.8-19.62-79.65-19.56l-165.15,273.65-41.74,69.55c-11.16,18.81-18.7,36.48-34.32,52.62-23.63,24.41-53.21,38.05-85.61,46.42-31.21,8.07-59.36,6.59-91.06,6.57l-70.58-.2c-9.15-.04-32.48-.72-40.54.15-1.74-.13-3.4-.39-5.14-.63l-.07-.92,3.46-2Z"/>
+<path fill="var(--air-green)" d="M904.8,631.45c27.19-.17,96.42-10.02,79.06,39.39-2.87,8.18-15.13,26.56-20.06,34.67l-34.94,57.55-129.23,213.54-24.19.14c-27.72.23-55.45.08-83.17-.46,46.97-80.63,97.82-163.19,146.24-243.16l42.26-70.08c5.73-9.51,11.95-20.18,18.17-29.47,1.5-2.25,2.87-1.77,5.86-2.13Z"/>
+<path fill="var(--air-green)" d="M1111.16,1112.84l-13.29,28.47c-13.05-.23-26.33,1.06-35.86,1.08l-165.15,273.65-41.74,69.55c-11.16,18.81-18.7,36.48-34.32,52.62-23.62,24.41-53.21,38.05-85.6,46.42-31.21,8.07-59.36,6.59-91.06,6.57l-70.58-.2c-9.15-.04-32.48-.72-40.53.15-1.74-.13-3.4-.39-5.14-.63l-.07-.92,3.45-2c82.43-45.61,107.51-99.31,153.6-176.19l98.48-164.29,146.08-243.04c-2.69,57.03,29.66,115.37,97.01,123.24,34.85,4.07,63.02-1.98,84.72-14.48Z"/>
+<path fill="var(--air-green)" d="M1148.76,1032.35c-3.36,16.71-10.43,32.55-21.33,45.66-19.81,23.87-52.29,38.71-98.08,33.36-80.64-9.42-103.35-102.41-67.98-160.42,11.48-18.81,29.06-33.94,52.75-41.35,3.6-1.14,7.35-2.08,11.23-2.84,23.35-4.54,43.56-3.02,60.54,2.84,50.85,17.52,72.72,73.87,62.87,122.75Z"/></svg>
+  </div>
+  <div class="stage-mark">
+    <svg class="heromark" id="heromark" viewBox="0 0 2048 2048" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AIR mark"><path fill="var(--air-pale)" d="M661.29,1588.41c48.02-15.76,104.27-41.72,139.57-78.38,15.26-15.85,34.64-51.71,46.74-71.86l64.54-106.98,343.52-569.99,100.45-166.21c34.67-56.14,49.37-92.82,114.8-121.37,18.04-7.77,37.15-12.79,56.68-14.89,16.88-1.77,41.24-1.09,58.75-1.08l94.65.04,303.07-.02c-27.3,47.33-58.2,96.8-86.61,143.65l-148.46,245-66.61,110.14c-12.48,20.77-31.73,55.4-46.51,72.19-24.92,28.49-57.68,49.01-94.19,59-10.6,2.86-20.42,4.45-31.25,5.9,27.69,30.93,38.88,65.77,20.43,106.05-8.17,17.84-20.69,36.25-30.99,53.18-17.02,27.74-33.85,55.59-50.49,83.56-6.4,10.54-20.6,30.76-23.11,41.63-1.96,8.68.33,17.78,6.18,24.49,6.25,7.09,15.2,9.07,24.26,9.1,29.01.1,58.17-.23,87.18-.31l157.82.28-38.39,63.16c-8.59,14.14-17.35,29.48-27.15,42.67-25.27,34.03-64.4,57.51-105.35,67.49-34.4,8.37-77,5.97-113.16,5.92l-131.87-.32-73,.33c-13.22.08-26.08.49-39.67-.23-36.22-1.92-57.77-41.56-46.11-74.06,4.26-11.88,13.36-25.36,20.02-36.44l30.38-50.53,115.19-190.96c16.63-27.6,71.21-93.32-1.08-97.13-15.76-.83-32.9.02-48.8.08l-162.63,267.86-40.81,67.12c-7.01,11.56-14.27,23.26-21.15,34.88-29.43,49.73-86.27,74.08-141.9,78.72-8.72,1.75-34.46,1.14-44.61,1.13l-80.97-.12-58.82.03c-8.25,0-26.22.46-33.7-.78l-.16-.99,3.33-.94Z"/>
+<path fill="var(--air-green)" d="M1551.56,629.8c25.82-.17,76.83-8.57,82.84,22.3,3.77,19.35-12.11,39.25-21.76,54.96-10.74,17.32-21.36,34.72-31.87,52.18l-131.36,217.5h-22.94s-84.85-.22-84.85-.22c54.25-94.09,113.66-186.05,168.88-279.66,13.07-22.14,26.94-45.67,41.06-67.06Z"/>
+<path fill="var(--air-pale)" d="M63.3,1587.19c82.43-45.61,107.51-99.31,153.6-176.19l98.48-164.29,325.97-542.32,69.67-116.28c32.46-54.05,48.74-91.31,110.51-117.55,15.21-6.33,31.27-10.39,47.66-12.06,15.91-1.47,39.75-.82,56.15-.8l95.17.08,309.38-.18c-50.19,85.44-103.68,171.71-155.28,256.47l-287.76,472.75-142.27,233.96-41.11,67.73c-30.31,49.82-50.12,81.54-110.97,97.17-9.3,2.4-18.82,3.87-28.41,4.39-8.79,1.84-36.65,1.05-47.61,1l-81.76-.09h-62.1c-7.14.03-29.3.61-34.93-.6l.28-1.07,4.06-.97c46.85-15.61,98.3-41.42,133.11-76.99,12.06-12.32,34.4-51.52,44.85-68.84l66.36-110,55.83-92.4c13.14-21.73,39.16-53.77,31.53-78.57-8.48-27.57-55.8-19.62-79.65-19.56l-165.15,273.65-41.74,69.55c-11.16,18.81-18.7,36.48-34.32,52.62-23.63,24.41-53.21,38.05-85.61,46.42-31.21,8.07-59.36,6.59-91.06,6.57l-70.58-.2c-9.15-.04-32.48-.72-40.54.15-1.74-.13-3.4-.39-5.14-.63l-.07-.92,3.46-2Z"/>
+<path fill="var(--air-green)" d="M904.8,631.45c27.19-.17,96.42-10.02,79.06,39.39-2.87,8.18-15.13,26.56-20.06,34.67l-34.94,57.55-129.23,213.54-24.19.14c-27.72.23-55.45.08-83.17-.46,46.97-80.63,97.82-163.19,146.24-243.16l42.26-70.08c5.73-9.51,11.95-20.18,18.17-29.47,1.5-2.25,2.87-1.77,5.86-2.13Z"/>
+<path fill="var(--air-green)" d="M1111.16,1112.84l-13.29,28.47c-13.05-.23-26.33,1.06-35.86,1.08l-165.15,273.65-41.74,69.55c-11.16,18.81-18.7,36.48-34.32,52.62-23.62,24.41-53.21,38.05-85.6,46.42-31.21,8.07-59.36,6.59-91.06,6.57l-70.58-.2c-9.15-.04-32.48-.72-40.53.15-1.74-.13-3.4-.39-5.14-.63l-.07-.92,3.45-2c82.43-45.61,107.51-99.31,153.6-176.19l98.48-164.29,146.08-243.04c-2.69,57.03,29.66,115.37,97.01,123.24,34.85,4.07,63.02-1.98,84.72-14.48Z"/>
+<path fill="var(--air-green)" d="M1148.76,1032.35c-3.36,16.71-10.43,32.55-21.33,45.66-19.81,23.87-52.29,38.71-98.08,33.36-80.64-9.42-103.35-102.41-67.98-160.42,11.48-18.81,29.06-33.94,52.75-41.35,3.6-1.14,7.35-2.08,11.23-2.84,23.35-4.54,43.56-3.02,60.54,2.84,50.85,17.52,72.72,73.87,62.87,122.75Z"/></svg>
+    <div class="dot-track" id="dottrack" aria-hidden="true">
+      <div class="dot-stops" id="dotstops"></div>
+      <button class="idot" id="idot" aria-label="Lesson playhead — drag, or use arrow keys" aria-describedby="lesson-line"></button>
+    </div>
+  </div>
+  <div class="stage-copy">
+    <p class="stage-kicker" id="lesson-kicker">AI READINESS</p>
+    <h1 class="stage-title" id="lesson-title">Clear the air.<br>Un-clutter the mindset.</h1>
+    <p class="stage-line" id="lesson-line" aria-live="polite">Communicate with intention. Drag the dot — or press → — to begin.</p>
+    <p class="stage-count"><span id="lesson-num">00</span>/08</p>
+  </div>
+  <p class="stage-hint" aria-hidden="true">drag the dot · ← → arrow keys · 1–8 · or turn HANDS on and conduct</p>
+</section>
+
+<main id="main">
+
+
+<section id="practice"><div class="sec-bg" aria-hidden="true"><video muted loop playsinline preload="none" data-secvid><source src="media/sec/practice.mp4" type="video/mp4"></video><div class="sec-veil"></div></div><div class="wrap">
+  <div class="eyebrow">Practice — everything stays in your browser</div>
+  <h2>Try the moves. Nothing leaves this page.</h2>
+  <p class="sublede">Five working exercises from the course. <b>No account, no payment, no email
+    — your answers save only to this browser.</b></p>
+
+  <!-- 1 · READINESS PULSE -->
+  <div class="widget" id="pulse">
+    <header><span class="wnum">01</span><h3>Readiness Pulse</h3>
+      <span class="wtag"><span id="pulse-count">0</span>/4 signals checked</span></header>
+    <p class="wlede">Readiness is four signals working together — not "do I know this tool?"
+      This is a reflection, not a score.</p>
+    <div class="pulse-grid" id="pulse-grid"></div>
+  </div>
+
+  <!-- 2 · THE LOOP -->
+  <div class="widget">
+    <header><span class="wnum">02</span><h3>Pattern-powered draft, not answer machine</h3></header>
+    <div class="loop">
+      <div class="lp"><b>01 · You give direction</b><span>A prompt supplies the task, context, and boundaries.</span></div>
+      <div class="lp"><b>02 · The system generates</b><span>It produces a response that fits learned patterns.</span></div>
+      <div class="lp"><b>03 · You inspect</b><span>Check the result against your goal and reliable evidence.</span></div>
+      <div class="lp"><b>04 · You decide</b><span>Revise it, verify it, or choose not to use it.</span></div>
+    </div>
+    <p class="wnote">Speed is a feature. <b>Judgment is the safeguard.</b></p>
+  </div>
+
+  <!-- 3 · TASK FIT SORTER -->
+  <div class="widget" id="sorter">
+    <header><span class="wnum">03</span><h3>Task Fit</h3>
+      <span class="wtag">task <span id="sort-n">1</span>/6</span></header>
+    <p class="wlede">Begin with the work — not the app. Where would you place it?</p>
+    <p class="sort-task" id="sort-task"></p>
+    <div class="sort-btns">
+      <button class="pill" data-b="0">Good place to practice</button>
+      <button class="pill" data-b="1">Use with care</button>
+      <button class="pill" data-b="2">Keep human-led</button>
+    </div>
+    <p class="sort-fb" id="sort-fb" aria-live="polite"></p>
+  </div>
+
+  <!-- 4 · BRIEF BUILDER -->
+  <div class="widget" id="brief">
+    <header><span class="wnum">04</span><h3>Prompt with Purpose</h3></header>
+    <p class="wlede">A prompt is a brief — not a magic phrase. Toggle the four layers and watch
+      the brief assemble.</p>
+    <div class="brief-toggles">
+      <button class="pill on" data-k="context">01 Context</button>
+      <button class="pill on" data-k="task">02 Task</button>
+      <button class="pill on" data-k="constraints">03 Constraints</button>
+      <button class="pill on" data-k="check">04 Check</button>
+    </div>
+    <p class="brief-out" id="brief-out" aria-live="polite"></p>
+    <button class="btn btn-ghost wsm" id="brief-copy">Copy prompt</button>
+  </div>
+
+  <!-- 5 · REVIEW SIGNALS -->
+  <div class="widget" id="review">
+    <header><span class="wnum">05</span><h3>Review the Result</h3>
+      <span class="wtag"><span id="rev-left">4</span> signals remaining</span></header>
+    <p class="wlede">The output is not the decision. A sample AI draft:</p>
+    <blockquote class="sample">"The neighborhood workshop begins next Tuesday at 6:00 p.m.
+      Bring a laptop and photo ID. Free parking is available behind the library."</blockquote>
+    <div class="rev-grid" id="rev-grid"></div>
+  </div>
+
+  <!-- 6 · SCENARIOS -->
+  <div class="widget" id="scen">
+    <header><span class="wnum">06</span><h3>More consequence, more pause</h3>
+      <span class="wtag">scenario <span id="scen-n">1</span>/4</span></header>
+    <p class="wlede">As stakes rise, raise human review. Sometimes the ready choice is not to
+      use AI. <span class="dim">Informed by the NIST AI Risk Management Framework.</span></p>
+    <p class="sort-task" id="scen-task"></p>
+    <div class="sort-btns" id="scen-btns">
+      <button class="pill" data-b="0">Practice + edit</button>
+      <button class="pill" data-b="1">Verify first</button>
+      <button class="pill" data-b="2">Pause + protect</button>
+      <button class="pill" data-b="3">Keep human-led</button>
+    </div>
+    <p class="sort-fb" id="scen-fb" aria-live="polite"></p>
+  </div>
+
+  <!-- 7 · ACTION PLAN -->
+  <div class="widget" id="plan">
+    <header><span class="wnum">07</span><h3>Your next useful step</h3></header>
+    <p class="wlede">Readiness grows through one small, reflected practice. Saved only in this
+      browser.</p>
+    <div class="plan-grid">
+      <label>One safe task I will practice<input id="p-task" type="text"></label>
+      <label>The human outcome I want<input id="p-out" type="text"></label>
+      <label>What must stay private<input id="p-priv" type="text"></label>
+      <label>How I will verify the result<input id="p-ver" type="text"></label>
+      <label>When I will try it
+        <select id="p-when"><option value="">Choose a day</option><option>Today</option>
+        <option>Tomorrow</option><option>This weekend</option><option>Next week</option></select></label>
+    </div>
+    <div class="plan-btns">
+      <button class="btn btn-go wsm" id="plan-copy">Copy my plan</button>
+      <button class="btn btn-ghost wsm" id="plan-clear">Clear</button>
+    </div>
+  </div>
+
+</div></section>
+
+<section id="portal"><div class="sec-bg" aria-hidden="true"><video muted loop playsinline preload="none" data-secvid><source src="media/sec/mission.mp4" type="video/mp4"></video><div class="sec-veil"></div></div><div class="wrap">
+  <div class="eyebrow">Learning portal</div>
+  <h2>Take the course with you.</h2>
+  <p class="sublede">Listen, read, practice — <b>free, no account, nothing collected.</b></p>
+  <div class="widget" id="radio">
+    <header><span class="wnum">🎙</span><h3>AIR Radio — the course as a conversation</h3></header>
+    <p class="wlede">Two hosts walk the whole journey — the eight lessons, the readiness signals,
+      and why judgment is the work. Generated from the course materials.</p>
+    <a class="btn btn-go" href="https://notebook.google.com/notebook/946727cf-b026-4469-a101-bd1d8ede1234/artifact/ff45348b-60f9-4db4-8167-9a3ca1a715d1" target="_blank" rel="noopener">▶ Listen — 16:36 Deep Dive ↗</a>
+    <p class="wnote" id="radio-note">"Define Human Outcomes Before AI Tools" — generated from the
+      course sources in Google NotebookLM. Opens in a new tab; no account needed.</p>
+  </div>
+  <div class="plat">
+    <a href="materials/air-course-map.md"><span class="kk">Read</span><b>The Course Map ↗</b></a>
+    <a href="materials/lesson-guide-say-it-so-they-get-it.md"><span class="kk">Read</span><b>Lesson Guide — full first experience ↗</b></a>
+    <a href="materials/air-brand-book.md"><span class="kk">Read</span><b>The AIR Brand Book ↗</b></a>
+    <a href="https://github.com/borngifted/air"><span class="kk">Source</span><b>Everything on GitHub ↗</b></a>
+  </div>
+</div></section>
+<section id="resources"><div class="sec-bg" aria-hidden="true"><video muted loop playsinline preload="none" data-secvid><source src="media/sec/resources.mp4" type="video/mp4"></video><div class="sec-veil"></div></div><div class="wrap">
+  <div class="eyebrow">Keep learning · open resources</div>
+  <h2>You don't need every tool.<br>You need a purpose and a process.</h2>
+  <div class="plat">
+    <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener"><span class="kk">01</span><b>NIST AI Risk Management Framework ↗</b></a>
+    <a href="https://www.unesco.org/en/digital-education/ai-future-learning" target="_blank" rel="noopener"><span class="kk">02</span><b>UNESCO AI Competency Framework ↗</b></a>
+    <a href="https://www.aiedu.org/" target="_blank" rel="noopener"><span class="kk">03</span><b>aiEDU AI Readiness Framework ↗</b></a>
+    <a href="https://digi2u.org" target="_blank" rel="noopener"><span class="kk">04</span><b>Visit Digi2U.org ↗</b></a>
+  </div>
+  <p class="wnote" style="margin-top:22px">Free community learning. No account, payment, or email required.</p>
+</div></section>
+
+<section id="start"><div class="sec-bg" aria-hidden="true"><video muted loop playsinline preload="none" data-secvid><source src="media/sec/start.mp4" type="video/mp4"></video><div class="sec-veil"></div></div><div class="wrap">
+  <div class="eyebrow">Experience 00 — twenty minutes, no tools</div>
+  <h2>What are you actually trying to make?</h2>
+  <p class="sublede">Below is the noise most people carry. <b>Tap anything that is
+    somebody else's goal, or a tool name instead of an outcome.</b> Cross it out.
+    Keep only what's yours.</p>
+
+  <div class="clearbox">
+    <div class="counter">Carrying <b id="left">12</b> of 12 · <span id="cut">0</span> cleared</div>
+    <div class="clutter" id="clutter"></div>
+    <div class="sentence">
+      <label for="make">Now finish the sentence</label>
+      <div class="fill">
+        <span>I want to make</span>
+        <input id="make" type="text" placeholder="a one-page explainer" aria-label="what you want to make">
+        <span>so that</span>
+        <input id="who" type="text" placeholder="my neighbour" aria-label="who it is for">
+        <span>can</span>
+        <input id="do" type="text" placeholder="find out if she qualifies" aria-label="what they can do">
+      </div>
+      <div class="out" id="out" role="status" aria-live="polite"></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="levels"><div class="wrap">
+  <div class="eyebrow">Three ways in</div>
+  <h2>Pick your level. Change it whenever.</h2>
+  <p class="sublede">Not difficulty tiers, and never decided by age. An eight-year-old
+    might Build. A developer might Explore. <b>Every path ends in a finished thing.</b></p>
+  <div class="levels">
+    <div class="lvl e"><span class="dot"></span><h3>Explore</h3>
+      <p>First time, with a kid, or just looking. Fewer decisions, more guidance —
+         and you still finish something real.</p></div>
+    <div class="lvl c"><span class="dot"></span><h3>Create</h3>
+      <p>Most people, most of the time. Real decisions, real tradeoffs, your own
+         subject matter.</p></div>
+    <div class="lvl b"><span class="dot"></span><h3>Build</h3>
+      <p>Under the hood. Workflow, automation, code, production systems that keep
+         working after you leave.</p></div>
+  </div>
+</div></section>
+
+<section id="mission"><div class="sec-bg" aria-hidden="true"><video muted loop playsinline preload="none" data-secvid><source src="media/sec/mission.mp4" type="video/mp4"></video><div class="sec-veil"></div></div><div class="wrap">
+  <div class="eyebrow">Why AIR exists</div>
+  <h2>Change how people approach AI —<br>not which buttons they press.</h2>
+  <p class="sublede"><b>Clear the air. Un-clutter the mindset. Communicate with intention.</b>
+    AIR is a free community course from Digi2U.org for everyone from 8 to 100. It is not a
+    tool tour and not a certificate mill. You start with a real human need, treat AI as a
+    creative partner, apply design judgment to everything it gives you back, and finish work
+    that someone actually uses. Every lesson below is taught through creative AI workflows
+    that were really run — image-anchored films chained frame to frame, custom-trained
+    models, logo-led design systems — with the seams left visible so you learn to see them.</p>
+</div></section>
+
+<section id="lessons"><div class="sec-bg" aria-hidden="true"><video muted loop playsinline preload="none" data-secvid><source src="media/sec/course.mp4" type="video/mp4"></video><div class="sec-veil"></div></div><div class="wrap">
+  <div class="eyebrow">The course · eight lessons</div>
+  <h2>One journey. Eight moves.<br>Real workflows, seams visible.</h2>
+  <p class="sublede">No certificates, no tests, no grades — <b>each lesson ends with something
+    you made.</b> Pick your level inside every lesson: <b>Explore</b> (guided, first-timers,
+    families) · <b>Create</b> (your own subject, real decisions) · <b>Build</b> (under the
+    hood: workflow, code, production systems).</p>
+  <div class="course">
+
+    <article class="ls"><header><span class="num">01</span><h3>Clear the Air</h3></header>
+      <p class="ls-m">Move from fear, hype and overload to one meaningful goal.</p>
+      <p class="ls-w">Workflow: the mission sentence — <em>"I want to make ___ so that ___ can ___."</em> Everything else in AIR needs this ticket first. Try it below.</p>
+      <ul><li><b>Explore</b> — say your sentence out loud to somebody.</li>
+          <li><b>Create</b> — write it, then cut it in half.</li>
+          <li><b>Build</b> — write three, rank by who is actually waiting for it.</li></ul></article>
+
+    <article class="ls"><header><span class="num">02</span><h3>See the Possibility</h3></header>
+      <p class="ls-m">Understand what makes finished work useful — not impressive, useful.</p>
+      <p class="ls-w">Workflow: the chained film — eight brand stills morphed into one motion piece by matching each clip's first frame to the last frame before it. The film behind this page was made that way.</p>
+      <ul><li><b>Explore</b> — watch one finished AI piece and name who it helps.</li>
+          <li><b>Create</b> — collect three finished works and write what made each land.</li>
+          <li><b>Build</b> — take one apart: list every human decision inside it.</li></ul></article>
+
+    <article class="ls"><header><span class="num">03</span><h3>Choose Your Mission</h3></header>
+      <p class="ls-m">Name the person, the problem, the message, the outcome.</p>
+      <p class="ls-w">Workflow: the human-before-tool brief — who is this for, what should they know, feel or do, which decisions need human judgment, and is AI even appropriate here.</p>
+      <ul><li><b>Explore</b> — describe one real person your idea helps.</li>
+          <li><b>Create</b> — write the four-line brief for a real project.</li>
+          <li><b>Build</b> — add the failure plan: what happens when it breaks?</li></ul></article>
+
+    <article class="ls"><header><span class="num">04</span><h3>Direct the Machine</h3></header>
+      <p class="ls-m">Speak like a creative director — not a magic-prompt hunter.</p>
+      <p class="ls-w">Workflow: art direction blocks — subject, light, lens, palette, mood, and a strict negative list (no robots, no neon). Decline the preset when the tool tries to swap in someone else's look.</p>
+      <ul><li><b>Explore</b> — direct one image with five deliberate words.</li>
+          <li><b>Create</b> — write a reusable direction block for your project's look.</li>
+          <li><b>Build</b> — chain outputs: feed one result in as the next input.</li></ul></article>
+
+    <article class="ls"><header><span class="num">05</span><h3>Make It Clear</h3></header>
+      <p class="ls-m">Let hierarchy, contrast and space do the talking.</p>
+      <p class="ls-w">Workflow: the logo-led system — this site's every color, angle and motion comes from the mark itself. Two tokens were checked for contrast before anything shipped.</p>
+      <ul><li><b>Explore</b> — find the one sentence that matters most; make it biggest.</li>
+          <li><b>Create</b> — one page, four sizes of type, nothing centered by accident.</li>
+          <li><b>Build</b> — tokens: name your colors and spacing, use only the names.</li></ul></article>
+
+    <article class="ls"><header><span class="num">06</span><h3>Challenge the Result</h3></header>
+      <p class="ls-m">Critique, verify, question, improve. Judgment is the work.</p>
+      <p class="ls-w">Workflow: the seams exercise — an early cut of this course's film drifted: the person changed between clips, the poster text was gibberish. It was kept, on purpose, to learn from.</p>
+      <ul><li><b>Explore</b> — find three things wrong with an AI image you like.</li>
+          <li><b>Create</b> — accuracy, representation, readability: check all three, fix one.</li>
+          <li><b>Build</b> — break your own work deliberately and watch what it tells the user.</li></ul></article>
+
+    <article class="ls"><header><span class="num">07</span><h3>Build Your Way</h3></header>
+      <p class="ls-m">Turn what worked into your own repeatable workflow.</p>
+      <p class="ls-w">Workflow: the process that built this film became a written, reusable skill the same day — generate, extract frames, chain, publish. Run twice means it's real.</p>
+      <ul><li><b>Explore</b> — list your steps from the last thing you finished.</li>
+          <li><b>Create</b> — write them so somebody else could run them.</li>
+          <li><b>Build</b> — make the repeat one command.</li></ul></article>
+
+    <article class="ls"><header><span class="num">08</span><h3>Put It in the World</h3></header>
+      <p class="ls-m">Complete something real and let someone use it.</p>
+      <p class="ls-w">Workflow: ship on your own ground — this presentation lives on a public page anyone can visit, owned outright, no platform between the work and the world.</p>
+      <ul><li><b>Explore</b> — show a finished thing to one person; write what they said.</li>
+          <li><b>Create</b> — publish one thing with a real URL.</li>
+          <li><b>Build</b> — make it self-contained so no vanished service can break it.</li></ul></article>
+
+  </div>
+</div></section>
+
+
+
+
+
+
+<section><div class="wrap">
+  <div class="eyebrow">What&#39;s behind it</div>
+  <div class="stats">
+    <div class="s"><b>6</b><span>Experiences</span></div>
+    <div class="s"><b>3</b><span>Ways in</span></div>
+    <div class="s"><b>8–100</b><span>Ages</span></div>
+    <div class="s"><b>0</b><span>Certificates</span></div>
+    <div class="s"><b>0</b><span>Tests</span></div>
+  </div>
+</div></section>
+
+</main>
+
+<footer><div class="wrap fw">
+  <span><b>AIR — AI Readiness</b> · sponsored by <a href="https://digi2u.org" target="_blank" rel="noopener">Digi2U.org</a></span>
+  <span>Clear the air. Un-clutter the mindset. Communicate with intention.</span>
+</div></footer>
+
+<script>
+(function(){
+  var NOISE=["Learn 12 AI tools","Build an agent","Master prompt engineering",
+    "Start a newsletter","Automate everything","Get certified","Learn to code first",
+    "Post daily","Fine-tune a model","Keep up with the news","Buy the course",
+    "Wait until you understand it"];
+  var box=document.getElementById("clutter"),
+      left=document.getElementById("left"), cut=document.getElementById("cut");
+  NOISE.forEach(function(t){
+    var b=document.createElement("button");
+    b.className="tag"; b.type="button"; b.textContent=t;
+    b.setAttribute("aria-pressed","false");
+    b.addEventListener("click",function(){
+      b.classList.toggle("gone");
+      b.setAttribute("aria-pressed", b.classList.contains("gone")?"true":"false");
+      var g=box.querySelectorAll(".tag.gone").length;
+      cut.textContent=g; left.textContent=NOISE.length-g;
+    });
+    box.appendChild(b);
+  });
+  var m=document.getElementById("make"), w=document.getElementById("who"),
+      d=document.getElementById("do"), out=document.getElementById("out");
+  function upd(){
+    if(m.value.trim()&&w.value.trim()&&d.value.trim()){
+      out.innerHTML='<span class="q">Your mission:</span> I want to make <b>'+esc(m.value)+
+        '</b> so that <b>'+esc(w.value)+'</b> can <b>'+esc(d.value)+'</b>.';
+      out.classList.add("show");
+    } else { out.classList.remove("show"); }
+  }
+  function esc(s){var e=document.createElement("span");e.textContent=s;return e.innerHTML;}
+  [m,w,d].forEach(function(i){i.addEventListener("input",upd)});
+})();
+</script>
+<script>
+/* who came through the door? greet them; presenters get a badge */
+(function(){try{
+  var n=localStorage.getItem("air-name");
+  var f=sessionStorage.getItem("air-facilitator")==="1";
+  if(n||f){
+    var el=document.createElement("span");
+    el.style.cssText="margin-left:auto;font-size:11px;letter-spacing:.1em;color:var(--air-bright);font-weight:700;white-space:nowrap";
+    el.textContent=f?"● PRESENTER":"HEY, "+n.toUpperCase();
+    var nav=document.querySelector("nav .wrap");
+    nav.insertBefore(el, nav.querySelector(".nlinks"));
+  }
+}catch(e){}})();
+</script>
+<script src="air-mark.js"></script>
+<script src="air-extras.js"></script>
+<script src="air-hands.js"></script>
+</body>
+</html>
