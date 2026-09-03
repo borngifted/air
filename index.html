@@ -129,6 +129,26 @@ label{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase
 .out .q{color:var(--air-lime);font-weight:700}
 
 
+
+/* ---- scroll-scrub film hero (Affirmations method) ---- */
+.scrub{height:1000vh}
+.scrub-sticky{position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden}
+#film-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;background:var(--air-green)}
+.scrub-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,42,36,.55) 0%,rgba(19,42,36,.12) 34%,rgba(19,42,36,.16) 66%,rgba(19,42,36,.62) 100%)}
+.scrub-ui{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:0 22px calc(10vh + 20px);max-width:1080px;margin:0 auto}
+.scrub-kicker{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--air-bright);font-weight:600;margin-bottom:14px;text-shadow:0 1px 8px rgba(13,30,25,.8)}
+.scrub-quote{font-size:clamp(30px,6.4vw,68px);line-height:1.02;font-weight:800;letter-spacing:-.03em;max-width:15ch;min-height:2.1em;text-wrap:balance;text-shadow:0 2px 18px rgba(13,30,25,.85)}
+.scrub-quote .w{display:inline-block;opacity:0;transform:translateY(.35em);transition:opacity .26s ease-out,transform .26s ease-out}
+.scrub-quote .w.on{opacity:1;transform:translateY(0)}
+.scrub-quote em{font-style:italic;color:var(--air-lime)}
+.scrub-index{margin-top:16px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600;font-variant-numeric:tabular-nums}
+.scrub-index .dotsep{margin:0 10px;color:var(--line)}
+.scrub-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);transition:opacity .5s}
+.scrub-hint .chev{animation:bob 1.6s ease-in-out infinite;font-size:14px}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.scrub-hint.off{opacity:0}
+@media(prefers-reduced-motion:reduce){.scrub{height:auto}.scrub-sticky{position:relative}.scrub-hint .chev{animation:none}}
+
 /* ---- film demo ---- */
 .film{display:grid;grid-template-columns:minmax(240px,340px) 1fr;gap:30px;align-items:start;margin-bottom:34px}
 .vfilm{width:100%;aspect-ratio:9/16;background:var(--deep);border:1px solid var(--line);border-radius:8px;display:block}
@@ -185,38 +205,23 @@ footer a{color:var(--air-bright)}
 <path fill="var(--air-pale)" d="M1148.76,1032.35c-3.36,16.71-10.43,32.55-21.33,45.66-19.81,23.87-52.29,38.71-98.08,33.36-80.64-9.42-103.35-102.41-67.98-160.42,11.48-18.81,29.06-33.94,52.75-41.35,3.6-1.14,7.35-2.08,11.23-2.84,23.35-4.54,43.56-3.02,60.54,2.84,50.85,17.52,72.72,73.87,62.87,122.75Z"/>
 </svg> AIR</a>
   <div class="nlinks">
-    <a href="#start">Start</a><a href="#levels">Levels</a>
+    <a href="#film">Film</a><a href="#start">Start</a><a href="#levels">Levels</a>
     <a href="#experiences">Experiences</a><a href="#watch">Watch</a><a href="#proof">Proof</a>
   </div>
 </div></nav>
 
-<header class="hero" id="top">
-  <div class="field"></div>
-  <div class="wrap inner">
-    <svg class="mark" viewBox="0 0 2048 2048" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AIR">
-<path fill="var(--air-green)" d="M661.29,1588.41c48.02-15.76,104.27-41.72,139.57-78.38,15.26-15.85,34.64-51.71,46.74-71.86l64.54-106.98,343.52-569.99,100.45-166.21c34.67-56.14,49.37-92.82,114.8-121.37,18.04-7.77,37.15-12.79,56.68-14.89,16.88-1.77,41.24-1.09,58.75-1.08l94.65.04,303.07-.02c-27.3,47.33-58.2,96.8-86.61,143.65l-148.46,245-66.61,110.14c-12.48,20.77-31.73,55.4-46.51,72.19-24.92,28.49-57.68,49.01-94.19,59-10.6,2.86-20.42,4.45-31.25,5.9,27.69,30.93,38.88,65.77,20.43,106.05-8.17,17.84-20.69,36.25-30.99,53.18-17.02,27.74-33.85,55.59-50.49,83.56-6.4,10.54-20.6,30.76-23.11,41.63-1.96,8.68.33,17.78,6.18,24.49,6.25,7.09,15.2,9.07,24.26,9.1,29.01.1,58.17-.23,87.18-.31l157.82.28-38.39,63.16c-8.59,14.14-17.35,29.48-27.15,42.67-25.27,34.03-64.4,57.51-105.35,67.49-34.4,8.37-77,5.97-113.16,5.92l-131.87-.32-73,.33c-13.22.08-26.08.49-39.67-.23-36.22-1.92-57.77-41.56-46.11-74.06,4.26-11.88,13.36-25.36,20.02-36.44l30.38-50.53,115.19-190.96c16.63-27.6,71.21-93.32-1.08-97.13-15.76-.83-32.9.02-48.8.08l-162.63,267.86-40.81,67.12c-7.01,11.56-14.27,23.26-21.15,34.88-29.43,49.73-86.27,74.08-141.9,78.72-8.72,1.75-34.46,1.14-44.61,1.13l-80.97-.12-58.82.03c-8.25,0-26.22.46-33.7-.78l-.16-.99,3.33-.94Z"/>
-<path fill="var(--air-pale)" d="M1551.56,629.8c25.82-.17,76.83-8.57,82.84,22.3,3.77,19.35-12.11,39.25-21.76,54.96-10.74,17.32-21.36,34.72-31.87,52.18l-131.36,217.5h-22.94s-84.85-.22-84.85-.22c54.25-94.09,113.66-186.05,168.88-279.66,13.07-22.14,26.94-45.67,41.06-67.06Z"/>
-<path fill="var(--air-green)" d="M63.3,1587.19c82.43-45.61,107.51-99.31,153.6-176.19l98.48-164.29,325.97-542.32,69.67-116.28c32.46-54.05,48.74-91.31,110.51-117.55,15.21-6.33,31.27-10.39,47.66-12.06,15.91-1.47,39.75-.82,56.15-.8l95.17.08,309.38-.18c-50.19,85.44-103.68,171.71-155.28,256.47l-287.76,472.75-142.27,233.96-41.11,67.73c-30.31,49.82-50.12,81.54-110.97,97.17-9.3,2.4-18.82,3.87-28.41,4.39-8.79,1.84-36.65,1.05-47.61,1l-81.76-.09h-62.1c-7.14.03-29.3.61-34.93-.6l.28-1.07,4.06-.97c46.85-15.61,98.3-41.42,133.11-76.99,12.06-12.32,34.4-51.52,44.85-68.84l66.36-110,55.83-92.4c13.14-21.73,39.16-53.77,31.53-78.57-8.48-27.57-55.8-19.62-79.65-19.56l-165.15,273.65-41.74,69.55c-11.16,18.81-18.7,36.48-34.32,52.62-23.63,24.41-53.21,38.05-85.61,46.42-31.21,8.07-59.36,6.59-91.06,6.57l-70.58-.2c-9.15-.04-32.48-.72-40.54.15-1.74-.13-3.4-.39-5.14-.63l-.07-.92,3.46-2Z"/>
-<path fill="var(--air-pale)" d="M904.8,631.45c27.19-.17,96.42-10.02,79.06,39.39-2.87,8.18-15.13,26.56-20.06,34.67l-34.94,57.55-129.23,213.54-24.19.14c-27.72.23-55.45.08-83.17-.46,46.97-80.63,97.82-163.19,146.24-243.16l42.26-70.08c5.73-9.51,11.95-20.18,18.17-29.47,1.5-2.25,2.87-1.77,5.86-2.13Z"/>
-<path fill="var(--air-pale)" d="M1111.16,1112.84l-13.29,28.47c-13.05-.23-26.33,1.06-35.86,1.08l-165.15,273.65-41.74,69.55c-11.16,18.81-18.7,36.48-34.32,52.62-23.62,24.41-53.21,38.05-85.6,46.42-31.21,8.07-59.36,6.59-91.06,6.57l-70.58-.2c-9.15-.04-32.48-.72-40.53.15-1.74-.13-3.4-.39-5.14-.63l-.07-.92,3.45-2c82.43-45.61,107.51-99.31,153.6-176.19l98.48-164.29,146.08-243.04c-2.69,57.03,29.66,115.37,97.01,123.24,34.85,4.07,63.02-1.98,84.72-14.48Z"/>
-<path fill="var(--air-pale)" d="M1148.76,1032.35c-3.36,16.71-10.43,32.55-21.33,45.66-19.81,23.87-52.29,38.71-98.08,33.36-80.64-9.42-103.35-102.41-67.98-160.42,11.48-18.81,29.06-33.94,52.75-41.35,3.6-1.14,7.35-2.08,11.23-2.84,23.35-4.54,43.56-3.02,60.54,2.84,50.85,17.52,72.72,73.87,62.87,122.75Z"/>
-</svg>
-    <div class="kicker">AI Readiness · Sponsored by Digi2U.org</div>
-    <h1>Clear the air.<br>Then <em>make something</em>.</h1>
-    <p class="lede">AI readiness doesn't start with more tools. It starts with knowing
-      what you're trying to make and who it's for. <b>Eight to a hundred. No tests,
-      no certificates — just finished work.</b></p>
-    <div class="cta">
-      <a class="btn btn-go" href="#start">Clear the air →</a>
-      <a class="btn btn-ghost" href="#experiences">See the experiences</a>
+<section class="scrub" id="film" aria-label="The AIR film — scroll to move through it">
+  <div class="scrub-sticky">
+    <canvas id="film-canvas" aria-hidden="true"></canvas>
+    <div class="scrub-veil" aria-hidden="true"></div>
+    <div class="scrub-ui">
+      <p class="scrub-kicker">AIR — AI READINESS · SPONSORED BY DIGI2U.ORG</p>
+      <h1 class="scrub-quote" id="scrub-quote" aria-live="polite"></h1>
+      <p class="scrub-index"><span id="scrub-act">ACT 1 · THE CLUTTER</span><span class="dotsep">·</span><span id="scrub-num">01</span>/12</p>
     </div>
+    <div class="scrub-hint" id="scrub-hint"><span>scroll</span><span class="chev">▾</span></div>
   </div>
-</header>
-
-<div class="ticker"><div class="trun">
-  <span><b>CLEAR THE AIR</b> · UN-CLUTTER THE MINDSET · COMMUNICATE WITH INTENTION · <b>EXPLORE</b> · <b>CREATE</b> · <b>BUILD</b> · </span>
-  <span><b>CLEAR THE AIR</b> · UN-CLUTTER THE MINDSET · COMMUNICATE WITH INTENTION · <b>EXPLORE</b> · <b>CREATE</b> · <b>BUILD</b> · </span>
-</div></div>
+</section>
 
 <main id="main">
 
@@ -299,27 +304,16 @@ footer a{color:var(--air-bright)}
 
 <section id="watch"><div class="wrap">
   <div class="eyebrow">Watch — made with the AIR method</div>
-  <h2>Four ideas, one continuous breath.</h2>
+  <h2>The chain, exposed.</h2>
   <p class="sublede">Generated with Seedance 2.5 using the start-frame / end-frame chaining
     method from the <a href="https://borngifted.github.io/affirmations/" target="_blank" rel="noopener" style="color:var(--air-bright)">Affirm&#39; project</a>:
     each clip begins on the exact frame the previous one ended.
     <b>Clutter &rarr; stillness &rarr; making &rarr; the world.</b></p>
 
-  <div class="film">
-    <video controls playsinline preload="metadata" poster="media/poster-v2-9x16.jpg" class="vfilm">
-      <source src="media/air-chain-v2-9x16.mp4" type="video/mp4">
-      Your browser can&#39;t play this video. <a href="media/air-chain-9x16.mp4">Download it instead.</a>
-    </video>
-    <div class="filmside">
-      <h3>The chain, exposed</h3>
-      <p>Each clip was generated <b style="color:var(--air-pale)">starting from the exact final frame of
-         the one before it</b>, so the person, light and world carry through. Below is the
-         first attempt in pieces &mdash; four independent clips joined by interpolated
-         transitions. Kept on purpose: comparing the two versions <em>is</em> the lesson.</p>
-      <a class="btn btn-ghost" href="media/air-chain-v2-16x9.mp4">16:9 version &darr;</a>
-      <a class="btn btn-ghost" href="media/air-chain-9x16.mp4">First attempt, seams and all &darr;</a>
-    </div>
-  </div>
+  <p class="sublede">The film at the top of this page <b>is</b> the presentation — scroll and it plays.
+    Downloads: <a href="media/air-chain-v2-9x16.mp4" style="color:var(--air-bright)">9:16</a> ·
+    <a href="media/air-chain-v2-16x9.mp4" style="color:var(--air-bright)">16:9</a> ·
+    <a href="media/air-chain-9x16.mp4" style="color:var(--air-bright)">first attempt, seams and all</a></p>
 
   <div class="pieces" aria-label="The seven clips that make up the film">
     <figure class="pc"><video muted loop playsinline preload="none" poster="media/p-clip-1-clutter.jpg" onclick="this.paused?this.play():this.pause()"><source src="media/clip-1-clutter.mp4" type="video/mp4"></video><figcaption><b>1 · Clutter</b> generated</figcaption></figure>
@@ -419,5 +413,6 @@ footer a{color:var(--air-bright)}
   [m,w,d].forEach(function(i){i.addEventListener("input",upd)});
 })();
 </script>
+<script src="air-scrub.js"></script>
 </body>
 </html>
