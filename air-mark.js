@@ -144,4 +144,6 @@
   hero.style.cursor = "pointer";
 
   setLesson(0);
+  /* public hook — the HANDS module and widgets drive the same playhead */
+  window.AIR = { setLesson: setLesson, lessons: N, current: function(){ return cur; } };
 })();

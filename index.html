@@ -213,6 +213,59 @@ label{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase
   text-transform:uppercase;color:var(--muted)}
 
 
+
+/* ---- practice widgets ---- */
+.widget{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:26px 24px;margin-bottom:18px;display:flex;flex-direction:column;gap:14px}
+.widget header{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.widget .wnum{font-size:12px;font-weight:800;color:var(--air-bright)}
+.widget h3{font-size:20px;font-weight:800;letter-spacing:-.015em;font-style:italic}
+.wtag{margin-left:auto;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.wlede{color:var(--muted);font-size:15px;max-width:64ch}
+.wlede .dim{opacity:.75;font-size:13px}
+.wnote{color:var(--muted);font-size:14.5px}
+.wnote b{color:var(--air-lime)}
+.pulse-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.pg{background:var(--panel2);padding:16px;display:flex;flex-direction:column;gap:8px}
+.pg b{font-size:12px;letter-spacing:.14em;color:var(--air-pale)}
+.pg span{font-size:13.5px;color:var(--muted)}
+.pg .opts{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.pill{background:var(--deep);border:1px solid var(--line);color:var(--muted);font-size:12.5px;padding:7px 13px;border-radius:999px;cursor:pointer;font-family:var(--f);transition:all .15s}
+.pill:hover{border-color:var(--air-bright);color:var(--air-pale)}
+.pill.on{background:var(--air-bright);border-color:var(--air-bright);color:var(--air-green);font-weight:700}
+.loop{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.lp{background:var(--panel2);padding:16px;display:flex;flex-direction:column;gap:6px}
+.lp b{font-size:12.5px;color:var(--air-bright);letter-spacing:.06em}
+.lp span{font-size:13.5px;color:var(--muted)}
+.sort-task{font-size:clamp(17px,2.4vw,22px);font-weight:700;font-style:italic;letter-spacing:-.01em}
+.sort-btns{display:flex;gap:8px;flex-wrap:wrap}
+.sort-fb{font-size:14px;color:var(--muted);min-height:1.5em}
+.sort-fb b{color:var(--air-lime)}
+.brief-toggles{display:flex;gap:8px;flex-wrap:wrap}
+.brief-out{background:var(--deep);border-left:3px solid var(--air-bright);padding:16px 18px;border-radius:0 4px 4px 0;font-size:15px;line-height:1.7;color:var(--air-pale)}
+.wsm{padding:9px 18px;font-size:13px}
+.sample{border-left:3px solid var(--line-2);padding:12px 16px;color:var(--air-pale);font-style:italic;font-size:15px}
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px}
+.rv{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:14px;text-align:left;cursor:pointer;font-family:var(--f);display:flex;flex-direction:column;gap:6px;transition:all .15s}
+.rv b{font-size:12px;letter-spacing:.14em;color:var(--air-pale)}
+.rv span{font-size:13px;color:var(--muted)}
+.rv.done{border-color:var(--air-bright)}
+.rv.done b{color:var(--air-bright)}
+.plan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.plan-grid label{display:flex;flex-direction:column;gap:6px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--air-bright);font-weight:700}
+.plan-grid input,.plan-grid select{background:var(--deep);border:1px solid var(--line);border-radius:4px;color:var(--air-pale);padding:11px 12px;font-size:15px;font-family:var(--f)}
+.plan-grid input:focus,.plan-grid select:focus{outline:none;border-color:var(--air-bright)}
+.plan-btns{display:flex;gap:10px;flex-wrap:wrap}
+/* ---- hands ---- */
+.hands-toggle{background:none;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:11px;letter-spacing:.12em;padding:7px 14px;cursor:pointer;font-family:var(--f);font-weight:700;transition:all .15s}
+.hands-toggle:hover{border-color:var(--air-bright);color:var(--air-bright)}
+.hands-toggle.on{background:var(--air-lime);border-color:var(--air-lime);color:var(--air-green)}
+.hands-card{position:fixed;right:16px;bottom:16px;z-index:120;background:var(--panel);border:1px solid var(--air-bright);border-radius:8px;overflow:hidden;width:200px;box-shadow:0 14px 44px rgba(0,0,0,.5)}
+.hands-card.hands-error{border-color:#c25}
+.hands-view{position:relative;width:200px;height:150px;background:var(--deep)}
+.hands-video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.hands-dots{position:absolute;inset:0}
+.hands-status{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:8px 10px;font-weight:700}
+
 /* ---- course detail ---- */
 .course{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden}
 .ls{background:var(--panel);padding:26px 24px;display:flex;flex-direction:column;gap:12px}
@@ -246,7 +299,7 @@ footer a{color:var(--air-bright)}
 </svg> AIR</a>
   <div class="nlinks">
     <a href="#film">Journey</a><a href="#start">Try it</a><a href="#levels">Levels</a>
-    <a href="#lessons">Lessons</a>
+    <a href="#lessons">Lessons</a><a href="#practice">Practice</a><button class="hands-toggle" id="hands-toggle" aria-pressed="false" title="Conduct the lessons with your hand — webcam, processed locally"><span id="hands-label">HANDS OFF</span></button>
   </div>
 </div></nav>
 
@@ -285,10 +338,127 @@ footer a{color:var(--air-bright)}
     <p class="stage-line" id="lesson-line" aria-live="polite">Communicate with intention. Drag the dot — or press → — to begin.</p>
     <p class="stage-count"><span id="lesson-num">00</span>/08</p>
   </div>
-  <p class="stage-hint" aria-hidden="true">drag the dot · ← → arrow keys · 1–8</p>
+  <p class="stage-hint" aria-hidden="true">drag the dot · ← → arrow keys · 1–8 · or turn HANDS on and conduct</p>
 </section>
 
 <main id="main">
+
+
+<section id="practice"><div class="wrap">
+  <div class="eyebrow">Practice — everything stays in your browser</div>
+  <h2>Try the moves. Nothing leaves this page.</h2>
+  <p class="sublede">Five working exercises from the course. <b>No account, no payment, no email
+    — your answers save only to this browser.</b></p>
+
+  <!-- 1 · READINESS PULSE -->
+  <div class="widget" id="pulse">
+    <header><span class="wnum">01</span><h3>Readiness Pulse</h3>
+      <span class="wtag"><span id="pulse-count">0</span>/4 signals checked</span></header>
+    <p class="wlede">Readiness is four signals working together — not "do I know this tool?"
+      This is a reflection, not a score.</p>
+    <div class="pulse-grid" id="pulse-grid"></div>
+  </div>
+
+  <!-- 2 · THE LOOP -->
+  <div class="widget">
+    <header><span class="wnum">02</span><h3>Pattern-powered draft, not answer machine</h3></header>
+    <div class="loop">
+      <div class="lp"><b>01 · You give direction</b><span>A prompt supplies the task, context, and boundaries.</span></div>
+      <div class="lp"><b>02 · The system generates</b><span>It produces a response that fits learned patterns.</span></div>
+      <div class="lp"><b>03 · You inspect</b><span>Check the result against your goal and reliable evidence.</span></div>
+      <div class="lp"><b>04 · You decide</b><span>Revise it, verify it, or choose not to use it.</span></div>
+    </div>
+    <p class="wnote">Speed is a feature. <b>Judgment is the safeguard.</b></p>
+  </div>
+
+  <!-- 3 · TASK FIT SORTER -->
+  <div class="widget" id="sorter">
+    <header><span class="wnum">03</span><h3>Task Fit</h3>
+      <span class="wtag">task <span id="sort-n">1</span>/6</span></header>
+    <p class="wlede">Begin with the work — not the app. Where would you place it?</p>
+    <p class="sort-task" id="sort-task"></p>
+    <div class="sort-btns">
+      <button class="pill" data-b="0">Good place to practice</button>
+      <button class="pill" data-b="1">Use with care</button>
+      <button class="pill" data-b="2">Keep human-led</button>
+    </div>
+    <p class="sort-fb" id="sort-fb" aria-live="polite"></p>
+  </div>
+
+  <!-- 4 · BRIEF BUILDER -->
+  <div class="widget" id="brief">
+    <header><span class="wnum">04</span><h3>Prompt with Purpose</h3></header>
+    <p class="wlede">A prompt is a brief — not a magic phrase. Toggle the four layers and watch
+      the brief assemble.</p>
+    <div class="brief-toggles">
+      <button class="pill on" data-k="context">01 Context</button>
+      <button class="pill on" data-k="task">02 Task</button>
+      <button class="pill on" data-k="constraints">03 Constraints</button>
+      <button class="pill on" data-k="check">04 Check</button>
+    </div>
+    <p class="brief-out" id="brief-out" aria-live="polite"></p>
+    <button class="btn btn-ghost wsm" id="brief-copy">Copy prompt</button>
+  </div>
+
+  <!-- 5 · REVIEW SIGNALS -->
+  <div class="widget" id="review">
+    <header><span class="wnum">05</span><h3>Review the Result</h3>
+      <span class="wtag"><span id="rev-left">4</span> signals remaining</span></header>
+    <p class="wlede">The output is not the decision. A sample AI draft:</p>
+    <blockquote class="sample">"The neighborhood workshop begins next Tuesday at 6:00 p.m.
+      Bring a laptop and photo ID. Free parking is available behind the library."</blockquote>
+    <div class="rev-grid" id="rev-grid"></div>
+  </div>
+
+  <!-- 6 · SCENARIOS -->
+  <div class="widget" id="scen">
+    <header><span class="wnum">06</span><h3>More consequence, more pause</h3>
+      <span class="wtag">scenario <span id="scen-n">1</span>/4</span></header>
+    <p class="wlede">As stakes rise, raise human review. Sometimes the ready choice is not to
+      use AI. <span class="dim">Informed by the NIST AI Risk Management Framework.</span></p>
+    <p class="sort-task" id="scen-task"></p>
+    <div class="sort-btns" id="scen-btns">
+      <button class="pill" data-b="0">Practice + edit</button>
+      <button class="pill" data-b="1">Verify first</button>
+      <button class="pill" data-b="2">Pause + protect</button>
+      <button class="pill" data-b="3">Keep human-led</button>
+    </div>
+    <p class="sort-fb" id="scen-fb" aria-live="polite"></p>
+  </div>
+
+  <!-- 7 · ACTION PLAN -->
+  <div class="widget" id="plan">
+    <header><span class="wnum">07</span><h3>Your next useful step</h3></header>
+    <p class="wlede">Readiness grows through one small, reflected practice. Saved only in this
+      browser.</p>
+    <div class="plan-grid">
+      <label>One safe task I will practice<input id="p-task" type="text"></label>
+      <label>The human outcome I want<input id="p-out" type="text"></label>
+      <label>What must stay private<input id="p-priv" type="text"></label>
+      <label>How I will verify the result<input id="p-ver" type="text"></label>
+      <label>When I will try it
+        <select id="p-when"><option value="">Choose a day</option><option>Today</option>
+        <option>Tomorrow</option><option>This weekend</option><option>Next week</option></select></label>
+    </div>
+    <div class="plan-btns">
+      <button class="btn btn-go wsm" id="plan-copy">Copy my plan</button>
+      <button class="btn btn-ghost wsm" id="plan-clear">Clear</button>
+    </div>
+  </div>
+
+</div></section>
+
+<section id="resources"><div class="wrap">
+  <div class="eyebrow">Keep learning · open resources</div>
+  <h2>You don't need every tool.<br>You need a purpose and a process.</h2>
+  <div class="plat">
+    <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener"><span class="kk">01</span><b>NIST AI Risk Management Framework ↗</b></a>
+    <a href="https://www.unesco.org/en/digital-education/ai-future-learning" target="_blank" rel="noopener"><span class="kk">02</span><b>UNESCO AI Competency Framework ↗</b></a>
+    <a href="https://www.aiedu.org/" target="_blank" rel="noopener"><span class="kk">03</span><b>aiEDU AI Readiness Framework ↗</b></a>
+    <a href="https://digi2u.org" target="_blank" rel="noopener"><span class="kk">04</span><b>Visit Digi2U.org ↗</b></a>
+  </div>
+  <p class="wnote" style="margin-top:22px">Free community learning. No account, payment, or email required.</p>
+</div></section>
 
 <section id="start"><div class="wrap">
   <div class="eyebrow">Experience 00 — twenty minutes, no tools</div>
@@ -470,5 +640,7 @@ footer a{color:var(--air-bright)}
 })();
 </script>
 <script src="air-mark.js"></script>
+<script src="air-extras.js"></script>
+<script src="air-hands.js"></script>
 </body>
 </html>
