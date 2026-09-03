@@ -131,6 +131,10 @@ label{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase
 
 
 /* ---- the mark IS the interface ---- */
+.stage-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.2;pointer-events:none}
+.stage-veil{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 42%,rgba(19,42,36,.25) 0%,rgba(19,42,36,.86) 78%);pointer-events:none}
+@media(prefers-reduced-motion:reduce){.stage-video{display:none}}
+
 .markstage{min-height:100vh;min-height:100dvh;position:relative;display:flex;flex-direction:column;
   justify-content:center;overflow:hidden;border-bottom:1px solid var(--line);padding:76px 22px 64px}
 .stage-top{position:absolute;top:76px;left:0;right:0;display:flex;justify-content:space-between;
@@ -208,6 +212,20 @@ label{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase
 .s span{display:block;margin-top:8px;font-size:10.5px;letter-spacing:.15em;
   text-transform:uppercase;color:var(--muted)}
 
+
+/* ---- course detail ---- */
+.course{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.ls{background:var(--panel);padding:26px 24px;display:flex;flex-direction:column;gap:12px}
+.ls header{display:flex;align-items:baseline;gap:12px}
+.ls .num{font-size:12px;font-weight:800;color:var(--air-bright);letter-spacing:.06em}
+.ls h3{font-size:20px;font-weight:800;letter-spacing:-.015em;font-style:italic}
+.ls-m{color:var(--air-pale);font-size:15px;font-weight:600}
+.ls-w{color:var(--muted);font-size:14px;line-height:1.6}
+.ls-w em{color:var(--air-lime);font-style:italic}
+.ls ul{list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+.ls li{font-size:13.5px;color:var(--muted)}
+.ls li b{color:var(--air-bright);font-weight:700;letter-spacing:.04em}
+
 footer{padding:56px 0 70px;color:var(--muted);font-size:13.5px}
 footer .fw{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
 footer b{color:var(--air-pale)}
@@ -237,6 +255,10 @@ footer a{color:var(--air-bright)}
     <span class="stage-brand">DIGI2U.ORG</span>
     <span class="stage-meta">Free community course · 8 lessons</span>
   </div>
+  <video class="stage-video" autoplay muted loop playsinline preload="metadata" poster="media/bg-poster.jpg" aria-hidden="true">
+    <source src="media/bg.mp4" type="video/mp4">
+  </video>
+  <div class="stage-veil" aria-hidden="true"></div>
   <div class="stage-scene" id="scene" aria-hidden="true">
     <svg class="scenemark" id="scenemark" viewBox="0 0 2048 2048" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="var(--air-pale)" d="M661.29,1588.41c48.02-15.76,104.27-41.72,139.57-78.38,15.26-15.85,34.64-51.71,46.74-71.86l64.54-106.98,343.52-569.99,100.45-166.21c34.67-56.14,49.37-92.82,114.8-121.37,18.04-7.77,37.15-12.79,56.68-14.89,16.88-1.77,41.24-1.09,58.75-1.08l94.65.04,303.07-.02c-27.3,47.33-58.2,96.8-86.61,143.65l-148.46,245-66.61,110.14c-12.48,20.77-31.73,55.4-46.51,72.19-24.92,28.49-57.68,49.01-94.19,59-10.6,2.86-20.42,4.45-31.25,5.9,27.69,30.93,38.88,65.77,20.43,106.05-8.17,17.84-20.69,36.25-30.99,53.18-17.02,27.74-33.85,55.59-50.49,83.56-6.4,10.54-20.6,30.76-23.11,41.63-1.96,8.68.33,17.78,6.18,24.49,6.25,7.09,15.2,9.07,24.26,9.1,29.01.1,58.17-.23,87.18-.31l157.82.28-38.39,63.16c-8.59,14.14-17.35,29.48-27.15,42.67-25.27,34.03-64.4,57.51-105.35,67.49-34.4,8.37-77,5.97-113.16,5.92l-131.87-.32-73,.33c-13.22.08-26.08.49-39.67-.23-36.22-1.92-57.77-41.56-46.11-74.06,4.26-11.88,13.36-25.36,20.02-36.44l30.38-50.53,115.19-190.96c16.63-27.6,71.21-93.32-1.08-97.13-15.76-.83-32.9.02-48.8.08l-162.63,267.86-40.81,67.12c-7.01,11.56-14.27,23.26-21.15,34.88-29.43,49.73-86.27,74.08-141.9,78.72-8.72,1.75-34.46,1.14-44.61,1.13l-80.97-.12-58.82.03c-8.25,0-26.22.46-33.7-.78l-.16-.99,3.33-.94Z"/>
 <path fill="var(--air-green)" d="M1551.56,629.8c25.82-.17,76.83-8.57,82.84,22.3,3.77,19.35-12.11,39.25-21.76,54.96-10.74,17.32-21.36,34.72-31.87,52.18l-131.36,217.5h-22.94s-84.85-.22-84.85-.22c54.25-94.09,113.66-186.05,168.88-279.66,13.07-22.14,26.94-45.67,41.06-67.06Z"/>
@@ -311,20 +333,83 @@ footer a{color:var(--air-bright)}
   </div>
 </div></section>
 
+<section id="mission"><div class="wrap">
+  <div class="eyebrow">Why AIR exists</div>
+  <h2>Change how people approach AI —<br>not which buttons they press.</h2>
+  <p class="sublede"><b>Clear the air. Un-clutter the mindset. Communicate with intention.</b>
+    AIR is a free community course from Digi2U.org for everyone from 8 to 100. It is not a
+    tool tour and not a certificate mill. You start with a real human need, treat AI as a
+    creative partner, apply design judgment to everything it gives you back, and finish work
+    that someone actually uses. Every lesson below is taught through creative AI workflows
+    that were really run — image-anchored films chained frame to frame, custom-trained
+    models, logo-led design systems — with the seams left visible so you learn to see them.</p>
+</div></section>
+
 <section id="lessons"><div class="wrap">
-  <div class="eyebrow">The eight lessons</div>
-  <h2>One journey. Eight moves.</h2>
-  <p class="sublede">This is the whole course. No certificates, no tests, no grades —
-    <b>each lesson ends with something you made.</b></p>
-  <div class="exps">
-    <div class="exp"><span class="num">01</span><div><h3>Clear the Air</h3><p>Move from fear, hype and overload to one meaningful goal.</p></div><span class="case">the clearing</span></div>
-    <div class="exp"><span class="num">02</span><div><h3>See the Possibility</h3><p>Understand what makes finished work useful — not impressive, useful.</p></div><span class="case">the card</span></div>
-    <div class="exp"><span class="num">03</span><div><h3>Choose Your Mission</h3><p>Name the person, the problem, the message, the outcome.</p></div><span class="case">the choice</span></div>
-    <div class="exp"><span class="num">04</span><div><h3>Direct the Machine</h3><p>Speak to AI like a creative director — not a magic-prompt hunter.</p></div><span class="case">the gesture</span></div>
-    <div class="exp"><span class="num">05</span><div><h3>Make It Clear</h3><p>Let hierarchy, contrast and space do the talking.</p></div><span class="case">the grid</span></div>
-    <div class="exp"><span class="num">06</span><div><h3>Challenge the Result</h3><p>Critique, verify, question, improve. Judgment is the work.</p></div><span class="case">the lens</span></div>
-    <div class="exp"><span class="num">07</span><div><h3>Build Your Way</h3><p>Turn what worked into your own repeatable workflow.</p></div><span class="case">the steps</span></div>
-    <div class="exp"><span class="num">08</span><div><h3>Put It in the World</h3><p>Complete something real and let someone use it.</p></div><span class="case">the release</span></div>
+  <div class="eyebrow">The course · eight lessons</div>
+  <h2>One journey. Eight moves.<br>Real workflows, seams visible.</h2>
+  <p class="sublede">No certificates, no tests, no grades — <b>each lesson ends with something
+    you made.</b> Pick your level inside every lesson: <b>Explore</b> (guided, first-timers,
+    families) · <b>Create</b> (your own subject, real decisions) · <b>Build</b> (under the
+    hood: workflow, code, production systems).</p>
+  <div class="course">
+
+    <article class="ls"><header><span class="num">01</span><h3>Clear the Air</h3></header>
+      <p class="ls-m">Move from fear, hype and overload to one meaningful goal.</p>
+      <p class="ls-w">Workflow: the mission sentence — <em>"I want to make ___ so that ___ can ___."</em> Everything else in AIR needs this ticket first. Try it below.</p>
+      <ul><li><b>Explore</b> — say your sentence out loud to somebody.</li>
+          <li><b>Create</b> — write it, then cut it in half.</li>
+          <li><b>Build</b> — write three, rank by who is actually waiting for it.</li></ul></article>
+
+    <article class="ls"><header><span class="num">02</span><h3>See the Possibility</h3></header>
+      <p class="ls-m">Understand what makes finished work useful — not impressive, useful.</p>
+      <p class="ls-w">Workflow: the chained film — eight brand stills morphed into one motion piece by matching each clip's first frame to the last frame before it. The film behind this page was made that way.</p>
+      <ul><li><b>Explore</b> — watch one finished AI piece and name who it helps.</li>
+          <li><b>Create</b> — collect three finished works and write what made each land.</li>
+          <li><b>Build</b> — take one apart: list every human decision inside it.</li></ul></article>
+
+    <article class="ls"><header><span class="num">03</span><h3>Choose Your Mission</h3></header>
+      <p class="ls-m">Name the person, the problem, the message, the outcome.</p>
+      <p class="ls-w">Workflow: the human-before-tool brief — who is this for, what should they know, feel or do, which decisions need human judgment, and is AI even appropriate here.</p>
+      <ul><li><b>Explore</b> — describe one real person your idea helps.</li>
+          <li><b>Create</b> — write the four-line brief for a real project.</li>
+          <li><b>Build</b> — add the failure plan: what happens when it breaks?</li></ul></article>
+
+    <article class="ls"><header><span class="num">04</span><h3>Direct the Machine</h3></header>
+      <p class="ls-m">Speak like a creative director — not a magic-prompt hunter.</p>
+      <p class="ls-w">Workflow: art direction blocks — subject, light, lens, palette, mood, and a strict negative list (no robots, no neon). Decline the preset when the tool tries to swap in someone else's look.</p>
+      <ul><li><b>Explore</b> — direct one image with five deliberate words.</li>
+          <li><b>Create</b> — write a reusable direction block for your project's look.</li>
+          <li><b>Build</b> — chain outputs: feed one result in as the next input.</li></ul></article>
+
+    <article class="ls"><header><span class="num">05</span><h3>Make It Clear</h3></header>
+      <p class="ls-m">Let hierarchy, contrast and space do the talking.</p>
+      <p class="ls-w">Workflow: the logo-led system — this site's every color, angle and motion comes from the mark itself. Two tokens were checked for contrast before anything shipped.</p>
+      <ul><li><b>Explore</b> — find the one sentence that matters most; make it biggest.</li>
+          <li><b>Create</b> — one page, four sizes of type, nothing centered by accident.</li>
+          <li><b>Build</b> — tokens: name your colors and spacing, use only the names.</li></ul></article>
+
+    <article class="ls"><header><span class="num">06</span><h3>Challenge the Result</h3></header>
+      <p class="ls-m">Critique, verify, question, improve. Judgment is the work.</p>
+      <p class="ls-w">Workflow: the seams exercise — an early cut of this course's film drifted: the person changed between clips, the poster text was gibberish. It was kept, on purpose, to learn from.</p>
+      <ul><li><b>Explore</b> — find three things wrong with an AI image you like.</li>
+          <li><b>Create</b> — accuracy, representation, readability: check all three, fix one.</li>
+          <li><b>Build</b> — break your own work deliberately and watch what it tells the user.</li></ul></article>
+
+    <article class="ls"><header><span class="num">07</span><h3>Build Your Way</h3></header>
+      <p class="ls-m">Turn what worked into your own repeatable workflow.</p>
+      <p class="ls-w">Workflow: the process that built this film became a written, reusable skill the same day — generate, extract frames, chain, publish. Run twice means it's real.</p>
+      <ul><li><b>Explore</b> — list your steps from the last thing you finished.</li>
+          <li><b>Create</b> — write them so somebody else could run them.</li>
+          <li><b>Build</b> — make the repeat one command.</li></ul></article>
+
+    <article class="ls"><header><span class="num">08</span><h3>Put It in the World</h3></header>
+      <p class="ls-m">Complete something real and let someone use it.</p>
+      <p class="ls-w">Workflow: ship on your own ground — this presentation lives on a public page anyone can visit, owned outright, no platform between the work and the world.</p>
+      <ul><li><b>Explore</b> — show a finished thing to one person; write what they said.</li>
+          <li><b>Create</b> — publish one thing with a real URL.</li>
+          <li><b>Build</b> — make it self-contained so no vanished service can break it.</li></ul></article>
+
   </div>
 </div></section>
 
