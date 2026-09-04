@@ -104,7 +104,14 @@
         }
       }
     }
-    if (scrollV) window.scrollBy(0, scrollV);
+    if (scrollV) {
+      var y0 = window.scrollY;
+      window.scrollBy(0, scrollV);
+      if (window.scrollY === y0) {              /* scrollBy no-op → drive the scroller directly */
+        var se = document.scrollingElement || document.documentElement;
+        se.scrollTop += scrollV;
+      }
+    }
     rafId = requestAnimationFrame(loop);
   }
 
@@ -136,7 +143,14 @@
     lastVideoTime = -1; smoothed = -1; lastSeen = performance.now();
     running = true;
     setStatus("SHOW YOUR PALM · move it left–right");
-    if (scrollV) window.scrollBy(0, scrollV);
+    if (scrollV) {
+      var y0 = window.scrollY;
+      window.scrollBy(0, scrollV);
+      if (window.scrollY === y0) {              /* scrollBy no-op → drive the scroller directly */
+        var se = document.scrollingElement || document.documentElement;
+        se.scrollTop += scrollV;
+      }
+    }
     rafId = requestAnimationFrame(loop);
   }
 
