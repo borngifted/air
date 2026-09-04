@@ -62,6 +62,6 @@
 - [x] Verify the edited video and responsive header logo treatment in both light and dark modes
 - [x] Verify hand-tracking loading, active, unavailable, and camera-denied states without uploading camera frames
 - [x] Re-run TypeScript, tests, production build, and authored no-audio experience audit
-- [ ] Save a fresh checkpoint after the latest lesson-video, logo, and hand-tracking changes
-- [ ] Push and synchronize the updated project to the connected `borngifted/air` GitHub repository
-- [ ] Verify the remote GitHub branch contains the latest video asset references, transparent logo treatment, and automatic hand-tracking code
+- [x] Save a fresh checkpoint after the latest lesson-video, logo, and hand-tracking changes
+- [x] Push and synchronize the updated project to the connected `borngifted/air` GitHub repository
+- [x] Verify the remote GitHub branch contains the latest video asset references, transparent logo treatment, and automatic hand-tracking code
