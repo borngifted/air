@@ -3,7 +3,7 @@ import { Link } from "wouter";
 
 export function SiteFooter() {
   return (
-    <footer className="site-footer border-t border-white/10 bg-[var(--ink)] py-12 text-white">
+    <footer className="site-footer border-t border-white/10 bg-black py-12 text-white">
       <div className="container grid gap-10 md:grid-cols-[1.4fr_.6fr_.6fr]">
         <div>
           <AirMark className="site-footer-logo h-12 w-auto" />

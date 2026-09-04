@@ -78,3 +78,8 @@
 - [x] Remove remaining green or lime text from dark green hero and callout surfaces while preserving green for backgrounds, icons, borders, and actions
 - [x] Run an actual light-mode visual verification of the homepage footer after the final contrast changes
 - [x] Perform and document a targeted source audit proving no green or lime copy remains on dark green surfaces
+- [x] Make the footer background exactly match the rendered logo’s negative-space color
+- [x] Preserve the official two-tone geometry so the lowercase i center and inner A and R shapes visually disappear into the footer background
+- [x] Verify the corrected footer logo remains crisp and legible in light and dark site modes on desktop and mobile
+- [x] Re-run TypeScript, tests, and production build after the footer-logo correction
+- [ ] Save a new checkpoint and synchronize the footer-logo fix to `borngifted/air` main

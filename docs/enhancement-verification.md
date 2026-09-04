@@ -47,3 +47,9 @@ The homepage retained the saved light preference on return. Its light header, tr
 An actual in-browser footer inspection was completed in light mode by locating the `Digi2U.org` attribution. The footer’s white headings, neutral light links, body copy, and attribution were readable on the dark canvas. The inspection also found that the two-tone footer mark was too subdued, so the footer now renders the mark as a dedicated white monochrome asset against the dark footer background.
 
 A targeted source audit reviewed every explicit `var(--go)` and `var(--spark)` text utility and the semantic rules for hero, callout, footer, card, and administrator surfaces. In dark mode, eyebrow labels and green text utilities are overridden to paper white; emphasized hero words, orbit-card labels, and administrator headline accents also resolve to paper white. Remaining green and lime uses are limited to action backgrounds, icons, borders, focus indicators, and decorative brand graphics rather than copy on dark green backgrounds.
+
+## Footer mark geometry
+
+The footer uses a pure black background and renders the official two-tone SVG through a high-contrast inverse filter. This preserves the complete white AiR silhouette while translating the logo’s original dark geometry into black. Visual inspection confirmed that the lowercase i center and the inner A and R forms disappear cleanly into the footer background, leaving crisp intentional negative space rather than a filled monochrome mark.
+
+The same footer position was then checked after switching the full site to dark mode. Because the footer keeps its own black canvas in both themes, the white logo forms and black internal cutouts remained unchanged and legible. Desktop verification is complete; the final release check includes the responsive mobile footer and automated build validation.

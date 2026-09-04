@@ -108,7 +108,7 @@ button:active, .air-button:active { transform: scale(.97); }
 .hero-section .eyebrow, .page-hero .eyebrow, .path-detail-hero .eyebrow, .lesson-sidebar .eyebrow, .trainer-hero .eyebrow, .dashboard-hero .eyebrow, .community-hero .eyebrow, .onboarding-shell .eyebrow, .admin-hero .eyebrow, .admin-login-shell .eyebrow, .idea-block .eyebrow, .exercise-panel .eyebrow, .site-footer .eyebrow { color: var(--paper); }
 .hero-section .eyebrow::before, .page-hero .eyebrow::before, .path-detail-hero .eyebrow::before, .trainer-hero .eyebrow::before, .dashboard-hero .eyebrow::before, .community-hero .eyebrow::before, .admin-hero .eyebrow::before { background: var(--paper); }
 .site-header { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--hairline); background: var(--header-glass); color: var(--foreground); backdrop-filter: blur(18px); }
-.site-footer-logo { filter: brightness(0) invert(1); }
+.site-footer-logo { filter: invert(1) grayscale(1) contrast(1000%); }
 .brand-link { display: flex; align-items: center; gap: .8rem; }
 .brand-emblem { display: grid; width: 68px; height: 48px; place-items: center; overflow: visible; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
 .brand-logo { width: 58px; height: 40px; object-fit: contain; opacity: .96; filter: brightness(0) saturate(100%) drop-shadow(0 5px 10px rgba(16,35,29,.12)); transition: filter 180ms cubic-bezier(.23,1,.32,1), opacity 180ms cubic-bezier(.23,1,.32,1); }
