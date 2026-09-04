@@ -82,4 +82,4 @@
 - [x] Preserve the official two-tone geometry so the lowercase i center and inner A and R shapes visually disappear into the footer background
 - [x] Verify the corrected footer logo remains crisp and legible in light and dark site modes on desktop and mobile
 - [x] Re-run TypeScript, tests, and production build after the footer-logo correction
-- [ ] Save a new checkpoint and synchronize the footer-logo fix to `borngifted/air` main
+- [x] Save a new checkpoint and synchronize the footer-logo fix to `borngifted/air` main
