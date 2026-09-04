@@ -65,6 +65,8 @@
      straight onto the playhead track. Move your hand left↔right and the dot
      glides with it; stops switch as you cross them. */
   var lastVideoTime = -1, smoothed = -1, lastSeen = 0;
+  var scrollV = 0;              /* pixels/frame from hand height */
+  var SCROLL_GAIN = 190;        /* max ~ (0.42 * 190) ≈ 80px/frame at full reach */
 
   function loop(now) {
     if (!running) return;
@@ -73,19 +75,28 @@
       var res = landmarker.detectForVideo(video, now);
       var hand = res.landmarks && res.landmarks[0];
       if (hand) {
-        /* palm center (avg of wrist + middle-mcp) is steadier than the wrist */
+        /* palm center (avg of wrist + middle-mcp) is steadier than either alone */
         var cx = (hand[0].x + hand[9].x) / 2;
-        var mx = 1 - cx; /* mirror so moving right moves the dot right */
+        var cy = (hand[0].y + hand[9].y) / 2;
+        /* X (mirrored) → lesson playhead, when the dot is on screen */
+        var mx = 1 - cx;
         var p = Math.max(0, Math.min(1, (mx - 0.12) / 0.76));
         var N = (window.AIR ? window.AIR.lessons : 9) - 1;
         var target = p * N;
         smoothed = smoothed < 0 ? target : smoothed + (target - smoothed) * 0.62;
         if (window.AIR) window.AIR.setPos(smoothed);
+        /* Y → vertical scroll velocity. Center band (0.42-0.58) = hold still;
+           hand high = scroll up, hand low = scroll down; rate grows with distance. */
+        var dz = 0.08, mid = 0.5, off = cy - mid;
+        scrollV = (Math.abs(off) < dz) ? 0 : (off - Math.sign(off) * dz) * SCROLL_GAIN;
         lastSeen = now;
-        setStatus("TRACKING · move your hand left and right");
+        setStatus(Math.abs(off) < dz
+          ? "TRACKING · hold to steer the dot · raise/lower to scroll"
+          : (off < 0 ? "▲ scrolling up" : "▼ scrolling down"));
         drawDots(hand);
       } else {
         drawDots(null);
+        scrollV = 0;
         if (now - lastSeen > NO_HAND_MS) {
           setStatus("NO HAND — show your palm");
           if (window.AIR && window.AIR.releasePos) window.AIR.releasePos();
@@ -93,6 +104,7 @@
         }
       }
     }
+    if (scrollV) window.scrollBy(0, scrollV);
     rafId = requestAnimationFrame(loop);
   }
 
@@ -124,11 +136,13 @@
     lastVideoTime = -1; smoothed = -1; lastSeen = performance.now();
     running = true;
     setStatus("SHOW YOUR PALM · move it left–right");
+    if (scrollV) window.scrollBy(0, scrollV);
     rafId = requestAnimationFrame(loop);
   }
 
   function disable() {
     running = false;
+    scrollV = 0;
     cancelAnimationFrame(rafId);
     stopStream();
     removeCard();
