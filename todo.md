@@ -87,5 +87,5 @@
 - [x] Preserve the same true negative-space geometry while rendering the visible header logo forms white in dark mode
 - [x] Verify the corrected header logo remains crisp without a background plate on desktop and mobile in both themes
 - [x] Re-run TypeScript, tests, and production build after the header-logo correction
-- [ ] Save a new checkpoint and synchronize the header-logo fix to `borngifted/air` main
+- [x] Save a new checkpoint and synchronize the header-logo fix to `borngifted/air` main
 - [x] Capture focused mobile light-mode and dark-mode header checks confirming the i, A, and R negative spaces match the header background
