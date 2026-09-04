@@ -1,8 +1,7 @@
 export type AirTheme = "light" | "dark";
 
-export function resolveAirTheme(stored: string | null, prefersLight: boolean, fallback: AirTheme = "dark"): AirTheme {
+export function resolveAirTheme(stored: string | null, _prefersLight: boolean, fallback: AirTheme = "dark"): AirTheme {
   if (stored === "light" || stored === "dark") return stored;
-  if (prefersLight) return "light";
   return fallback;
 }
 

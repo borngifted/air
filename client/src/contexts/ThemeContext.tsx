@@ -10,6 +10,7 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+const THEME_STORAGE_KEY = "air-theme-v2";
 
 interface ThemeProviderProps {
   children: React.ReactNode;
@@ -24,7 +25,10 @@ export function ThemeProvider({
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(() => {
     if (switchable) {
-      const stored = localStorage.getItem("theme");
+      const stored = localStorage.getItem(THEME_STORAGE_KEY) ?? localStorage.getItem("theme");
+      if (!localStorage.getItem(THEME_STORAGE_KEY) && (stored === "light" || stored === "dark")) {
+        localStorage.setItem(THEME_STORAGE_KEY, stored);
+      }
       return resolveAirTheme(stored, Boolean(window.matchMedia?.("(prefers-color-scheme: light)").matches), defaultTheme);
     }
     return defaultTheme;
@@ -40,7 +44,8 @@ export function ThemeProvider({
     root.style.colorScheme = theme;
 
     if (switchable) {
-      localStorage.setItem("theme", theme);
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
+      localStorage.removeItem("theme");
     }
   }, [theme, switchable]);
 

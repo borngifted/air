@@ -16,7 +16,8 @@ describe("theme and presentation helpers", () => {
   it("respects a stored theme before system preference", () => {
     expect(resolveAirTheme("dark", true)).toBe("dark");
     expect(resolveAirTheme("light", false)).toBe("light");
-    expect(resolveAirTheme(null, true)).toBe("light");
+    expect(resolveAirTheme(null, true)).toBe("dark");
+    expect(resolveAirTheme(null, false)).toBe("dark");
   });
 
   it("maps hand position and controls to safe scene indexes", () => {

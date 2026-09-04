@@ -31,3 +31,19 @@ The global header mark now sits directly on the header with no colored backgroun
 Camera startup now requests video without audio and immediately starts browser-local hand tracking after permission is granted. The same tracked palm position is passed to presentation mode for left/right scene navigation. Buttons and keyboard controls remain available when hand tracking cannot load.
 
 The replacement lesson clip was generated from an identity-locked reference frame and technically verified as a five-second, 1280 × 720 H.264 video. Visual review of both the reference image and the final video opening frame confirmed an unmistakably African American male lead with dark brown skin, short black hair, and subtle facial hair in the same warm, contemplative office concept. The uploaded clip remains silent in the product experience and replaces the previous fallback lesson video.
+
+## Dark-first homepage correction
+
+The homepage hero now uses the same verified African American male video and matching poster as the lesson fallback, so the previous Caucasian subject no longer appears before or during hero playback. New visitors start in dark mode. Existing valid choices from the previous `theme` key are migrated once into `air-theme-v2`, and future toggles persist under the new key.
+
+Interactive browser verification confirmed the corrected hero in dark mode, then switched to light mode and confirmed that the transparent logo, navigation, white hero copy, neutral supporting copy, buttons, and orbit cards remain legible. Dark-mode eyebrow and green-text utility styles now resolve to white on dark green surfaces; green remains available for buttons, borders, icons, and non-text visual energy.
+
+The saved light preference was then carried across the curriculum and camera routes. Curriculum hero copy, path labels, cards, and controls remained readable; the signed-out camera route correctly showed its light protected-access state with dark headline and body copy. The next verification pass covers trainer, administrator, and footer states before release.
+
+The trainer route’s light protected-access state remained readable with a dark headline, neutral body copy, and green action button. The separate administrator sign-in intentionally retains its dark branded canvas in both theme settings; its label, body copy, controls, and logo were legible. This pass identified one dark-green italic headline accent on that canvas, which was changed to the high-contrast lime signal color before final validation.
+
+The homepage retained the saved light preference on return. Its light header, transparent dark logo, navigation, controls, and dark hero copy hierarchy remained readable. Footer rules explicitly keep the footer on its inverse dark canvas with white headings and neutral light body/link text regardless of the surrounding theme, preventing green-on-green copy at the page boundary.
+
+An actual in-browser footer inspection was completed in light mode by locating the `Digi2U.org` attribution. The footer’s white headings, neutral light links, body copy, and attribution were readable on the dark canvas. The inspection also found that the two-tone footer mark was too subdued, so the footer now renders the mark as a dedicated white monochrome asset against the dark footer background.
+
+A targeted source audit reviewed every explicit `var(--go)` and `var(--spark)` text utility and the semantic rules for hero, callout, footer, card, and administrator surfaces. In dark mode, eyebrow labels and green text utilities are overridden to paper white; emphasized hero words, orbit-card labels, and administrator headline accents also resolve to paper white. Remaining green and lime uses are limited to action backgrounds, icons, borders, focus indicators, and decorative brand graphics rather than copy on dark green backgrounds.

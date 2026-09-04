@@ -22,7 +22,7 @@ export default function Home() {
   return (
     <PublicShell>
       <section className="hero-section">
-        <video className="hero-film" autoPlay muted loop playsInline poster={AIR_ASSETS.poster} aria-hidden="true"><source src={AIR_ASSETS.heroVideo} type="video/mp4" /></video>
+        <video className="hero-film" autoPlay muted loop playsInline poster={AIR_ASSETS.coursePoster} aria-hidden="true"><source src={AIR_ASSETS.courseVideo} type="video/mp4" /></video>
         <div className="hero-grid" aria-hidden="true" />
         <div className="container relative z-10 grid min-h-[calc(100vh-76px)] items-center gap-12 py-16 lg:grid-cols-[1.05fr_.95fr]">
           <div className="max-w-3xl">

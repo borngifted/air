@@ -65,3 +65,16 @@
 - [x] Save a fresh checkpoint after the latest lesson-video, logo, and hand-tracking changes
 - [x] Push and synchronize the updated project to the connected `borngifted/air` GitHub repository
 - [x] Verify the remote GitHub branch contains the latest video asset references, transparent logo treatment, and automatic hand-tracking code
+- [x] Replace the homepage opening hero video with the verified African American male lead footage
+- [x] Replace the homepage hero poster so no Caucasian subject appears before or during playback
+- [x] Verify the corrected hero identity and composition on desktop and mobile in light and dark themes
+- [x] Re-run TypeScript, tests, production build, and authored no-audio experience audit after the hero fix
+- [ ] Save the corrected checkpoint and synchronize the hero fix to `borngifted/air` main
+- [x] Make dark mode the default for first-time visitors while preserving the saved light-mode preference
+- [x] Audit all dark green surfaces and replace green-on-green text with white or high-contrast neutral copy
+- [x] Verify headings, body copy, labels, controls, and footer text remain readable across dark and light modes
+- [x] Migrate a valid saved preference from the previous `theme` key into `air-theme-v2` before applying the dark default
+- [x] Run and document an explicit light-mode verification pass across homepage, curriculum, studio, trainers, admin, and footer states
+- [x] Remove remaining green or lime text from dark green hero and callout surfaces while preserving green for backgrounds, icons, borders, and actions
+- [x] Run an actual light-mode visual verification of the homepage footer after the final contrast changes
+- [x] Perform and document a targeted source audit proving no green or lime copy remains on dark green surfaces
