@@ -69,7 +69,7 @@
 - [x] Replace the homepage hero poster so no Caucasian subject appears before or during playback
 - [x] Verify the corrected hero identity and composition on desktop and mobile in light and dark themes
 - [x] Re-run TypeScript, tests, production build, and authored no-audio experience audit after the hero fix
-- [ ] Save the corrected checkpoint and synchronize the hero fix to `borngifted/air` main
+- [x] Save the corrected checkpoint and synchronize the hero fix to `borngifted/air` main
 - [x] Make dark mode the default for first-time visitors while preserving the saved light-mode preference
 - [x] Audit all dark green surfaces and replace green-on-green text with white or high-contrast neutral copy
 - [x] Verify headings, body copy, labels, controls, and footer text remain readable across dark and light modes
