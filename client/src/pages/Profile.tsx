@@ -1,0 +1,11 @@
+import { AuthGate } from "@/components/AuthGate";
+import { PublicShell } from "@/components/PublicShell";
+import { trpc } from "@/lib/trpc";
+import { CircleCheck, MessageSquareText, ShieldCheck } from "lucide-react";
+import { Link } from "wouter";
+import { QueryError } from "@/components/QueryError";
+
+export default function Profile({ id }: { id: number }) {
+  const { data: profile, isLoading, error, refetch } = trpc.profile.public.useQuery({ userId: id });
+  return <PublicShell><AuthGate><section className="py-16 sm:py-24"><div className="container max-w-4xl">{error ? <QueryError message={error.message} retry={() => refetch()} /> : isLoading ? <div className="h-72 animate-pulse rounded-[2rem] bg-white/5" /> : profile ? <div className="profile-panel"><div className="profile-avatar">{(profile.displayName || "A").slice(0,1).toUpperCase()}</div><p className="eyebrow mt-8 capitalize">{profile.publicRole.replace("_", " ")}</p><h1 className="display mt-3 text-7xl">{profile.displayName || "AiR member"}</h1>{profile.headline && <p className="mt-4 text-xl font-semibold">{profile.headline}</p>}{profile.bio && <p className="mt-5 max-w-2xl text-base leading-8 text-mist">{profile.bio}</p>}<div className="mt-10 grid gap-3 sm:grid-cols-3"><div className="profile-stat"><CircleCheck className="size-5 text-[var(--go)]" /><b>{profile.completedLessons}</b><span>moves completed</span></div><div className="profile-stat"><MessageSquareText className="size-5 text-[var(--go)]" /><b>{profile.postCount + profile.commentCount}</b><span>community contributions</span></div><div className="profile-stat"><ShieldCheck className="size-5 text-[var(--spark)]" /><b>Private by default</b><span>Lesson reflections stay personal</span></div></div>{profile.recentPosts.length > 0 && <div className="mt-10 border-t border-white/10 pt-8"><p className="eyebrow">Recent practice</p><div className="mt-4 grid gap-2">{profile.recentPosts.map(post => <Link key={post.id} href={`/community/${post.id}`} className="dashboard-path"><span className="post-category">{post.category}</span><b>{post.title}</b></Link>)}</div></div>}</div> : <div className="profile-panel"><h1 className="display text-6xl">Profile not found.</h1></div>}</div></section></AuthGate></PublicShell>;
+}

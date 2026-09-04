@@ -1,0 +1,8 @@
+import { AuthGate } from "@/components/AuthGate";
+import { CameraStudio } from "@/components/CameraStudio";
+import { PublicShell } from "@/components/PublicShell";
+import { Camera, Download, ShieldCheck, Sparkles } from "lucide-react";
+
+export default function CameraLab() {
+  return <PublicShell><AuthGate><section className="camera-page"><div className="container py-14 sm:py-20"><div className="grid gap-10 lg:grid-cols-[.7fr_1.3fr] lg:items-end"><div><p className="eyebrow">AiR camera studio</p><h1 className="display mt-4 text-7xl leading-[.88] sm:text-9xl">Show<br /><em>your work.</em></h1></div><p className="max-w-2xl text-lg leading-8 text-mist">Use your camera to practice what you will say or show something you made. Nothing is saved unless you press Download.</p></div><div className="mt-12 grid gap-6 lg:grid-cols-[1.35fr_.65fr]"><CameraStudio /><aside className="camera-guide"><div><Camera className="size-6 text-[var(--go)]" /><h2 className="display mt-4 text-4xl">1. Check the picture.</h2><p>Look behind you. Move private things out of view.</p></div><div><Sparkles className="size-6 text-[var(--spark)]" /><h2 className="display mt-4 text-4xl">2. Show or tell.</h2><p>Show what you made. Say what changed and what you will try next.</p></div><div><Download className="size-6 text-[var(--go)]" /><h2 className="display mt-4 text-4xl">3. Choose to save.</h2><p>Press Download only if you want a copy on your device.</p></div><div><ShieldCheck className="size-6 text-[var(--spark)]" /><h2 className="display mt-4 text-4xl">You are in control.</h2><p>You can turn the camera off at any time.</p></div></aside></div></div></section></AuthGate></PublicShell>;
+}

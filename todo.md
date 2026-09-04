@@ -1,0 +1,67 @@
+# Project TODO
+
+- [x] Inspect the selected `borngifted/air` GitHub repository and document reusable architecture, content, and brand ideas
+- [x] Remove and exclude every audio podcast or player experience from the product
+- [x] Define the AiR brand system as a bold, elegant, action-oriented, free “Nike of AI” platform
+- [x] Define information architecture for public pages, learning paths, lessons, community, profiles, onboarding, and trainer resources
+- [x] Define the persistent domain model for member profiles, learning paths as canonical courses, modules, lessons, checkpoints, exercises, progress, posts, comments, and trainer resources
+- [x] Implement database schema and migrations for the complete learning and community experience
+- [x] Implement authenticated onboarding that invites each new member to choose and start a learning path
+- [x] Implement learner profiles that preserve course progress and community participation
+- [x] Implement public landing, mission, curriculum, course catalog, and community-preview experiences
+- [x] Implement structured AI mindset learning paths with video-led lessons and visible completion progress
+- [x] Implement interactive lesson checkpoints, reflections, practical exercises, completion actions, and community discussion prompts
+- [x] Implement secure course video upload, storage metadata, access control, and playback
+- [x] Implement authenticated community post creation, commenting, discussion browsing, and author attribution
+- [x] Implement resume-learning, next-lesson, and path-completion journeys
+- [x] Author and integrate a complete free AI mindset curriculum with practical outcomes
+- [x] Create a distinct trainer knowledge base with facilitator guides, teaching frameworks, delivery notes, exercises, and source references
+- [x] Persist trainer-resource content separately from learner-facing curriculum content
+- [x] Add responsive desktop, tablet, and mobile layouts with accessible interaction states
+- [x] Add loading, error, empty, authorization, and success states for every major flow
+- [x] Add and update Vitest coverage for permissions, progress logic, community operations, and trainer-resource access
+- [x] Run schema, type, unit, build, and visual verification checks
+- [x] Verify that no audio podcast or player UI, route, copy, or component remains anywhere in the platform
+- [x] Complete the separate trainer knowledge-base deliverable and project documentation
+- [x] Design every core lesson so an eight-year-old can understand the main idea without prior AI or technical knowledge
+- [x] Add age-inclusive visual stories, concrete analogies, read-aloud-friendly copy, and short guided choices throughout the curriculum
+- [x] Structure each complex task as a simple sequence of one clear move, one example, one practice action, and one reflection
+- [x] Preserve optional Explore, Create, and Build depth so children and adults can learn the same mindset at appropriate levels
+- [x] Implement child-safe profile defaults and community participation patterns without exposing sensitive personal information
+- [x] Add trainer guidance for mixed-age groups, family participation, reading support, and no-device delivery
+- [x] Verify learner-facing copy for plain language, age-eight comprehension, and clear next actions
+- [x] Redesign the site color system so the AiR logo has strong contrast and visual priority in both light and dark modes
+- [x] Add a persistent accessible light/dark theme switch across all public, learner, community, trainer, and administrator pages
+- [x] Generate multiple AiR campaign advertisements with Higgsfield using the official logo and diverse Black and brown representation
+- [x] Upload and integrate the approved campaign ads into purposeful placements on the public site
+- [x] Create a distinct administrator login entry and protected administrator workspace without weakening the existing role checks
+- [x] Add administrator navigation for media, community moderation, trainer resources, and presentation controls
+- [x] Expand the member community into persistent channel-based spaces inspired by Discord and Facebook groups
+- [x] Add community channel navigation, post reactions, threaded replies, activity metadata, and moderation controls
+- [x] Restore the original camera concept as an interactive browser camera studio with explicit permission, capture, retake, download, and privacy states
+- [x] Integrate the camera studio into the learner journey without storing captures unless the member deliberately chooses to save or share them
+- [x] Build a facilitator presentation mode with lesson scenes, large readable prompts, keyboard controls, fullscreen support, speaker notes, and activity timers
+- [x] Add presentation entry points for trainers and administrators while keeping presentation mode separate from learner progress
+- [x] Add schema migrations and persistence for community channels, reactions, and threaded replies
+- [x] Add Vitest coverage for theme helpers, administrator boundaries, community channels and reactions, and presentation sequencing
+- [x] Verify camera permissions and fallback states, light/dark contrast, responsive layouts, and all updated member and administrator flows
+- [x] Audit every newly added theme, advertisement, administrator, community, camera, and presentation message for age-eight comprehension
+- [x] Replace abstract interface terms with short concrete labels, add one-action-at-a-time helper text, and preserve adult brand sophistication through visual design rather than difficult wording
+- [x] Add and verify the light/dark theme control on the separate administrator sign-in page
+- [x] Add direct camera-studio entry points from the learner dashboard and interactive lesson flow
+- [x] Clarify that camera captures are local-only and can be deliberately downloaded, with no community sharing or server storage in this release
+- [x] Add targeted automated verification for unavailable and denied camera states
+- [x] Verify the administrator workspace, moderation, media, trainer, and presentation entry flows after the final changes
+- [x] Edit the existing lesson video so the lead subject is an African American man while preserving the original concept, setting, pacing, and lesson intent
+- [x] Upload and replace the current fallback lesson video with the approved edited video asset
+- [x] Remove the colored background plate behind the AiR logo in the global header
+- [x] Make the header logo colors invert appropriately for light and dark themes without reducing legibility
+- [x] Make hand tracking active and clearly visible in the camera studio after camera permission is granted
+- [x] Make hand tracking active in presentation mode so horizontal hand movement changes teaching scenes
+- [x] Preserve accessible buttons, keyboard controls, and clear unsupported-device guidance as hand-tracking fallbacks
+- [x] Verify the edited video and responsive header logo treatment in both light and dark modes
+- [x] Verify hand-tracking loading, active, unavailable, and camera-denied states without uploading camera frames
+- [x] Re-run TypeScript, tests, production build, and authored no-audio experience audit
+- [ ] Save a fresh checkpoint after the latest lesson-video, logo, and hand-tracking changes
+- [ ] Push and synchronize the updated project to the connected `borngifted/air` GitHub repository
+- [ ] Verify the remote GitHub branch contains the latest video asset references, transparent logo treatment, and automatic hand-tracking code

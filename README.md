@@ -1,80 +1,108 @@
-<p align="center"><img src="brand/AiR_Logo-MAIN.png" width="420" alt="AIR — the A·i·R mark"></p>
+# AiR — AI Readiness
 
-# AIR — AI Readiness
+AiR is a free, mindset-first AI learning and community platform designed for learners beginning at age eight while preserving meaningful depth for adults, educators, creators, and teams.
 
-**A free community course by [Digi2U.org](https://digi2u.org). Ages 8–100. No cost, no
-account, no tests, no certificates — you leave with something you actually made.**
+> **Clear the noise. Give useful direction. Challenge the result. Put the work in the world.**
 
-> Clear the air. Un-clutter the mindset. Communicate with intention.
+## What is included
 
-**▶ Live: https://borngifted.github.io/air/**
+| Area | Implementation |
+|---|---|
+| Public experience | Responsive landing page, brand story, curriculum catalog, and path detail pages |
+| Brand and themes | Official-logo-first header and hero treatment, persistent accessible light/dark modes, and three Higgsfield campaign placements |
+| Curriculum | Four learning paths, four modules, twelve lessons, sixty interactive checkpoints, and thirty-six mode-specific exercises |
+| Lesson experience | Protected video lessons, stories, big ideas, saved checkpoints, Explore/Create/Build exercises, completion, next-lesson actions, and linked discussions |
+| Accounts | Manus OAuth, automatic first-session onboarding, child-safe display names, learning preferences, and persistent profiles |
+| Progress | Enrollments, resumable lesson status, checkpoint answers, exercise submissions, path completion, and artifacts |
+| Community | Persistent topic rooms, social feed, reactions, threaded replies, recent member cues, profiles, reporting, moderation, and private-information checks |
+| Trainer knowledge base | Separate protected route family with persistent facilitator guides, frameworks, exercises, delivery notes, video guidance, and source references |
+| Course media | Admin-only MP4/WebM upload, S3 storage, database metadata, lesson attachment, visibility controls, and signed playback URLs |
+| Camera studio | Explicit browser permission, private local preview, capture, retake, local download, turn-off, and optional on-device hand tracking |
+| Presentation mode | Curriculum-driven teaching scenes, giant AiR mark, keyboard and pointer controls, fullscreen, speaker notes, timer, and optional hand control |
+| Administrator experience | Separate sign-in route, protected overview, community safety queue, lesson media, trainer resources, and live teaching entry |
 
-The landing page explains everything in plain words and offers two doors: a community
-sign-in (first name, stored only on your device) and a facilitator entrance (session
-code) that opens presenter mode.
+The product contains no sound-only program, player, route, or media type. Course media is video-led, with captions/transcripts and text-based alternatives specified in the trainer guidance.
 
-## The experience
+## Curriculum
 
-- **The mark is the interface** — the full-screen AIR logo is the home screen; its
-  i-dot is a draggable playhead through the eight lessons; arrow keys, number keys and
-  letterform click-zones all navigate.
-- **🎥 HANDS** — turn on your webcam and *conduct* the deck: move your hand left–right
-  and the dot follows (MediaPipe HandLandmarker, processed entirely in your browser,
-  nothing uploaded).
-- **Video atmosphere** — every act runs over footage from the course's own chained film:
-  clutter → clearing → making → the world.
-- **Practice suite** — Readiness Pulse, Task-Fit sorter, prompt brief builder,
-  Review-the-Result signals, NIST-informed scenarios, and a private action plan. All
-  answers save to your browser only.
-- **🎙 AIR Radio** — a 16-minute Deep Dive podcast generated from the course sources.
+| Path | Lessons |
+|---|---|
+| Clear | Clear the Air; Machines Make Guesses; Choose One Mission |
+| Direct | Be the Director; Give Useful Context; Ask for Options |
+| Judge | Spot the Guess; Check the Stakes; Make It Fit People |
+| Make | Make a First Version; Build Your Way; Put It in the World |
 
-## The eight lessons
+Every lesson uses the same five-beat rhythm: **See it, Name it, Try it, Check it, Share it**. Each lesson also provides Explore, Create, and Build exercises so learners can change the level of support without being ranked by age.
 
-| # | Lesson | The move |
-|---|--------|----------|
-| 1 | [Clear the Air](courses/lesson-01-clear-the-air.md) | From fear, hype and overload to one meaningful goal |
-| 2 | [See the Possibility](courses/lesson-02-see-the-possibility.md) | What makes finished work useful |
-| 3 | [Choose Your Mission](courses/lesson-03-choose-your-mission.md) | Person · problem · message · outcome |
-| 4 | [Direct the Machine](courses/lesson-04-direct-the-machine.md) | Creative direction, not magic prompts |
-| 5 | [Make It Clear](courses/lesson-05-make-it-clear.md) | Hierarchy, contrast, space |
-| 6 | [Challenge the Result](courses/lesson-06-challenge-the-result.md) | Judgment is the work |
-| 7 | [Build Your Way](courses/lesson-07-build-your-way.md) | Turn what worked into a repeatable workflow |
-| 8 | [Put It in the World](courses/lesson-08-put-it-in-the-world.md) | Finish. Release. |
+## Key routes
 
-Every lesson offers three ways in — **Explore** (guided, great with kids), **Create**
-(your own project), **Build** (under the hood) — never gated by age.
+| Route | Purpose | Access |
+|---|---|---|
+| `/` | Public brand and mission | Public |
+| `/curriculum` | Complete path catalog | Public |
+| `/paths/:slug` | Public path overview | Public |
+| `/onboarding` | Display name, role, mode, safety promise, and first path | Member |
+| `/dashboard` | Resume learning, progress, paths, community, and profile | Member |
+| `/learn/:slug` | Interactive video lesson | Member |
+| `/community` | Practice-centered discussions | Member |
+| `/community/:id` | Reactions and threaded conversation | Member |
+| `/studio` | Private camera rehearsal and capture studio | Member |
+| `/members/:id` | Privacy-minimizing learner profile | Member |
+| `/trainers` | Separate trainer knowledge base | Member |
+| `/present` | Live facilitator presentation mode | Member |
+| `/admin/login` | Separate secure administrator entry | Public; role checked after sign-in |
+| `/admin` | Administrator workspace | Administrator |
+| `/admin/community` | Reports and community moderation | Administrator |
+| `/admin/media` | Course-video upload and lesson attachment | Administrator |
 
-## Repository layout
+## Technical architecture
 
+The application uses React 19, Tailwind CSS 4, Wouter, tRPC 11, Express, Drizzle ORM, MySQL/TiDB, Manus OAuth, and managed S3 storage. Public curriculum data is read through typed procedures. Learner, community, trainer, and media operations use protected or administrator-only procedures.
+
+Curriculum content is authoritatively defined in `server/content.ts` and idempotently persisted to the database. `learningPaths` are the canonical course entities; each contains modules, lessons, checkpoints, and exercises. User responses and progress are stored separately from the authored curriculum.
+
+## Administrator workflow
+
+Open `/admin/login` and use the normal secure account flow. The server checks the account’s administrator role before any administrator procedure runs. `/admin` provides entry points for community safety, course media, trainer resources, and presentation mode.
+
+Open `/admin/media` to upload an MP4 or WebM file of up to 25 MB, choose its visibility, then select a stored video and attach it to a lesson. The lesson procedure returns signed playback URLs only after access checks. Open `/admin/community` to review reports, inspect the related conversation, hide content, and mark a report resolved or dismissed.
+
+Trainer content is seeded into the separate `trainerResources` table. An administrator-only upsert procedure supports future editing interfaces without mixing trainer material into learner lessons. Trainers can launch `/present` from the knowledge-base hero. Presentation progress is intentionally separate from learner progress.
+
+## Camera privacy
+
+The camera is off until the member presses **Enable camera** and accepts the browser permission prompt. Video is requested with audio disabled. Frames and optional hand landmarks are processed on the current device. Nothing is uploaded or stored by AiR. A captured image can only leave the page when the member deliberately downloads it to their device; community sharing is not included in this release.
+
+## Community rooms
+
+The application seeds seven persistent rooms: Start Here, Clear, Direct, Check, Make, Wins + What I Learned, and Trainers Room. Posts belong to a room, while replies can form one-level threads. Four reaction types use plain learner-facing labels: **This helps**, **Good idea**, **Celebrate**, and **I wonder**. There are no follower counts or public rankings.
+
+## Verification
+
+The project passes TypeScript checking, **19 Vitest tests**, and the production build. Automated tests cover curriculum completeness, age-accessible copy constraints, progress calculation, resume logic, community safety, channels, reactions, threaded replies, theme selection, presentation sequencing, hand-to-scene mapping, automatic hand-tracking status, camera fallback messages, trainer authentication, administrator boundaries, media access, and logout behavior.
+
+Responsive visual checks were completed at desktop, tablet, and mobile sizes across public, dashboard, lesson, community, camera, trainer, administrator, media, and presentation routes. The light/dark control was exercised interactively in the browser. Live camera approval remains a person-controlled browser action; unsupported, denied, missing-device, and unknown failure messages are covered by tests.
+
+## Supporting documents
+
+| Document | Purpose |
+|---|---|
+| `docs/AiR-Trainer-Knowledge-Base.md` | Standalone trainer handbook with the facilitation method and all twelve lesson guides |
+| `docs/product-blueprint.md` | Product, brand, curriculum, community, onboarding, and trainer model |
+| `docs/data-model.md` | Persistent data and privacy architecture |
+| `docs/plain-language-review.md` | Age-eight copy acceptance criteria and verification |
+| `docs/research-notes.md` | Research grounding and source map |
+| `docs/source-audit.md` | Reuse decisions from the original GitHub repository |
+| `docs/higgsfield-campaign-assets.md` | Generated campaign asset manifest and placement intent |
+| `docs/enhancement-verification.md` | Theme, responsive, access, camera, presentation, and release verification notes |
+
+## Local commands
+
+```bash
+pnpm dev
+pnpm check
+pnpm test
+pnpm build
 ```
-index.html          landing page — plain-words breakdown + the two doors
-present.html        the presentation: mark interface, HANDS, practice, portal
-air-mark.js         playhead engine (drag / keys / click-zones / setPos hook)
-air-hands.js        webcam hand-conducting (MediaPipe, local-only)
-air-extras.js       practice widgets (localStorage) + section-video observer
-courses/            the eight lessons, one file each
-materials/          course map · full first lesson guide · brand book
-marketing/          the five AIR commercial scripts + campaign overview
-docs/               the film chain method (Seedance start→end-frame)
-brand/              the AIR mark (SVG + PNG)
-media/              the chained film, section scenes, posters
-frames/             lesson anchor stills
-```
 
-## The method behind the film
-
-The film running through the site was made with start→end-frame chaining: eight brand
-stills generated in one visual world, then each motion clip conditioned to begin on the
-exact final frame of the one before it. The first, seam-y attempt was kept on purpose —
-spotting its drift *is* Lesson 6. Full recipe: [docs/film-chain-method.md](docs/film-chain-method.md).
-
-## Brand
-
-Deep green `#132a24` · ivory `#f7fff8` · bright green `#18C98B` · lime `#D8FF45`.
-The mark — a forward-italic A + lowercase i + R, the i living in the negative space,
-its dot the spark — drives every color, angle and motion on the site.
-Details: [materials/air-brand-book.md](materials/air-brand-book.md).
-
----
-Free community learning. Nothing sold, nothing collected.
-Sponsored by **[Digi2U.org](https://digi2u.org)**.
+Database migrations are stored in `drizzle/`. Do not use destructive reset commands. New schema changes should be generated, reviewed, and applied in order.
