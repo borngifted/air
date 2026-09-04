@@ -238,6 +238,28 @@ section>.wrap{position:relative;z-index:1}
 @media(prefers-reduced-motion:reduce){.reveal,.reveal-card{opacity:1;transform:none}.sec-intro span::after{display:none}}
 
 
+
+
+/* ---- gemini visuals ---- */
+.gem-fig{margin:26px 0 0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--deep)}
+.gem-fig img{display:block;width:100%;height:auto}
+.gem-fig figcaption{padding:12px 16px;font-size:13.5px;color:var(--muted);line-height:1.5}
+.gem-fig figcaption a{color:var(--air-bright)}
+.gem-tag{display:inline-block;margin-left:6px;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--air-lime);border:1px solid var(--air-lime);padding:1px 7px;border-radius:999px;font-weight:800}
+
+/* ---- prompt coach ---- */
+#coach textarea{width:100%;background:var(--deep);border:1px solid var(--line);border-radius:6px;color:var(--air-pale);padding:14px;font-size:15px;font-family:var(--f);line-height:1.5;resize:vertical}
+#coach textarea:focus{outline:none;border-color:var(--air-bright)}
+.coach-row{display:flex;align-items:center;gap:14px;margin:12px 0}
+.coach-mode{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:4px 9px;border-radius:999px}
+.coach-mode.gemini{color:var(--air-green);background:var(--air-lime);border-color:var(--air-lime);font-weight:800}
+.coach-out{background:var(--deep);border-left:3px solid var(--air-bright);border-radius:0 4px 4px 0;padding:16px 18px;font-size:14.5px;color:var(--muted);min-height:80px;line-height:1.6}
+.coach-out h5{color:var(--air-pale);margin:0 0 8px;font-size:15px}
+.coach-score{font-size:26px;font-weight:800;color:var(--air-lime);font-variant-numeric:tabular-nums}
+.coach-out ul{margin:8px 0 0;padding-left:18px}
+.coach-out .have{color:var(--air-bright)}
+.coach-out .miss{color:var(--air-pale)}
+
 /* ---- framework modules (handoff: Dweck / Zipf / Navarro) ---- */
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 .mgrid{display:grid;gap:10px;margin:4px 0}
@@ -495,6 +517,21 @@ footer a{color:var(--air-bright)}
     <button class="btn btn-ghost wsm" id="brief-copy">Copy prompt</button>
   </div>
 
+  <!-- 4b · PROMPT COACH (Lesson 4 · optional Gemini) -->
+  <div class="widget" id="coach">
+    <header><span class="wnum">4b</span><h3>Prompt Coach</h3>
+      <span class="wtag">Lesson 4 · Direct the machine</span></header>
+    <p class="wlede">Write a prompt the way a creative director briefs a crew. The coach checks
+      it for the four things a good brief needs — <b>context, task, constraints, and a
+      check</b> — and tells you what's missing.</p>
+    <textarea id="coach-in" rows="4" placeholder="e.g. I run a food pantry. Draft a warm two-paragraph reminder for returning volunteers with arrival time and what to bring; flag anything you had to guess."></textarea>
+    <div class="coach-row">
+      <button class="btn btn-go wsm" id="coach-go">Check my brief</button>
+      <span class="coach-mode" id="coach-mode">on-device</span>
+    </div>
+    <div class="coach-out" id="coach-out" aria-live="polite">Your brief's score and coaching appear here — nothing leaves this page.</div>
+  </div>
+
   <!-- 5 · REVIEW SIGNALS -->
   <div class="widget" id="review">
     <header><span class="wnum">05</span><h3>Review the Result</h3>
@@ -575,6 +612,7 @@ footer a{color:var(--air-bright)}
     <p class="wnote" id="radio-note">"Define Human Outcomes Before AI Tools" — generated from the
       course sources in Google NotebookLM. Opens in a new tab; no account needed.</p>
   </div>
+  <figure class="gem-fig reveal"><img src="media/gem-map.jpg" alt="A constellation-style map of the eight AIR lessons connected to a central hub" loading="lazy"><figcaption>Eight lessons, one hub. Explore the full interactive mind map in <a href="https://notebook.google.com/notebook/946727cf-b026-4469-a101-bd1d8ede1234" target="_blank" rel="noopener">the AIR notebook ↗</a>. <span class="gem-tag">made with Gemini</span></figcaption></figure>
   <div class="plat">
     <a href="materials/air-course-map.md"><span class="kk">Read</span><b>The Course Map ↗</b></a>
     <a href="materials/lesson-guide-say-it-so-they-get-it.md"><span class="kk">Read</span><b>Lesson Guide — full first experience ↗</b></a>

@@ -308,3 +308,68 @@
     });
   }
 })();
+
+/* ================= Prompt Coach (Lesson 4) — local-first, optional Gemini ================= */
+(function () {
+  var inEl = document.getElementById("coach-in"),
+      out = document.getElementById("coach-out"),
+      modeEl = document.getElementById("coach-mode");
+  if (!inEl) return;
+
+  /* opt-in Gemini: a facilitator can set localStorage 'air-gemini-key' in their own
+     browser to upgrade the coach to a live critique. No key ships in this file; nothing
+     is sent unless the user themselves added a key. Default is fully on-device. */
+  var key = null;
+  try { key = localStorage.getItem("air-gemini-key"); } catch (e) {}
+  if (key) { modeEl.textContent = "Gemini live"; modeEl.classList.add("gemini"); }
+
+  var CHECKS = [
+    ["context", /\b(i am|i'm|i run|i work|we are|we're|our|my |for a|as a)\b/i, "who you are / the situation"],
+    ["task", /\b(draft|write|make|create|summari|explain|plan|design|list|turn|build|generate)\b/i, "the actual task"],
+    ["constraints", /\b(tone|warm|plain|short|word|include|avoid|don't|do not|by |before|format|paragraph|bullet|under|no )\b/i, "constraints — tone, length, must-haves"],
+    ["check", /\b(flag|confirm|verify|check|assume|guess|missing|unsure|not sure|cite|source)\b/i, "a check — ask it to surface what it guessed"],
+  ];
+
+  function localCritique(text) {
+    var have = [], miss = [];
+    CHECKS.forEach(function (c) {
+      (c[1].test(text) ? have : miss).push(c[2]);
+    });
+    var score = Math.round(have.length / CHECKS.length * 100);
+    var tips = miss.length
+      ? "<ul>" + miss.map(function (m) { return "<li class='miss'>Add " + m + ".</li>"; }).join("") + "</ul>"
+      : "<p class='have'>All four layers present — that's a real brief, not a wish.</p>";
+    var got = have.length
+      ? "<ul>" + have.map(function (m) { return "<li class='have'>✓ " + m + "</li>"; }).join("") + "</ul>"
+      : "";
+    return "<h5>Brief strength <span class='coach-score'>" + score + "%</span></h5>" + got + tips;
+  }
+
+  async function geminiCritique(text) {
+    var url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + key;
+    var prompt = "You are AIR's Prompt Coach. In under 90 words, coach this AI prompt like a "
+      + "creative director. Say what's strong, name the single most important thing to add "
+      + "(context, task, constraints, or a check that surfaces guesses), and rewrite it in one "
+      + "tighter line. Prompt:\n\n" + text;
+    var res = await fetch(url, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+    });
+    if (!res.ok) throw new Error("gemini " + res.status);
+    var data = await res.json();
+    var t = (((data.candidates || [])[0] || {}).content || {}).parts || [];
+    return "<h5>Gemini coaching</h5><p>" + (t.map(function (p) { return p.text; }).join(" ") || "No response.") + "</p>";
+  }
+
+  document.getElementById("coach-go").addEventListener("click", async function () {
+    var text = inEl.value.trim();
+    if (!text) { out.textContent = "Write a prompt first."; return; }
+    out.innerHTML = localCritique(text); /* always show the on-device read instantly */
+    if (key) {
+      out.innerHTML += "<p class='miss'>Asking Gemini…</p>";
+      try { out.innerHTML = localCritique(text) + geminiCritiqueWrap(await geminiCritique(text)); }
+      catch (e) { out.innerHTML = localCritique(text) + "<p class='miss'>(Gemini unavailable — showing on-device coaching.)</p>"; }
+    }
+  });
+  function geminiCritiqueWrap(html) { return "<hr style='border:none;border-top:1px solid var(--line);margin:14px 0'>" + html; }
+})();
