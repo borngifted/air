@@ -53,3 +53,9 @@ A targeted source audit reviewed every explicit `var(--go)` and `var(--spark)` t
 The footer uses a pure black background and renders the official two-tone SVG through a high-contrast inverse filter. This preserves the complete white AiR silhouette while translating the logo’s original dark geometry into black. Visual inspection confirmed that the lowercase i center and the inner A and R forms disappear cleanly into the footer background, leaving crisp intentional negative space rather than a filled monochrome mark.
 
 The same footer position was then checked after switching the full site to dark mode. Because the footer keeps its own black canvas in both themes, the white logo forms and black internal cutouts remained unchanged and legible. Desktop verification is complete; the final release check includes the responsive mobile footer and automated build validation.
+
+## Header mark geometry
+
+The global header now preserves the same intentional negative-space construction without reintroducing a background plate. In light mode, the original two-tone mark uses multiply blending so its dark forms remain visible while the white lowercase i center and inner A and R geometry adopt the light header background. In dark mode, the mark is converted to white and black, then uses screen blending so the black internal geometry adopts the dark header background. Interactive desktop inspection confirmed crisp logo forms and background-matched cutouts in both themes.
+
+Focused 390 × 844 mobile captures were completed for both themes. The isolated light-mode capture showed dark logo forms with the internal i, A, and R geometry matching the warm light header; the restored production dark-mode capture showed white forms with those same internal shapes matching the dark header. Neither state introduced a logo background plate, blur, or edge halo.

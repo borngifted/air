@@ -111,8 +111,8 @@ button:active, .air-button:active { transform: scale(.97); }
 .site-footer-logo { filter: invert(1) grayscale(1) contrast(1000%); }
 .brand-link { display: flex; align-items: center; gap: .8rem; }
 .brand-emblem { display: grid; width: 68px; height: 48px; place-items: center; overflow: visible; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
-.brand-logo { width: 58px; height: 40px; object-fit: contain; opacity: .96; filter: brightness(0) saturate(100%) drop-shadow(0 5px 10px rgba(16,35,29,.12)); transition: filter 180ms cubic-bezier(.23,1,.32,1), opacity 180ms cubic-bezier(.23,1,.32,1); }
-.dark .brand-logo { filter: brightness(0) invert(1) drop-shadow(0 5px 12px rgba(0,0,0,.25)); }
+.brand-logo { width: 58px; height: 40px; object-fit: contain; opacity: 1; filter: none; mix-blend-mode: multiply; transition: filter 180ms cubic-bezier(.23,1,.32,1), opacity 180ms cubic-bezier(.23,1,.32,1); }
+.dark .brand-logo, .admin-login-shell .brand-logo { filter: invert(1) grayscale(1) contrast(1000%); mix-blend-mode: screen; }
 .brand-words { display: grid; line-height: 1; }
 .brand-words b { font-family: "Barlow Condensed"; font-size: 1.3rem; text-transform: uppercase; }
 .brand-words small { margin-top: .3rem; color: var(--copy-muted); font-size: 8px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
