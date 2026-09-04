@@ -12,6 +12,10 @@ The chained film: eight brand stills morphed into one continuous motion piece by
 - **Create** — Collect three finished works and write what made each land.
 - **Build** — Take one apart: list every human decision inside it.
 
+## Deeper: the math of creativity (Simonton · Bowden · Zipf)
+
+Breakthroughs aren't magic, they're arithmetic. **Combinatorial creativity** (Bowden): recombining a few building blocks yields astronomical permutations. **The law of large numbers** (Simonton): prolific makers make breakthroughs statistically inevitable. **Zipf's law**: most output is noise — the signal lives in the outliers, and outliers need volume. The **Formula of Genius** simulator in the practice suite makes this visible.
+
 ---
 *AIR — AI Readiness · a free community course by [Digi2U.org](https://digi2u.org) · ages 8–100 ·
 no certificates, no tests — progress is the things you make.*
