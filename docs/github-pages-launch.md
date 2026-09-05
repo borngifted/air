@@ -1,6 +1,6 @@
 # AiR GitHub Pages Launch
 
-AiR’s public frontend is deployed to **[https://borngifted.github.io/air/](https://borngifted.github.io/air/)** from the `docs/` directory on `main`. The release process builds the React application with the `/air/` base path, downloads the public media release into the deployment artifact, creates a `404.html` SPA fallback, copies the artifact into `docs/`, and configures GitHub Pages to serve `main/docs`.
+AiR’s public frontend is deployed to **[https://borngifted.github.io/air/](https://borngifted.github.io/air/)** from the repository root on `main`, which is the Pages source already enabled for this repository. The release process builds the React application with the `/air/` base path, downloads the public media release into the deployment artifact, creates a `404.html` SPA fallback, and copies the deployable artifact to the repository root alongside the editable source.
 
 ## What GitHub Hosts
 
@@ -25,7 +25,7 @@ After changing `VITE_API_ORIGIN`, rebuild the Pages artifact, replace the deploy
 
 ## Media
 
-The `air-pages-media-v1` GitHub release is the source bundle for public logos, posters, MP4 files, and campaign images. The release packaging step downloads those files into the generated `docs/media` artifact so the final site serves them with browser-compatible content types. The editable application source continues to reference centralized asset paths rather than importing media into React modules.
+The `air-pages-media-v1` GitHub release is the source bundle for public logos, posters, MP4 files, and campaign images. The release packaging step downloads those files into the generated root `media/` artifact so the final site serves them with browser-compatible content types. The editable application source continues to reference centralized asset paths rather than importing media into React modules.
 
 ## Deep Links
 
@@ -45,15 +45,15 @@ With no API origin, public learning remains available and protected actions rout
 
 ## Branch-based release
 
-The connected GitHub App can push repository content but cannot create workflow files. The supported launch therefore uses the standard GitHub Pages branch source:
+The connected GitHub App can push repository content but cannot create workflow files or change Pages settings. The supported launch therefore uses the repository’s already active GitHub Pages branch source, `main /`:
 
 1. Build and verify the `/air/` artifact.
-2. Preserve the Markdown source documents already in `docs/`.
-3. Replace `docs/index.html`, `docs/404.html`, `docs/.nojekyll`, `docs/assets/`, and `docs/media/` with the verified artifact.
+2. Preserve the editable application source and Markdown documents.
+3. Replace only root `index.html`, `404.html`, `.nojekyll`, `assets/`, and `media/` with the verified artifact.
 4. Commit and push `main`.
-5. Set the Pages source to branch `main`, path `/docs`.
+5. GitHub Pages automatically rebuilds from its existing `main /` source.
 
-The deployable `docs/media` files are generated copies of the `air-pages-media-v1` release assets.
+The deployable root `media/` files are generated copies of the `air-pages-media-v1` release assets.
 
 ## Verification record
 

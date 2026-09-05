@@ -91,7 +91,7 @@
 - [x] Capture focused mobile light-mode and dark-mode header checks confirming the i, A, and R negative spaces match the header background
 - [x] Audit the current `borngifted/air` GitHub Pages deployment and identify why it is not yet a reliable full-platform launch
 - [x] Configure the frontend production build for the `/air/` GitHub Pages base path without breaking local or managed hosting
-- [x] Add a GitHub Pages production-build definition; use a branch-based `main/docs` deployment because the connected GitHub App cannot create workflow files
+- [x] Add a GitHub Pages production-build definition; use the repository’s existing branch-based `main /` deployment because the connected GitHub App cannot create workflow files or change Pages settings
 - [x] Add and verify a client-side deep-link fallback so curriculum, lesson, community, trainer, camera, and admin URLs reopen correctly on Pages
 - [x] Define the `VITE_API_ORIGIN`, `FRONTEND_ORIGIN`, and `PUBLIC_API_ORIGIN` contract required for authentication, database, uploads, community, and progress features
 - [x] Preserve a graceful public-learning experience when the production API origin is unavailable
@@ -99,9 +99,10 @@
 - [x] Verify authenticated entry degrades safely and document which backend-dependent flows require a separately hosted server
 - [x] Document the GitHub launch architecture, required repository variables or secrets, and future deployment workflow
 - [x] Re-run TypeScript, all 21 tests, full-stack production build, and GitHub Pages production build
-- [ ] Package the verified static Pages artifact into repository `docs/` without committing project-only build output
-- [ ] Remove the blocked GitHub Actions workflow file from the launch commit and document the `main/docs` deployment source
-- [ ] Save a checkpoint, push the branch-based launch to `borngifted/air` main, configure Pages to serve `main/docs`, and confirm deployment succeeds
+- [ ] Package the verified static Pages artifact at the repository root without committing project-only build output
+- [x] Remove the blocked GitHub Actions workflow file from the launch commit
+- [ ] Document the existing `main /` deployment source and the GitHub App’s Pages-settings permission limit
+- [ ] Save a checkpoint, push the root-based launch to `borngifted/air` main, and confirm the existing Pages deployment succeeds
 - [x] Verify direct Pages-build routes for a lesson, community, trainers, camera, and administrator sign-in, including their intended protected fallback
 - [x] Capture desktop and mobile Pages-build checks in dark and light themes covering hero media, campaign images, header/footer logo geometry, and launch status
 - [ ] Verify and document the same critical states on the deployed `https://borngifted.github.io/air/` URL after GitHub Actions finishes
