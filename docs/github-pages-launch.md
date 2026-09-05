@@ -74,3 +74,19 @@ All eleven packaged media routes returned HTTP 200 with browser-compatible types
 Additional light-theme campaign captures at 1280 × 720 and 390 × 844 confirmed the warm paper background, dark headings, green accent, all visible campaign imagery, readable overlays, and responsive stacking. The first campaign card remains the mobile lead while the desktop composition shows the wide **Move with it** card beside **Check before you trust**.
 
 Dark-theme footer captures at 1280 × 720 and 390 × 844 confirmed the white AiR mark remains crisp against black and its lowercase i center plus inner A and R shapes match the footer background. Footer copy, navigation, attribution, and the green community band remained legible at both breakpoints.
+
+## Live deployment verification
+
+GitHub Pages built commit `36cd90e4bfce50ecc04970680f2b8ae484c9ea25` successfully from the existing `main /` source. The public homepage at `https://borngifted.github.io/air/` rendered the dark-first brand experience, African American male hero media, all three campaign placements, static curriculum cards, theme control, and background-matched header/footer marks. The direct `/air/curriculum` URL reopened without a 404 and displayed all four paths plus Explore, Create, and Build entry modes.
+
+The deployed `/air/paths/clear` deep link rendered the complete Clear overview and all three lesson summaries. The deployed `/air/launch` route rendered the branded launch-status state and clearly distinguished the live public curriculum from account, community, upload, and administrator capabilities that require the secure AiR server.
+
+The live `/air/community` deep link rendered the intended free-member access gate instead of failing. The live `/air/admin/login` deep link rendered the distinct administrator sign-in design with both AiR marks, theme control, and launch-safe sign-in action.
+
+Phone-sized captures of the deployed homepage in dark and light modes confirmed the responsive AiR header, theme-aware negative-space mark, African American male hero media, age-eight-readable headline, supporting copy, and primary actions render correctly. The live light-mode administrator switch also produced the corrected warm light surface and white sign-in card.
+
+All eleven deployed `/air/media/` routes returned HTTP 200 with the correct browser MIME types for SVG, PNG, JPEG, and MP4 assets. This includes the hero video and poster, African American male course video/poster, all three campaign images, and both logo formats.
+
+The deployed `/air/learn/clear-the-air` deep link reopened the intended free-member gate instead of a 404. The deployed `/air/trainers` route reopened the trainer-specific access state and correctly explained that facilitator materials require sign-in through the secure server.
+
+The deployed `/air/studio` camera route also reopened the intended free-member access gate with the complete branded shell. Together, the live lesson, community, trainer, camera, and administrator URLs confirm that protected deep links degrade safely on GitHub Pages until the production API bridge is connected.

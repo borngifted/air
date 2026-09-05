@@ -99,13 +99,13 @@
 - [x] Verify authenticated entry degrades safely and document which backend-dependent flows require a separately hosted server
 - [x] Document the GitHub launch architecture, required repository variables or secrets, and future deployment workflow
 - [x] Re-run TypeScript, all 21 tests, full-stack production build, and GitHub Pages production build
-- [ ] Package the verified static Pages artifact at the repository root without committing project-only build output
+- [x] Package the verified static Pages artifact at the repository root without committing project-only build output
 - [x] Remove the blocked GitHub Actions workflow file from the launch commit
-- [ ] Document the existing `main /` deployment source and the GitHub App’s Pages-settings permission limit
-- [ ] Save a checkpoint, push the root-based launch to `borngifted/air` main, and confirm the existing Pages deployment succeeds
+- [x] Document the existing `main /` deployment source and the GitHub App’s Pages-settings permission limit
+- [x] Save a checkpoint, push the root-based launch to `borngifted/air` main, and confirm the existing Pages deployment succeeds
 - [x] Verify direct Pages-build routes for a lesson, community, trainers, camera, and administrator sign-in, including their intended protected fallback
 - [x] Capture desktop and mobile Pages-build checks in dark and light themes covering hero media, campaign images, header/footer logo geometry, and launch status
-- [ ] Verify and document the same critical states on the deployed `https://borngifted.github.io/air/` URL after GitHub Actions finishes
+- [x] Verify and document the same critical states on the deployed `https://borngifted.github.io/air/` URL after the GitHub Pages build finishes
 - [x] Capture and review explicit local Pages screenshots for `/air/launch`, `/air/curriculum`, and `/air/admin/login` in desktop and mobile states
 - [x] Verify packaged hero video/poster, all three campaign images, header logo, and footer logo directly from `/air/media/` responses and rendered captures
 - [x] Fix the separate administrator sign-in surface so the light-theme capture visibly changes its background and card treatment instead of remaining dark
