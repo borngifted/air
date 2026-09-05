@@ -124,3 +124,9 @@
 - [x] Preserve the complete static curriculum fallback when the connected production API is temporarily unavailable or returns an error
 - [x] Correct the published OAuth portal origin so “Join free” reaches the working Manus sign-in route instead of `api.manus.ai/app-auth` returning 404
 - [x] Re-test the live GitHub Pages handoff to the Manus sign-in page with the stable AiR callback and preserved GitHub return state
+- [x] Audit the final AiR logo system, color palette, typography, messaging, audience, and four-move learning framework for the brand kit
+- [x] Create a production-ready AiR brand kit covering positioning, purpose, audience, messaging hierarchy, voice, logo rules, color, typography, photography, motion, accessibility, campaign structure, and usage examples
+- [x] Create a separate AiR commercial shoot book with four filmable concepts mapped to Clear, Direct, Judge, and Make
+- [x] Give each commercial timed visual beats, full dialogue or voiceover, on-screen copy, shot direction, casting, wardrobe, props, locations, sound, edit notes, and 15-second cutdowns
+- [x] Review all brand and commercial language for age-eight comprehension, adult sophistication, casting consistency, shoot practicality, and alignment with the live platform
+- [ ] Save the finished brand package in the project, create a final checkpoint, and deliver the files as downloadable attachments
