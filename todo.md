@@ -129,4 +129,5 @@
 - [x] Create a separate AiR commercial shoot book with four filmable concepts mapped to Clear, Direct, Judge, and Make
 - [x] Give each commercial timed visual beats, full dialogue or voiceover, on-screen copy, shot direction, casting, wardrobe, props, locations, sound, edit notes, and 15-second cutdowns
 - [x] Review all brand and commercial language for age-eight comprehension, adult sophistication, casting consistency, shoot practicality, and alignment with the live platform
-- [ ] Save the finished brand package in the project, create a final checkpoint, and deliver the files as downloadable attachments
+- [x] Save the finished brand package in the project, create a final checkpoint, and prepare the files for downloadable delivery
+- [x] Create an attachment-ready ZIP containing the AiR brand kit, four-commercial shoot book, package index, and official logo files
