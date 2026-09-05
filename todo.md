@@ -117,9 +117,9 @@
 - [x] Confirm the deployed backend is serving `FRONTEND_ORIGIN=https://borngifted.github.io/air/` and `PUBLIC_API_ORIGIN=https://airplatform-6feozlue.manus.space`
 - [x] Validate cross-origin public catalog and session requests from the GitHub Pages origin before rebuilding the frontend
 - [x] Rebuild the GitHub Pages artifact with `VITE_API_ORIGIN=https://airplatform-6feozlue.manus.space`
-- [ ] Publish the connected artifact at the repository root and confirm the GitHub Pages build succeeds
-- [ ] Verify the live homepage, curriculum, member sign-in start, protected routes, media, and static fallback with the production API bridge enabled
-- [ ] Update launch documentation, run TypeScript and all tests, save a final checkpoint, and synchronize the completed bridge to `borngifted/air` main
+- [x] Publish the connected artifact at the repository root and confirm the GitHub Pages build succeeds
+- [x] Verify the live homepage, curriculum, member sign-in start, protected routes, media, and static fallback with the production API bridge enabled
+- [x] Update launch documentation, run TypeScript and all 24 tests, save a final checkpoint, and synchronize the completed bridge to `borngifted/air` main
 - [x] Confirm `/api/oauth/start` emits `https://airplatform-6feozlue.manus.space/api/oauth/callback` and safely preserves the GitHub Pages return URL
 - [x] Preserve the complete static curriculum fallback when the connected production API is temporarily unavailable or returns an error
 - [x] Correct the published OAuth portal origin so “Join free” reaches the working Manus sign-in route instead of `api.manus.ai/app-auth` returning 404

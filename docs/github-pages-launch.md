@@ -102,3 +102,15 @@ Connected artifact commit `9fadc3079f17a19bc0a6b84ee2eee96cb1f38557` includes th
 GitHub Pages build `1f51cf3b822d20c387dc17c9471cbe91170aec4c` completed successfully with the connected artifact at the repository root. The live JavaScript bundle contains the production AiR API origin. The deployed `/air/launch` route now states that the secure server is connected and that members can sign in and continue their learning journey.
 
 The first live sign-in check exposed an obsolete `api.manus.ai/app-auth` route that returned 404. AiR now builds the canonical `https://manus.im/login` authorization URL with `app_id`, `redirect_url`, and signed `state`. A second live click on **Join free** opened the real Manus sign-in/sign-up page. Its URL contained the stable AiR callback and a signed return value for the originating GitHub Pages route. No credentials were entered during verification.
+
+Final Pages build `5b357af18dd43e487e5cc76b3b235b10522d1a8f` completed successfully after the OAuth correction. The deployed homepage rendered the branded hero, campaign media, navigation, and footer. After the production catalog request settled, the live page displayed all four backend-supplied learning paths: Clear, Direct, Judge, and Make.
+
+The deployed `/air/community` route queried the connected backend and, for an anonymous visitor, rendered the intended **Free member access** gate with a clear **Join free** action. It did not expose community data or fail into an empty route.
+
+The final `/air/curriculum` route rendered the four connected learning paths and the age-adaptive Explore, Create, and Build entry levels. The `/air/paths/clear` deep link rendered all three Clear lessons with valid `/air/learn/` destinations, durations, and the secure **Join to start** action.
+
+The final live bundle contains the production API origin and canonical `manus.im` login host, with no remaining `app-auth` reference. The production catalog endpoint returns the exact GitHub Pages origin and credential allowance. All eleven packaged media assets returned HTTP 200 with browser-correct SVG, PNG, JPEG, or MP4 MIME types, including the theme-aware marks, African American male hero/course footage and poster, three campaign images, and supporting lesson video clips.
+
+Post-bridge protected-route checks confirmed that `/air/learn/clear-the-air`, `/air/trainers`, and `/air/studio` each settle into an appropriate **Free member access** gate for an anonymous visitor. The trainer gate specifically explains that the separate knowledge base and facilitator materials require sign-in; the camera gate does not expose browser camera controls before membership is established.
+
+The final `/air/admin/login` route rendered the separate AiR administrator sign-in surface with its theme control, administrator-specific copy, secure sign-in action, and return link to the public site. No administrator tools or data were exposed before role-checked authentication.
