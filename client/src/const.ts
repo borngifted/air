@@ -1,4 +1,5 @@
 import { OAUTH_STATE_COOKIE, encodeOAuthState } from "@shared/const";
+import { buildOAuthLoginUrl } from "@shared/oauth";
 import { API_ORIGIN, appPath, HAS_PLATFORM_API } from "@/lib/runtime";
 
 export { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
@@ -34,11 +35,5 @@ export const startLogin = () => {
   document.cookie = `${OAUTH_STATE_COOKIE}=${nonce}; Path=/; Max-Age=600; SameSite=None; Secure`;
   const state = encodeOAuthState({ redirectUri, nonce });
 
-  const url = new URL(`${oauthPortalUrl}/app-auth`);
-  url.searchParams.set("appId", appId);
-  url.searchParams.set("redirectUri", redirectUri);
-  url.searchParams.set("state", state);
-  url.searchParams.set("type", "signIn");
-
-  window.location.href = url.toString();
+  window.location.href = buildOAuthLoginUrl(oauthPortalUrl, appId, redirectUri, state);
 };

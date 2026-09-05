@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { staticCatalog } from "../client/src/lib/staticCatalog";
 import { shouldUseStaticCatalog } from "../client/src/lib/publicCatalogFallback";
 import { decodeOAuthState, encodeOAuthState } from "../shared/const";
+import { buildOAuthLoginUrl } from "../shared/oauth";
 
 describe("GitHub Pages launch contract", () => {
   it("ships all four paths and twelve public lesson summaries without an API", () => {
@@ -28,6 +29,24 @@ describe("GitHub Pages launch contract", () => {
       nonce: "one-time-nonce",
       returnTo: "https://borngifted.github.io/air/dashboard",
     });
+  });
+
+  it("builds the canonical Manus login URL instead of the removed app-auth route", () => {
+    const loginUrl = new URL(buildOAuthLoginUrl(
+      "https://manus.im",
+      "air-app-id",
+      "https://airplatform-6feozlue.manus.space/api/oauth/callback",
+      "signed-state",
+    ));
+
+    expect(loginUrl.origin).toBe("https://manus.im");
+    expect(loginUrl.pathname).toBe("/login");
+    expect(loginUrl.searchParams.get("app_id")).toBe("air-app-id");
+    expect(loginUrl.searchParams.get("redirect_url")).toBe(
+      "https://airplatform-6feozlue.manus.space/api/oauth/callback",
+    );
+    expect(loginUrl.searchParams.get("state")).toBe("signed-state");
+    expect(loginUrl.searchParams.has("type")).toBe(false);
   });
 
   it("connects the configured GitHub frontend origin to the published catalog API", async () => {

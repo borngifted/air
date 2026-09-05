@@ -122,3 +122,5 @@
 - [ ] Update launch documentation, run TypeScript and all tests, save a final checkpoint, and synchronize the completed bridge to `borngifted/air` main
 - [x] Confirm `/api/oauth/start` emits `https://airplatform-6feozlue.manus.space/api/oauth/callback` and safely preserves the GitHub Pages return URL
 - [x] Preserve the complete static curriculum fallback when the connected production API is temporarily unavailable or returns an error
+- [x] Correct the published OAuth portal origin so “Join free” reaches the working Manus sign-in route instead of `api.manus.ai/app-auth` returning 404
+- [x] Re-test the live GitHub Pages handoff to the Manus sign-in page with the stable AiR callback and preserved GitHub return state

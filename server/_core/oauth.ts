@@ -1,4 +1,5 @@
 import { COOKIE_NAME, ONE_YEAR_MS, OAUTH_STATE_COOKIE, decodeOAuthState, encodeOAuthState } from "@shared/const";
+import { buildOAuthLoginUrl } from "@shared/oauth";
 import { parse as parseCookieHeader } from "cookie";
 import type { Express, Request, Response } from "express";
 import { randomUUID } from "node:crypto";
@@ -54,12 +55,7 @@ export function registerOAuthRoutes(app: Express) {
       maxAge: 600_000,
     });
 
-    const url = new URL(`${ENV.oAuthServerUrl}/app-auth`);
-    url.searchParams.set("appId", ENV.appId);
-    url.searchParams.set("redirectUri", redirectUri);
-    url.searchParams.set("state", state);
-    url.searchParams.set("type", "signIn");
-    res.redirect(302, url.toString());
+    res.redirect(302, buildOAuthLoginUrl(ENV.oAuthPortalUrl, ENV.appId, redirectUri, state));
   });
 
   app.get("/api/oauth/callback", async (req: Request, res: Response) => {
