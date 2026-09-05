@@ -90,3 +90,7 @@ All eleven deployed `/air/media/` routes returned HTTP 200 with the correct brow
 The deployed `/air/learn/clear-the-air` deep link reopened the intended free-member gate instead of a 404. The deployed `/air/trainers` route reopened the trainer-specific access state and correctly explained that facilitator materials require sign-in through the secure server.
 
 The deployed `/air/studio` camera route also reopened the intended free-member access gate with the complete branded shell. Together, the live lesson, community, trainer, camera, and administrator URLs confirm that protected deep links degrade safely on GitHub Pages until the production API bridge is connected.
+
+## Connected backend build
+
+The Pages artifact was rebuilt with `VITE_API_ORIGIN=https://airplatform-6feozlue.manus.space`. Its generated JavaScript bundle contains that exact origin and serves from `/air/assets/` as `text/javascript`. A local production preview rendered the complete homepage and all four curriculum cards. Because the temporary preview origin is intentionally outside production CORS, the public catalog request failed safely and the new static-catalog fallback restored all public learning content instead of showing an empty state.

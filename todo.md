@@ -113,3 +113,12 @@
 - [x] Capture and review the Pages campaign section in light theme on desktop and mobile
 - [x] Capture and review the Pages footer logo in dark theme on desktop and mobile
 - [x] Document the final cross-theme Pages evidence for campaign images and footer-logo negative space
+- [x] Audit the published AiR server at `https://airplatform-6feozlue.manus.space` for production tRPC, OAuth-start, callback, CORS, and health behavior after deployment
+- [x] Confirm the deployed backend is serving `FRONTEND_ORIGIN=https://borngifted.github.io/air/` and `PUBLIC_API_ORIGIN=https://airplatform-6feozlue.manus.space`
+- [x] Validate cross-origin public catalog and session requests from the GitHub Pages origin before rebuilding the frontend
+- [x] Rebuild the GitHub Pages artifact with `VITE_API_ORIGIN=https://airplatform-6feozlue.manus.space`
+- [ ] Publish the connected artifact at the repository root and confirm the GitHub Pages build succeeds
+- [ ] Verify the live homepage, curriculum, member sign-in start, protected routes, media, and static fallback with the production API bridge enabled
+- [ ] Update launch documentation, run TypeScript and all tests, save a final checkpoint, and synchronize the completed bridge to `borngifted/air` main
+- [x] Confirm `/api/oauth/start` emits `https://airplatform-6feozlue.manus.space/api/oauth/callback` and safely preserves the GitHub Pages return URL
+- [x] Preserve the complete static curriculum fallback when the connected production API is temporarily unavailable or returns an error
