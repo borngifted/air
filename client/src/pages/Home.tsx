@@ -1,6 +1,6 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { startLogin } from "@/const";
+import { GoogleSignInButton } from "@/components/GoogleSignInButton";
 import { AIR_ASSETS } from "@/lib/assets";
 import { usePublicCatalog } from "@/hooks/usePublicCatalog";
 import { ArrowDown, ArrowRight, Check, Eye, Flag, Sparkles, Users } from "lucide-react";
@@ -30,7 +30,7 @@ export default function Home() {
             <h1 className="display hero-title mt-8">Stop learning AI.<br /><em>Learn to move with it.</em></h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-mist sm:text-xl">AiR turns complex AI work into simple human moves. Choose what matters. Give clear direction. Check what comes back. Make something real.</p>
             <div className="mt-9 flex flex-wrap gap-3">
-              {isAuthenticated ? <Link href="/dashboard"><Button className="air-button big">Continue your move <ArrowRight /></Button></Link> : <Button className="air-button big" onClick={() => startLogin()}>Join AiR free <ArrowRight /></Button>}
+              {isAuthenticated ? <Link href="/dashboard"><Button className="air-button big">Continue your move <ArrowRight /></Button></Link> : <GoogleSignInButton label="Join free with Google" className="big" />}
               <Link href="/curriculum"><Button variant="outline" className="air-button secondary big">See the paths <ArrowDown /></Button></Link>
             </div>
             <p className="mt-5 text-xs font-semibold uppercase tracking-[.14em] text-mist">No cost · no grades · no tool chasing</p>

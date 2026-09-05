@@ -1,6 +1,6 @@
 import { useAuth } from "@/_core/hooks/useAuth";
-import { startLogin } from "@/const";
 import { Button } from "@/components/ui/button";
+import { GoogleSignInButton } from "./GoogleSignInButton";
 import { AirMark } from "./AirMark";
 import { Link, useLocation } from "wouter";
 import { Menu, Moon, ShieldCheck, Sun, X } from "lucide-react";
@@ -48,7 +48,7 @@ export function SiteHeader() {
               <button className="signout-link" onClick={() => logout()}>Sign out</button>
             </>
           ) : (
-            <Button onClick={() => startLogin()} className="air-button">Join free</Button>
+            <GoogleSignInButton label="Continue with Google" />
           )}
         </div>
 
@@ -71,7 +71,7 @@ export function SiteHeader() {
                 <Link href="/dashboard" onClick={() => setOpen(false)} className="mobile-nav-link">My AiR</Link>
                 <button className="mobile-nav-link text-left" onClick={() => logout()}>Sign out</button>
               </>
-            ) : <Button onClick={() => startLogin()} className="air-button mt-3">Join AiR free</Button>}
+            ) : <GoogleSignInButton className="mt-3 w-full" />}
             {user?.role === "admin" && <Link href="/admin" onClick={() => setOpen(false)} className="mobile-nav-link">Admin workspace</Link>}
           </nav>
         </div>

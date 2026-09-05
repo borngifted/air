@@ -1,4 +1,5 @@
 import { COOKIE_NAME, ONE_YEAR_MS, OAUTH_STATE_COOKIE, decodeOAuthState, encodeOAuthState } from "@shared/const";
+import { hasConflictingIdentity, isGoogleLoginMethod, type AuthReturnError } from "@shared/auth";
 import { buildOAuthLoginUrl } from "@shared/oauth";
 import { parse as parseCookieHeader } from "cookie";
 import type { Express, Request, Response } from "express";
@@ -34,6 +35,17 @@ function safeFrontendReturn(raw?: string) {
   } catch {
     return undefined;
   }
+}
+
+function returnAuthError(res: Response, returnTo: string | undefined, code: AuthReturnError) {
+  const frontendReturn = safeFrontendReturn(returnTo);
+  if (!frontendReturn) {
+    res.status(code === "identity_conflict" ? 409 : 403).json({ error: code });
+    return;
+  }
+  const destination = new URL(frontendReturn);
+  destination.hash = new URLSearchParams({ air_auth_error: code }).toString();
+  res.redirect(302, destination.toString());
 }
 
 export function registerOAuthRoutes(app: Express) {
@@ -84,11 +96,25 @@ export function registerOAuthRoutes(app: Express) {
         return;
       }
 
+      const loginMethod = userInfo.loginMethod ?? userInfo.platform ?? null;
+      if (!isGoogleLoginMethod(loginMethod)) {
+        returnAuthError(res, returnTo, "google_required");
+        return;
+      }
+
+      if (userInfo.email) {
+        const matchingEmailUsers = await db.getUsersByNormalizedEmail(userInfo.email);
+        if (hasConflictingIdentity(matchingEmailUsers, userInfo.openId)) {
+          returnAuthError(res, returnTo, "identity_conflict");
+          return;
+        }
+      }
+
       await db.upsertUser({
         openId: userInfo.openId,
         name: userInfo.name || null,
         email: userInfo.email ?? null,
-        loginMethod: userInfo.loginMethod ?? userInfo.platform ?? null,
+        loginMethod,
         lastSignedIn: new Date(),
       });
 

@@ -1,6 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
-import { startLogin } from "@/const";
-import { Button } from "@/components/ui/button";
+import { GoogleSignInButton } from "@/components/GoogleSignInButton";
 import { LockKeyhole } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -15,7 +14,8 @@ export function AuthGate({ children, message = "Join AiR to keep your work, prog
         <p className="eyebrow mt-6">Free member access</p>
         <h1 className="display mt-3 text-5xl">Keep your next move.</h1>
         <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-mist">{message}</p>
-        <Button className="air-button mt-8" onClick={() => startLogin()}>Join free</Button>
+        <GoogleSignInButton className="mt-8" />
+        <p className="mt-4 text-xs leading-5 text-mist">Google opens the secure sign-in page. AiR never sees your Google password.</p>
       </div>
     </div>
   );

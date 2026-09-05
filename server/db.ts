@@ -72,6 +72,14 @@ export async function getUserByOpenId(openId: string) {
   return result[0];
 }
 
+export async function getUsersByNormalizedEmail(email: string) {
+  const db = await getDb();
+  if (!db) return [];
+  const normalizedEmail = email.trim().toLowerCase();
+  if (!normalizedEmail) return [];
+  return db.select().from(users).where(sql`LOWER(TRIM(${users.email})) = ${normalizedEmail}`).limit(2);
+}
+
 async function runContentSeed() {
   const db = await getDb();
   if (!db) throw new Error("Database unavailable");

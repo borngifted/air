@@ -131,3 +131,14 @@
 - [x] Review all brand and commercial language for age-eight comprehension, adult sophistication, casting consistency, shoot practicality, and alignment with the live platform
 - [x] Save the finished brand package in the project, create a final checkpoint, and prepare the files for downloadable delivery
 - [x] Create an attachment-ready ZIP containing the AiR brand kit, four-commercial shoot book, package index, and official logo files
+- [x] Audit the current Manus OAuth entry, callback, user upsert, GitHub Pages token bridge, and administrator role mapping for a Google-provider sign-in change
+- [x] Confirm the supported production method: Google-first AiR controls open the hosted identity page, and the callback requires a verified Google login method without inventing an undocumented provider endpoint
+- [x] Replace member-facing join and sign-in actions with clear “Continue with Google” language and the official Google sign-in visual pattern
+- [x] Route new sign-ups and returning members through the supported Google identity provider from public, protected, community, trainer, camera, and administrator entry points
+- [x] Preserve existing member progress, posts, comments, profile data, and administrator roles through the verified Google `openId`; the production audit found one Google member and no duplicate email
+- [x] Preserve safe behavior when a Google email is private or missing by keeping `openId` authoritative, and reject normalized-email conflicts instead of silently merging identities
+- [x] Add Vitest coverage for Google provider normalization, canonical authorization URL construction, callback return state, openId continuity, duplicate-email conflict handling, and administrator access
+- [ ] Verify Google sign-in handoff on the managed site and live GitHub Pages site without submitting personal credentials on the user’s behalf
+- [ ] Re-run TypeScript, all tests, full-stack build, GitHub Pages build, and cross-origin session checks
+- [ ] Publish the backend authentication update, rebuild the connected GitHub Pages artifact, synchronize `borngifted/air` main, and confirm the live sign-in entry
+- [ ] Save the final Google sign-in checkpoint and document the authentication flow and operational requirements

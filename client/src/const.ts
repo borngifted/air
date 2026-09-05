@@ -4,7 +4,9 @@ import { API_ORIGIN, appPath, HAS_PLATFORM_API } from "@/lib/runtime";
 
 export { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 
-// Start the Manus OAuth login. Call this from an event handler or effect at the
+// Start the secure AiR OAuth login. The hosted identity screen presents Google
+// as the first provider and the member-facing controls call this Google entry.
+// Call this from an event handler or effect at the
 // moment you want to navigate, e.g. `onClick={() => startLogin()}`.
 //
 // It has SIDE EFFECTS — it mints a one-time nonce, writes the __Host- state
@@ -37,3 +39,7 @@ export const startLogin = () => {
 
   window.location.href = buildOAuthLoginUrl(oauthPortalUrl, appId, redirectUri, state);
 };
+
+// Keep the provider intent explicit at every visible entry point without
+// inventing an undocumented provider endpoint or changing the verified callback.
+export const startGoogleLogin = startLogin;

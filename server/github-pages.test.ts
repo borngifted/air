@@ -3,6 +3,13 @@ import { staticCatalog } from "../client/src/lib/staticCatalog";
 import { shouldUseStaticCatalog } from "../client/src/lib/publicCatalogFallback";
 import { decodeOAuthState, encodeOAuthState } from "../shared/const";
 import { buildOAuthLoginUrl } from "../shared/oauth";
+import {
+  deriveLoginMethod,
+  getAuthReturnErrorMessage,
+  GOOGLE_SIGN_IN_LABEL,
+  hasConflictingIdentity,
+  isGoogleLoginMethod,
+} from "../shared/auth";
 
 describe("GitHub Pages launch contract", () => {
   it("ships all four paths and twelve public lesson summaries without an API", () => {
@@ -67,4 +74,27 @@ describe("GitHub Pages launch contract", () => {
     const payload = await response.json() as { result?: { data?: { json?: unknown[] } } };
     expect(payload.result?.data?.json).toHaveLength(4);
   }, 20_000);
+});
+
+describe("Google sign-in contract", () => {
+  it("recognizes Google from Manus provider enums and plain provider names", () => {
+    expect(deriveLoginMethod(["REGISTERED_PLATFORM_GOOGLE"], null)).toBe("google");
+    expect(deriveLoginMethod([], "REGISTERED_PLATFORM_GOOGLE")).toBe("google");
+    expect(deriveLoginMethod([], "Google")).toBe("google");
+    expect(isGoogleLoginMethod("google")).toBe(true);
+    expect(isGoogleLoginMethod("microsoft")).toBe(false);
+    expect(GOOGLE_SIGN_IN_LABEL).toBe("Continue with Google");
+  });
+
+  it("preserves the same openId and rejects a duplicate email on another identity", () => {
+    expect(hasConflictingIdentity([{ openId: "google-member" }], "google-member")).toBe(false);
+    expect(hasConflictingIdentity([{ openId: "existing-member" }], "new-google-member")).toBe(true);
+    expect(hasConflictingIdentity([], "new-google-member")).toBe(false);
+  });
+
+  it("returns clear age-readable messages for provider and identity conflicts", () => {
+    expect(getAuthReturnErrorMessage("google_required")).toContain("Continue with Google");
+    expect(getAuthReturnErrorMessage("identity_conflict")).toContain("AiR administrator");
+    expect(getAuthReturnErrorMessage("unknown")).toBeNull();
+  });
 });

@@ -1,20 +1,28 @@
-import { trpc } from "@/lib/trpc";
+import { trpc } from '@/lib/trpc';
 import { COOKIE_NAME, UNAUTHED_ERR_MSG } from '@shared/const';
+import { getAuthReturnErrorMessage } from '@shared/auth';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, TRPCClientError } from "@trpc/client";
 import { createRoot } from "react-dom/client";
+import { toast } from "sonner";
 import superjson from "superjson";
 import App from "./App";
 import { startLogin } from "./const";
 import "./index.css";
 import { apiUrl, HAS_PLATFORM_API } from "./lib/runtime";
 
-const sessionFromHash = new URLSearchParams(window.location.hash.slice(1)).get("air_session");
+const hashParams = new URLSearchParams(window.location.hash.slice(1));
+const sessionFromHash = hashParams.get("air_session");
+const authReturnError = getAuthReturnErrorMessage(hashParams.get("air_auth_error"));
 if (sessionFromHash) {
   try {
     sessionStorage.setItem("manus-cookie", `${COOKIE_NAME}=${sessionFromHash}`);
     window.history.replaceState({}, document.title, `${window.location.pathname}${window.location.search}`);
   } catch {}
+}
+
+if (authReturnError) {
+  window.history.replaceState({}, document.title, `${window.location.pathname}${window.location.search}`);
 }
 
 const analyticsEndpoint = import.meta.env.VITE_ANALYTICS_ENDPOINT;
@@ -99,3 +107,7 @@ createRoot(document.getElementById("root")!).render(
     </QueryClientProvider>
   </trpc.Provider>
 );
+
+if (authReturnError) {
+  window.setTimeout(() => toast.error(authReturnError), 0);
+}

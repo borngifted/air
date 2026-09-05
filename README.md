@@ -12,7 +12,7 @@ AiR is a free, mindset-first AI learning and community platform designed for lea
 | Brand and themes | Official-logo-first header and hero treatment, persistent accessible light/dark modes, and three Higgsfield campaign placements |
 | Curriculum | Four learning paths, four modules, twelve lessons, sixty interactive checkpoints, and thirty-six mode-specific exercises |
 | Lesson experience | Protected video lessons, stories, big ideas, saved checkpoints, Explore/Create/Build exercises, completion, next-lesson actions, and linked discussions |
-| Accounts | Manus OAuth, automatic first-session onboarding, child-safe display names, learning preferences, and persistent profiles |
+| Accounts | Google-first sign-in through the secure hosted identity screen, verified-Google callback enforcement, automatic onboarding, child-safe display names, learning preferences, and persistent profiles |
 | Progress | Enrollments, resumable lesson status, checkpoint answers, exercise submissions, path completion, and artifacts |
 | Community | Persistent topic rooms, social feed, reactions, threaded replies, recent member cues, profiles, reporting, moderation, and private-information checks |
 | Trainer knowledge base | Separate protected route family with persistent facilitator guides, frameworks, exercises, delivery notes, video guidance, and source references |
@@ -57,13 +57,15 @@ Every lesson uses the same five-beat rhythm: **See it, Name it, Try it, Check it
 
 ## Technical architecture
 
-The application uses React 19, Tailwind CSS 4, Wouter, tRPC 11, Express, Drizzle ORM, MySQL/TiDB, Manus OAuth, and managed S3 storage. Public curriculum data is read through typed procedures. Learner, community, trainer, and media operations use protected or administrator-only procedures.
+The application uses React 19, Tailwind CSS 4, Wouter, tRPC 11, Express, Drizzle ORM, MySQL/TiDB, secure hosted OAuth with Google as the required member provider, and managed S3 storage. Public curriculum data is read through typed procedures. Learner, community, trainer, and media operations use protected or administrator-only procedures.
+
+Every visible member entry uses one shared **Continue with Google** control. It opens the hosted sign-in screen, where Google is the first provider action. The backend preserves the nonce-bound callback and GitHub Pages return state, then accepts the identity only when the verified login method is Google. Member continuity remains keyed to the provider `openId`; AiR does not silently merge a different identity by email. A normalized-email conflict returns a clear help message instead of creating a second account.
 
 Curriculum content is authoritatively defined in `server/content.ts` and idempotently persisted to the database. `learningPaths` are the canonical course entities; each contains modules, lessons, checkpoints, and exercises. User responses and progress are stored separately from the authored curriculum.
 
 ## Administrator workflow
 
-Open `/admin/login` and use the normal secure account flow. The server checks the account’s administrator role before any administrator procedure runs. `/admin` provides entry points for community safety, course media, trainer resources, and presentation mode.
+Open `/admin/login` and use the Google account connected to the AiR administrator role. The server first verifies the Google identity and then checks the account’s administrator role before any administrator procedure runs. `/admin` provides entry points for community safety, course media, trainer resources, and presentation mode.
 
 Open `/admin/media` to upload an MP4 or WebM file of up to 25 MB, choose its visibility, then select a stored video and attach it to a lesson. The lesson procedure returns signed playback URLs only after access checks. Open `/admin/community` to review reports, inspect the related conversation, hide content, and mark a report resolved or dismissed.
 
@@ -79,7 +81,7 @@ The application seeds seven persistent rooms: Start Here, Clear, Direct, Check, 
 
 ## Verification
 
-The project passes TypeScript checking, **19 Vitest tests**, and the production build. Automated tests cover curriculum completeness, age-accessible copy constraints, progress calculation, resume logic, community safety, channels, reactions, threaded replies, theme selection, presentation sequencing, hand-to-scene mapping, automatic hand-tracking status, camera fallback messages, trainer authentication, administrator boundaries, media access, and logout behavior.
+The project passes TypeScript checking, **27 Vitest tests**, and the production build. Automated tests cover curriculum completeness, age-accessible copy constraints, progress calculation, resume logic, community safety, channels, reactions, threaded replies, theme selection, presentation sequencing, hand-to-scene mapping, automatic hand-tracking status, camera fallback messages, trainer authentication, administrator boundaries, Google provider normalization, OAuth return state, openId continuity, duplicate-email conflict handling, media access, and logout behavior.
 
 Responsive visual checks were completed at desktop, tablet, and mobile sizes across public, dashboard, lesson, community, camera, trainer, administrator, media, and presentation routes. The light/dark control was exercised interactively in the browser. Live camera approval remains a person-controlled browser action; unsupported, denied, missing-device, and unknown failure messages are covered by tests.
 
@@ -95,6 +97,7 @@ Responsive visual checks were completed at desktop, tablet, and mobile sizes acr
 | `docs/source-audit.md` | Reuse decisions from the original GitHub repository |
 | `docs/higgsfield-campaign-assets.md` | Generated campaign asset manifest and placement intent |
 | `docs/enhancement-verification.md` | Theme, responsive, access, camera, presentation, and release verification notes |
+| `docs/google-signin-audit.md` | Google provider, hosted login, account continuity, and conflict-handling audit |
 
 ## Local commands
 
