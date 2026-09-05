@@ -323,6 +323,13 @@ button:active, .air-button:active { transform: scale(.97); }
 .admin-login-card { width: min(100%, 680px); border: 1px solid rgba(255,255,255,.14); border-radius: 2rem; background: rgba(6,19,14,.82); padding: clamp(1.5rem, 6vw, 4.5rem); box-shadow: 0 40px 100px rgba(0,0,0,.4); backdrop-filter: blur(22px); }
 .admin-login-shell .text-mist { color: var(--mist); }
 .admin-login-mark { width: 150px; margin-bottom: 3rem; border: 1px solid rgba(216,255,69,.35); border-radius: 1.25rem; background: #0c2b23; padding: 1rem; box-shadow: 0 0 0 8px rgba(216,255,69,.05); }
+:root:not(.dark) .admin-login-shell { background: radial-gradient(circle at 78% 15%, rgba(216,255,69,.24), transparent 28%), radial-gradient(circle at 15% 75%, rgba(24,201,139,.13), transparent 32%), var(--paper); color: var(--deep); }
+:root:not(.dark) .admin-login-card { border-color: rgba(19,42,36,.14); background: rgba(255,255,255,.84); box-shadow: 0 40px 100px rgba(19,42,36,.16); }
+:root:not(.dark) .admin-login-shell .text-mist { color: var(--deep-soft); }
+:root:not(.dark) .admin-login-shell .eyebrow, :root:not(.dark) .admin-login-shell .display em { color: var(--deep); }
+:root:not(.dark) .admin-login-brand { color: var(--deep-soft); }
+:root:not(.dark) .admin-theme-toggle { border-color: rgba(19,42,36,.16); background: rgba(255,255,255,.82); color: var(--deep); }
+:root:not(.dark) .admin-login-shell .brand-logo { filter: none; mix-blend-mode: multiply; }
 .admin-hero { background: radial-gradient(circle at 72% 20%, rgba(216,255,69,.12), transparent 32%), var(--deep); color: white; }
 .admin-body { background: var(--background); color: var(--foreground); }
 .admin-stat { display: grid; grid-template-columns: auto 1fr; gap: .4rem .9rem; align-items: center; border: 1px solid var(--hairline); border-radius: 1.25rem; background: var(--surface-raised); padding: 1.2rem; }

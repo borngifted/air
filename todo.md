@@ -89,3 +89,26 @@
 - [x] Re-run TypeScript, tests, and production build after the header-logo correction
 - [x] Save a new checkpoint and synchronize the header-logo fix to `borngifted/air` main
 - [x] Capture focused mobile light-mode and dark-mode header checks confirming the i, A, and R negative spaces match the header background
+- [x] Audit the current `borngifted/air` GitHub Pages deployment and identify why it is not yet a reliable full-platform launch
+- [x] Configure the frontend production build for the `/air/` GitHub Pages base path without breaking local or managed hosting
+- [x] Add a GitHub Pages production-build definition; use a branch-based `main/docs` deployment because the connected GitHub App cannot create workflow files
+- [x] Add and verify a client-side deep-link fallback so curriculum, lesson, community, trainer, camera, and admin URLs reopen correctly on Pages
+- [x] Define the `VITE_API_ORIGIN`, `FRONTEND_ORIGIN`, and `PUBLIC_API_ORIGIN` contract required for authentication, database, uploads, community, and progress features
+- [x] Preserve a graceful public-learning experience when the production API origin is unavailable
+- [x] Verify the local GitHub Pages artifact assets, homepage, deep links, themes, hero video, logo geometry, and responsive layouts
+- [x] Verify authenticated entry degrades safely and document which backend-dependent flows require a separately hosted server
+- [x] Document the GitHub launch architecture, required repository variables or secrets, and future deployment workflow
+- [x] Re-run TypeScript, all 21 tests, full-stack production build, and GitHub Pages production build
+- [ ] Package the verified static Pages artifact into repository `docs/` without committing project-only build output
+- [ ] Remove the blocked GitHub Actions workflow file from the launch commit and document the `main/docs` deployment source
+- [ ] Save a checkpoint, push the branch-based launch to `borngifted/air` main, configure Pages to serve `main/docs`, and confirm deployment succeeds
+- [x] Verify direct Pages-build routes for a lesson, community, trainers, camera, and administrator sign-in, including their intended protected fallback
+- [x] Capture desktop and mobile Pages-build checks in dark and light themes covering hero media, campaign images, header/footer logo geometry, and launch status
+- [ ] Verify and document the same critical states on the deployed `https://borngifted.github.io/air/` URL after GitHub Actions finishes
+- [x] Capture and review explicit local Pages screenshots for `/air/launch`, `/air/curriculum`, and `/air/admin/login` in desktop and mobile states
+- [x] Verify packaged hero video/poster, all three campaign images, header logo, and footer logo directly from `/air/media/` responses and rendered captures
+- [x] Fix the separate administrator sign-in surface so the light-theme capture visibly changes its background and card treatment instead of remaining dark
+- [x] Re-capture administrator sign-in on desktop and mobile in true light mode after the theme fix
+- [x] Capture and review the Pages campaign section in light theme on desktop and mobile
+- [x] Capture and review the Pages footer logo in dark theme on desktop and mobile
+- [x] Document the final cross-theme Pages evidence for campaign images and footer-logo negative space

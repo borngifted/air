@@ -7,10 +7,30 @@ import superjson from "superjson";
 import App from "./App";
 import { startLogin } from "./const";
 import "./index.css";
+import { apiUrl, HAS_PLATFORM_API } from "./lib/runtime";
+
+const sessionFromHash = new URLSearchParams(window.location.hash.slice(1)).get("air_session");
+if (sessionFromHash) {
+  try {
+    sessionStorage.setItem("manus-cookie", `${COOKIE_NAME}=${sessionFromHash}`);
+    window.history.replaceState({}, document.title, `${window.location.pathname}${window.location.search}`);
+  } catch {}
+}
+
+const analyticsEndpoint = import.meta.env.VITE_ANALYTICS_ENDPOINT;
+const analyticsWebsiteId = import.meta.env.VITE_ANALYTICS_WEBSITE_ID;
+if (analyticsEndpoint && analyticsWebsiteId) {
+  const script = document.createElement("script");
+  script.defer = true;
+  script.src = `${analyticsEndpoint.replace(/\/$/, "")}/umami`;
+  script.dataset.websiteId = analyticsWebsiteId;
+  document.head.appendChild(script);
+}
 
 const queryClient = new QueryClient();
 
 const redirectToLoginIfUnauthorized = (error: unknown) => {
+  if (!HAS_PLATFORM_API) return;
   if (!(error instanceof TRPCClientError)) return;
   if (typeof window === "undefined") return;
 
@@ -40,7 +60,7 @@ queryClient.getMutationCache().subscribe(event => {
 const trpcClient = trpc.createClient({
   links: [
     httpBatchLink({
-      url: "/api/trpc",
+      url: apiUrl("/api/trpc"),
       transformer: superjson,
       headers() {
         // Preview auto-login fallback: when the browser blocks iframe cookies

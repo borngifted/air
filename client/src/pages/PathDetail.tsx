@@ -1,14 +1,14 @@
 import { PublicShell } from "@/components/PublicShell";
 import { Button } from "@/components/ui/button";
 import { startLogin } from "@/const";
-import { trpc } from "@/lib/trpc";
+import { usePublicCatalog } from "@/hooks/usePublicCatalog";
 import { ArrowRight, Clock3 } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
 
 export default function PathDetail({ slug }: { slug: string }) {
   const { isAuthenticated } = useAuth();
-  const { data: catalog = [] } = trpc.catalog.list.useQuery();
+  const { data: catalog = [] } = usePublicCatalog();
   const path = catalog.find(item => item.slug === slug);
   if (!path) return <PublicShell><div className="container py-28"><p className="eyebrow">Path not found</p><h1 className="display mt-4 text-6xl">Take another route.</h1></div></PublicShell>;
   const allLessons = path.modules.flatMap(module => module.lessons);

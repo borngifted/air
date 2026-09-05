@@ -2,7 +2,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { startLogin } from "@/const";
 import { AIR_ASSETS } from "@/lib/assets";
-import { trpc } from "@/lib/trpc";
+import { usePublicCatalog } from "@/hooks/usePublicCatalog";
 import { ArrowDown, ArrowRight, Check, Eye, Flag, Sparkles, Users } from "lucide-react";
 import { Link } from "wouter";
 import { PathCard } from "@/components/PathCard";
@@ -17,7 +17,7 @@ const moves = [
 
 export default function Home() {
   const { isAuthenticated } = useAuth();
-  const { data: catalog = [] } = trpc.catalog.list.useQuery();
+  const { data: catalog = [] } = usePublicCatalog();
 
   return (
     <PublicShell>

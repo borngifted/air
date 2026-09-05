@@ -1,4 +1,5 @@
 import { OAUTH_STATE_COOKIE, encodeOAuthState } from "@shared/const";
+import { API_ORIGIN, appPath, HAS_PLATFORM_API } from "@/lib/runtime";
 
 export { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 
@@ -13,6 +14,18 @@ export { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 // with "invalid oauth state". It returns void by design, so there is no URL to
 // stash across renders.
 export const startLogin = () => {
+  if (!HAS_PLATFORM_API) {
+    window.location.href = appPath("/launch");
+    return;
+  }
+
+  if (API_ORIGIN) {
+    const startUrl = new URL("/api/oauth/start", API_ORIGIN);
+    startUrl.searchParams.set("returnTo", window.location.href);
+    window.location.href = startUrl.toString();
+    return;
+  }
+
   const oauthPortalUrl = import.meta.env.VITE_OAUTH_PORTAL_URL;
   const appId = import.meta.env.VITE_APP_ID;
   const redirectUri = `${window.location.origin}/api/oauth/callback`;

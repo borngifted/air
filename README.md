@@ -106,3 +106,9 @@ pnpm build
 ```
 
 Database migrations are stored in `drizzle/`. Do not use destructive reset commands. New schema changes should be generated, reviewed, and applied in order.
+
+## GitHub Pages launch
+
+The public AiR frontend is deployed from the `docs/` directory on `main` to [https://borngifted.github.io/air/](https://borngifted.github.io/air/). The Pages build uses `/air/` routing, a static fallback for the complete public curriculum, a `404.html` SPA fallback, and public media packaged from the `air-pages-media-v1` release. Branch-based `main/docs` publishing is used because the connected GitHub App can push content but cannot create workflow files.
+
+GitHub Pages is static hosting and cannot execute AiR’s Express, tRPC, OAuth, database, S3, or community backend. With no API origin, the public learning site remains available and protected actions show a clear launch-status page. To activate sign-in, saved progress, community, uploads, and administrator tools, publish the Node server separately and rebuild with `VITE_API_ORIGIN` set to its stable HTTPS origin. Full configuration and the `main/docs` release process are documented in `docs/github-pages-launch.md`.

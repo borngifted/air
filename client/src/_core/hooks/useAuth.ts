@@ -2,6 +2,7 @@ import { startLogin } from "@/const";
 import { trpc } from "@/lib/trpc";
 import { TRPCClientError } from "@trpc/client";
 import { useCallback, useEffect, useMemo } from "react";
+import { appPath, HAS_PLATFORM_API } from "@/lib/runtime";
 
 type UseAuthOptions = {
   redirectOnUnauthenticated?: boolean;
@@ -17,6 +18,7 @@ export function useAuth(options?: UseAuthOptions) {
   const utils = trpc.useUtils();
 
   const meQuery = trpc.auth.me.useQuery(undefined, {
+    enabled: HAS_PLATFORM_API,
     retry: false,
     refetchOnWindowFocus: false,
   });
@@ -56,10 +58,10 @@ export function useAuth(options?: UseAuthOptions) {
       JSON.stringify(meQuery.data)
     );
     return {
-      user: meQuery.data ?? null,
-      loading: meQuery.isLoading || logoutMutation.isPending,
-      error: meQuery.error ?? logoutMutation.error ?? null,
-      isAuthenticated: Boolean(meQuery.data),
+      user: HAS_PLATFORM_API ? (meQuery.data ?? null) : null,
+      loading: HAS_PLATFORM_API ? (meQuery.isLoading || logoutMutation.isPending) : false,
+      error: HAS_PLATFORM_API ? (meQuery.error ?? logoutMutation.error ?? null) : null,
+      isAuthenticated: HAS_PLATFORM_API && Boolean(meQuery.data),
     };
   }, [
     meQuery.data,
@@ -78,7 +80,7 @@ export function useAuth(options?: UseAuthOptions) {
 
     // Navigate at this moment only. startLogin() mints the nonce + cookie itself.
     if (redirectPath) {
-      window.location.href = redirectPath;
+      window.location.href = appPath(redirectPath);
     } else {
       startLogin();
     }

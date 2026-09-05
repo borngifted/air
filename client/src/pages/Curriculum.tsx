@@ -1,10 +1,10 @@
 import { PathCard } from "@/components/PathCard";
 import { PublicShell } from "@/components/PublicShell";
-import { trpc } from "@/lib/trpc";
+import { usePublicCatalog } from "@/hooks/usePublicCatalog";
 import { QueryError } from "@/components/QueryError";
 
 export default function Curriculum() {
-  const { data: catalog = [], isLoading, error, refetch } = trpc.catalog.list.useQuery();
+  const { data: catalog = [], isLoading, error, refetch } = usePublicCatalog();
   return (
     <PublicShell>
       <section className="page-hero">
