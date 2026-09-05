@@ -94,3 +94,7 @@ The deployed `/air/studio` camera route also reopened the intended free-member a
 ## Connected backend build
 
 The Pages artifact was rebuilt with `VITE_API_ORIGIN=https://airplatform-6feozlue.manus.space`. Its generated JavaScript bundle contains that exact origin and serves from `/air/assets/` as `text/javascript`. A local production preview rendered the complete homepage and all four curriculum cards. Because the temporary preview origin is intentionally outside production CORS, the public catalog request failed safely and the new static-catalog fallback restored all public learning content instead of showing an empty state.
+
+The published backend now serves `FRONTEND_ORIGIN=https://borngifted.github.io/air/` and `PUBLIC_API_ORIGIN=https://airplatform-6feozlue.manus.space`. Post-deployment checks returned HTTP 200 for the root, four-path public catalog, and anonymous session query; production CORS returned the exact GitHub origin with credentials enabled. `/api/oauth/start` now emits `https://airplatform-6feozlue.manus.space/api/oauth/callback`, preserves a GitHub Pages dashboard return in signed state, and sets the short-lived OAuth state cookie with `Secure` and `SameSite=None`. Missing callback parameters return 400 and a state without the matching cookie returns 403.
+
+Connected artifact commit `9fadc3079f17a19bc0a6b84ee2eee96cb1f38557` includes the production API origin, connected launch-status message, and static fallback for temporary API errors.
