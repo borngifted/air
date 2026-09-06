@@ -138,7 +138,9 @@
 - [x] Preserve existing member progress, posts, comments, profile data, and administrator roles through the verified Google `openId`; the production audit found one Google member and no duplicate email
 - [x] Preserve safe behavior when a Google email is private or missing by keeping `openId` authoritative, and reject normalized-email conflicts instead of silently merging identities
 - [x] Add Vitest coverage for Google provider normalization, canonical authorization URL construction, callback return state, openId continuity, duplicate-email conflict handling, and administrator access
-- [ ] Verify Google sign-in handoff on the managed site and live GitHub Pages site without submitting personal credentials on the user’s behalf
-- [ ] Re-run TypeScript, all tests, full-stack build, GitHub Pages build, and cross-origin session checks
-- [ ] Publish the backend authentication update, rebuild the connected GitHub Pages artifact, synchronize `borngifted/air` main, and confirm the live sign-in entry
-- [ ] Save the final Google sign-in checkpoint and document the authentication flow and operational requirements
+- [x] Verify Google sign-in handoff on the managed site and live GitHub Pages site without submitting personal credentials on the user’s behalf
+- [x] Re-run TypeScript, all 27 tests, full-stack build, GitHub Pages build, and cross-origin session checks
+- [x] Publish the backend authentication update, rebuild the connected GitHub Pages artifact, synchronize `borngifted/air` main, and confirm the live sign-in entry
+- [x] Save the final Google sign-in checkpoint and document the authentication flow and operational requirements
+- [x] Diagnose the blank direct `/community` frame on the managed production domain as the intentional transient loading state before automatic secure sign-in, while preserving the visible GitHub Pages gate
+- [x] Verify the managed production community route reaches the Google-first hosted identity page after the transient mobile loading frame

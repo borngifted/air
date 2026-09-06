@@ -30,6 +30,16 @@ The mobile dark community gate displayed the Google control at a comfortable tou
 
 The production backend start route was opened with the live GitHub Pages community return URL. It redirected to the canonical hosted identity page with **Continue with Google** as the first provider action, followed by Microsoft, Apple, email, and passkey. The URL preserved `https://airplatform-6feozlue.manus.space/api/oauth/callback` and a signed state containing `https://borngifted.github.io/air/community`. No provider button was clicked and no credentials were entered during this verification.
 
+## Final live verification
+
+GitHub Pages built commit `4e068abf2f47eb0828178b07a88975387a1dc556`. The deployed JavaScript bundle contains the shared **Continue with Google** control, the Google-only callback error message, and the production AiR API origin. The live homepage displays **Continue with Google** in the header and **Join free with Google** in the hero while preserving the official AiR media and theme-aware marks.
+
+The live `/air/community` route exposed no posts before authentication and displayed the shared Google control plus the password-privacy explanation. Selecting that control opened the canonical hosted identity page with **Continue with Google** first and preserved both the stable AiR callback and the exact `/air/community` return route. No Google button was pressed and no credentials were submitted during this release check.
+
+The managed production administrator route rendered its light-theme Google sign-in page correctly in a clean mobile browser profile. A direct mobile capture of the managed `/community` route produced a blank warm background, so that route requires a focused managed-host diagnosis even though the same protected gate works on GitHub Pages and the production `auth.me` endpoint correctly returns an anonymous session.
+
+Follow-up inspection showed that the blank managed `/community` frame is the short loading state before the managed site automatically opens secure sign-in; it is not a failed page render. The route then reached the canonical hosted identity page with **Continue with Google** first and the stable AiR callback. GitHub Pages intentionally keeps its explanatory member gate visible until the visitor selects the Google control. The managed administrator route remains a visible Google sign-in page so administrators can confirm they are using the account tied to their role.
+
 ## Sources checked
 
 The audit reviewed the project OAuth implementation, the official Manus OAuth integration guidance, the live `https://manus.im/login` page, the rendered Google button metadata, and the Manus account help article describing supported login methods and identity permanence.
