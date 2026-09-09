@@ -113,17 +113,17 @@
 - [x] Capture and review the Pages campaign section in light theme on desktop and mobile
 - [x] Capture and review the Pages footer logo in dark theme on desktop and mobile
 - [x] Document the final cross-theme Pages evidence for campaign images and footer-logo negative space
-- [x] Audit the published AiR server at `https://airplatform-6feozlue.manus.space` for production tRPC, OAuth-start, callback, CORS, and health behavior after deployment
-- [x] Confirm the deployed backend is serving `FRONTEND_ORIGIN=https://borngifted.github.io/air/` and `PUBLIC_API_ORIGIN=https://airplatform-6feozlue.manus.space`
+- [x] Audit the published AiR server for production tRPC, OAuth-start, callback, CORS, and health behavior after deployment
+- [x] Confirm the deployed backend is serving `FRONTEND_ORIGIN=https://borngifted.github.io/air/` and its own `PUBLIC_API_ORIGIN`
 - [x] Validate cross-origin public catalog and session requests from the GitHub Pages origin before rebuilding the frontend
-- [x] Rebuild the GitHub Pages artifact with `VITE_API_ORIGIN=https://airplatform-6feozlue.manus.space`
+- [x] Rebuild the GitHub Pages artifact with the production API origin
 - [x] Publish the connected artifact at the repository root and confirm the GitHub Pages build succeeds
 - [x] Verify the live homepage, curriculum, member sign-in start, protected routes, media, and static fallback with the production API bridge enabled
 - [x] Update launch documentation, run TypeScript and all 24 tests, save a final checkpoint, and synchronize the completed bridge to `borngifted/air` main
-- [x] Confirm `/api/oauth/start` emits `https://airplatform-6feozlue.manus.space/api/oauth/callback` and safely preserves the GitHub Pages return URL
+- [x] Confirm `/api/oauth/start` emits `<PUBLIC_API_ORIGIN>/api/oauth/callback` and safely preserves the GitHub Pages return URL
 - [x] Preserve the complete static curriculum fallback when the connected production API is temporarily unavailable or returns an error
-- [x] Correct the published OAuth portal origin so “Join free” reaches the working Manus sign-in route instead of `api.manus.ai/app-auth` returning 404
-- [x] Re-test the live GitHub Pages handoff to the Manus sign-in page with the stable AiR callback and preserved GitHub return state
+- [x] Correct the published sign-in origin so “Join free” reaches a working sign-in route instead of a 404
+- [x] Re-test the live GitHub Pages handoff to the sign-in page with the stable AiR callback and preserved GitHub return state
 - [x] Audit the final AiR logo system, color palette, typography, messaging, audience, and four-move learning framework for the brand kit
 - [x] Create a production-ready AiR brand kit covering positioning, purpose, audience, messaging hierarchy, voice, logo rules, color, typography, photography, motion, accessibility, campaign structure, and usage examples
 - [x] Create a separate AiR commercial shoot book with four filmable concepts mapped to Clear, Direct, Judge, and Make
@@ -131,7 +131,7 @@
 - [x] Review all brand and commercial language for age-eight comprehension, adult sophistication, casting consistency, shoot practicality, and alignment with the live platform
 - [x] Save the finished brand package in the project, create a final checkpoint, and prepare the files for downloadable delivery
 - [x] Create an attachment-ready ZIP containing the AiR brand kit, four-commercial shoot book, package index, and official logo files
-- [x] Audit the current Manus OAuth entry, callback, user upsert, GitHub Pages token bridge, and administrator role mapping for a Google-provider sign-in change
+- [x] Audit the OAuth entry, callback, user upsert, GitHub Pages token bridge, and administrator role mapping for a Google-provider sign-in change
 - [x] Confirm the supported production method: Google-first AiR controls open the hosted identity page, and the callback requires a verified Google login method without inventing an undocumented provider endpoint
 - [x] Replace member-facing join and sign-in actions with clear “Continue with Google” language and the official Google sign-in visual pattern
 - [x] Route new sign-ups and returning members through the supported Google identity provider from public, protected, community, trainer, camera, and administrator entry points
@@ -144,3 +144,15 @@
 - [x] Save the final Google sign-in checkpoint and document the authentication flow and operational requirements
 - [x] Diagnose the blank direct `/community` frame on the managed production domain as the intentional transient loading state before automatic secure sign-in, while preserving the visible GitHub Pages gate
 - [x] Verify the managed production community route reaches the Google-first hosted identity page after the transient mobile loading frame
+
+## Platform independence (September 2026)
+
+- [x] Replace the hosted identity portal with direct Google OAuth 2.0 / OpenID Connect handled by the AiR server (authorization URL, code exchange, JWKS-verified ID token, nonce, verified email)
+- [x] Replace the platform storage proxy with direct S3-compatible uploads and per-request signed playback URLs
+- [x] Remove the platform Vite runtime plugin, debug collector, dev-host allowlist, template scaffold, and unused platform helper modules (LLM, image generation, transcription, maps, heartbeat, notifications)
+- [x] Serve all public media from the repository's own `media/` folder in both builds
+- [x] Add a runtime `air-config.js` so the GitHub Pages site can switch servers without a rebuild
+- [x] Add a `Dockerfile`, build/publish scripts, an environment template, and `docs/independent-hosting.md`
+- [x] Replace vendor-specific tests with Google sign-in, session, and return-URL coverage (36 tests)
+- [ ] Create the Google OAuth client, database, bucket, and server deployment, then set `apiOrigin` in the root `air-config.js`
+

@@ -1,0 +1,39 @@
+# Copy this file to .env only in your own local environment. Never commit real values.
+# Every variable is explained in docs/independent-hosting.md.
+NODE_ENV=development
+PORT=3000
+
+# Database and sessions
+DATABASE_URL=mysql://USER:PASSWORD@HOST:3306/DATABASE
+JWT_SECRET=replace-with-at-least-32-random-characters
+
+# Direct Google sign-in (Google Cloud Console -> Credentials -> OAuth client ID)
+# Authorized redirect URI: https://YOUR-API-HOST/api/oauth/callback
+GOOGLE_CLIENT_ID=replace-with-your-client-id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=replace-with-your-client-secret
+
+# First administrator (either one)
+OWNER_EMAIL=
+OWNER_OPEN_ID=
+
+# Public deployment origins
+FRONTEND_ORIGIN=https://borngifted.github.io/air/
+PUBLIC_API_ORIGIN=https://your-api.example.com
+# Optional build-time API origin for the static site; air-config.js can override it at runtime
+VITE_API_ORIGIN=
+
+# S3-compatible storage for uploaded course video (AWS S3, Cloudflare R2, Backblaze B2, MinIO, ...)
+S3_BUCKET=
+S3_ACCESS_KEY_ID=
+S3_SECRET_ACCESS_KEY=
+S3_REGION=auto
+S3_ENDPOINT=
+S3_FORCE_PATH_STYLE=false
+
+# Optional analytics (Umami-compatible)
+VITE_ANALYTICS_ENDPOINT=
+VITE_ANALYTICS_WEBSITE_ID=
+
+# Static GitHub Pages packaging flags (set automatically by `pnpm build:pages`)
+GITHUB_PAGES=false
+VITE_GITHUB_PAGES=false

@@ -1,45 +1,20 @@
-import { OAUTH_STATE_COOKIE, encodeOAuthState } from "@shared/const";
-import { buildOAuthLoginUrl } from "@shared/oauth";
-import { API_ORIGIN, appPath, HAS_PLATFORM_API } from "@/lib/runtime";
+import { API_ORIGIN, apiUrl, appPath, HAS_PLATFORM_API } from "@/lib/runtime";
 
 export { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 
-// Start the secure AiR OAuth login. The hosted identity screen presents Google
-// as the first provider and the member-facing controls call this Google entry.
-// Call this from an event handler or effect at the
-// moment you want to navigate, e.g. `onClick={() => startLogin()}`.
-//
-// It has SIDE EFFECTS — it mints a one-time nonce, writes the __Host- state
-// cookie, and navigates immediately — so the cookie nonce always matches the
-// `state` it sends. Do NOT call it during render (no `href={startLogin()}` /
-// `loginUrl={...}`): each call overwrites the cookie, so a stray render-phase
-// call would desync it from an in-flight login and the callback would reject it
-// with "invalid oauth state". It returns void by design, so there is no URL to
-// stash across renders.
+// Start Google sign-in. The AiR server owns the whole flow: it mints the
+// one-time nonce, sets the state cookie, and sends the browser to Google.
+// Call this from an event handler or effect, e.g. `onClick={() => startLogin()}`.
 export const startLogin = () => {
   if (!HAS_PLATFORM_API) {
     window.location.href = appPath("/launch");
     return;
   }
 
-  if (API_ORIGIN) {
-    const startUrl = new URL("/api/oauth/start", API_ORIGIN);
-    startUrl.searchParams.set("returnTo", window.location.href);
-    window.location.href = startUrl.toString();
-    return;
-  }
-
-  const oauthPortalUrl = import.meta.env.VITE_OAUTH_PORTAL_URL;
-  const appId = import.meta.env.VITE_APP_ID;
-  const redirectUri = `${window.location.origin}/api/oauth/callback`;
-
-  const nonce = crypto.randomUUID();
-  document.cookie = `${OAUTH_STATE_COOKIE}=${nonce}; Path=/; Max-Age=600; SameSite=None; Secure`;
-  const state = encodeOAuthState({ redirectUri, nonce });
-
-  window.location.href = buildOAuthLoginUrl(oauthPortalUrl, appId, redirectUri, state);
+  const startUrl = new URL(apiUrl("/api/oauth/start"), API_ORIGIN || window.location.origin);
+  startUrl.searchParams.set("returnTo", window.location.href);
+  window.location.href = startUrl.toString();
 };
 
-// Keep the provider intent explicit at every visible entry point without
-// inventing an undocumented provider endpoint or changing the verified callback.
+// Every visible entry point is Google. Keep the intent explicit in the name.
 export const startGoogleLogin = startLogin;

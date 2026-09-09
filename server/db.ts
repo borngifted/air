@@ -24,6 +24,12 @@ import { ENV } from "./_core/env";
 let _db: ReturnType<typeof drizzle> | null = null;
 let contentSeedPromise: Promise<void> | null = null;
 
+function isOwnerIdentity(openId: string, email: string | null | undefined) {
+  if (ENV.ownerOpenId && openId === ENV.ownerOpenId) return true;
+  if (ENV.ownerEmail && email && email.trim().toLowerCase() === ENV.ownerEmail) return true;
+  return false;
+}
+
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
@@ -57,7 +63,9 @@ export async function upsertUser(user: InsertUser): Promise<void> {
   if (user.role !== undefined) {
     values.role = user.role;
     updateSet.role = user.role;
-  } else if (user.openId === ENV.ownerOpenId) {
+  } else if (isOwnerIdentity(user.openId, user.email)) {
+    // Owner bootstrap: the configured owner account is always an administrator.
+    // Every other administrator is promoted server-side and persisted in `role`.
     values.role = "admin";
     updateSet.role = "admin";
   }

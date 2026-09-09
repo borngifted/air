@@ -1,5 +1,5 @@
 import { trpc } from '@/lib/trpc';
-import { COOKIE_NAME, UNAUTHED_ERR_MSG } from '@shared/const';
+import { SESSION_STORAGE_KEY, UNAUTHED_ERR_MSG } from '@shared/const';
 import { getAuthReturnErrorMessage } from '@shared/auth';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, TRPCClientError } from "@trpc/client";
@@ -16,7 +16,7 @@ const sessionFromHash = hashParams.get("air_session");
 const authReturnError = getAuthReturnErrorMessage(hashParams.get("air_auth_error"));
 if (sessionFromHash) {
   try {
-    sessionStorage.setItem("manus-cookie", `${COOKIE_NAME}=${sessionFromHash}`);
+    sessionStorage.setItem(SESSION_STORAGE_KEY, sessionFromHash);
     window.history.replaceState({}, document.title, `${window.location.pathname}${window.location.search}`);
   } catch {}
 }
@@ -71,19 +71,14 @@ const trpcClient = trpc.createClient({
       url: apiUrl("/api/trpc"),
       transformer: superjson,
       headers() {
-        // Preview auto-login fallback: when the browser blocks iframe cookies
-        // (Safari ITP / private browsing / WebView), the runtime mirrors the
-        // session into sessionStorage so we can forward it as a Bearer token.
-        // The regular OAuth cookie flow keeps working and takes priority server-side.
+        // Cross-origin frontend (GitHub Pages): the sign-in callback hands the
+        // session over in the URL fragment and we keep it in sessionStorage,
+        // forwarding it as a Bearer token. Same-origin deployments rely on the
+        // session cookie, which the server checks first.
         try {
-          const raw = sessionStorage.getItem("manus-cookie");
-          if (raw) {
-            const prefix = `${COOKIE_NAME}=`;
-            const pair = raw.split(";").find(s => s.trim().startsWith(prefix));
-            const token = pair?.trim().slice(prefix.length);
-            if (token) {
-              return { Authorization: `Bearer ${token}` };
-            }
+          const token = sessionStorage.getItem(SESSION_STORAGE_KEY);
+          if (token) {
+            return { Authorization: `Bearer ${token}` };
           }
         } catch {
           // sessionStorage unavailable

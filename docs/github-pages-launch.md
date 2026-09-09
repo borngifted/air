@@ -1,6 +1,6 @@
 # AiR GitHub Pages Launch
 
-AiR’s public frontend is deployed to **[https://borngifted.github.io/air/](https://borngifted.github.io/air/)** from the repository root on `main`, which is the Pages source already enabled for this repository. The release process builds the React application with the `/air/` base path, downloads the public media release into the deployment artifact, creates a `404.html` SPA fallback, and copies the deployable artifact to the repository root alongside the editable source.
+AiR’s public frontend is deployed to **[https://borngifted.github.io/air/](https://borngifted.github.io/air/)** from the repository root on `main`, which is the Pages source already enabled for this repository. The release process (`pnpm build:pages && pnpm pages:publish`) builds the React application with the `/air/` base path, copies the repository's `media/` folder into the artifact, creates a `404.html` SPA fallback, and copies the deployable artifact to the repository root alongside the editable source.
 
 ## What GitHub Hosts
 
@@ -12,7 +12,7 @@ GitHub Pages cannot run Express, tRPC, OAuth callbacks, MySQL/TiDB, protected me
 
 | Variable | Value |
 |---|---|
-| `VITE_API_ORIGIN` | The stable HTTPS origin of the published AiR server, without a trailing slash; leave empty for the public-learning launch |
+| `air-config.js` → `apiOrigin` | The stable HTTPS origin of the published AiR server, without a trailing slash; leave empty for the public-learning launch |
 
 The server should receive these production environment values:
 
@@ -21,11 +21,11 @@ The server should receive these production environment values:
 | `FRONTEND_ORIGIN` | `https://borngifted.github.io/air/` |
 | `PUBLIC_API_ORIGIN` | The same stable HTTPS server origin used for `VITE_API_ORIGIN` |
 
-After changing `VITE_API_ORIGIN`, rebuild the Pages artifact, replace the deployable files in `docs/`, commit, and push to `main`. The Pages frontend sends tRPC calls to that server. Sign-in begins on the server, returns through its OAuth callback, and then hands the signed session back to the Pages route through a URL fragment that the client immediately removes and stores in session storage.
+`VITE_API_ORIGIN` is optional: the root `air-config.js` overrides it at runtime, so changing servers is a one-line edit with no rebuild. To ship code changes, run `pnpm build:pages && pnpm pages:publish`, commit, and push to `main`. The Pages frontend sends tRPC calls to that server. Sign-in begins on the server, returns through its OAuth callback, and then hands the signed session back to the Pages route through a URL fragment that the client immediately removes and stores in session storage.
 
 ## Media
 
-The `air-pages-media-v1` GitHub release is the source bundle for public logos, posters, MP4 files, and campaign images. The release packaging step downloads those files into the generated root `media/` artifact so the final site serves them with browser-compatible content types. The editable application source continues to reference centralized asset paths rather than importing media into React modules.
+The repository's top-level `media/` folder is the source of truth for public logos, posters, MP4 files, and campaign images. `scripts/copy-media.mjs` copies it into every build so both the full-stack server and the Pages site serve the same files from `/media/`. The editable application source continues to reference centralized asset paths rather than importing media into React modules.
 
 ## Deep Links
 
@@ -34,10 +34,7 @@ The packaged artifact copies `index.html` to `404.html`. Wouter is configured wi
 ## Local Verification
 
 ```bash
-GITHUB_PAGES=true VITE_GITHUB_PAGES=true VITE_API_ORIGIN='' pnpm build:pages
-gh release download air-pages-media-v1 --repo borngifted/air --dir dist/public/media --clobber
-cp dist/public/index.html dist/public/404.html
-touch dist/public/.nojekyll
+pnpm build:pages   # sets the /air/ base, copies media/, adds 404.html and .nojekyll
 GITHUB_PAGES=true VITE_GITHUB_PAGES=true VITE_API_ORIGIN='' pnpm exec vite preview --host 0.0.0.0 --port 4173
 ```
 
@@ -93,23 +90,9 @@ The deployed `/air/studio` camera route also reopened the intended free-member a
 
 ## Connected backend build
 
-The Pages artifact was rebuilt with `VITE_API_ORIGIN=https://airplatform-6feozlue.manus.space`. Its generated JavaScript bundle contains that exact origin and serves from `/air/assets/` as `text/javascript`. A local production preview rendered the complete homepage and all four curriculum cards. Because the temporary preview origin is intentionally outside production CORS, the public catalog request failed safely and the new static-catalog fallback restored all public learning content instead of showing an empty state.
+The Pages frontend no longer needs a rebuild to change servers. The repository root ships `air-config.js`, loaded before the application bundle, which sets `window.AIR_CONFIG.apiOrigin`. Set it to the HTTPS origin of the AiR server described in `docs/independent-hosting.md`, commit, and push; sign-in, saved progress, community, uploads, and administrator tools turn on when Pages redeploys. With an empty value the public learning site runs on its own and every protected route settles into the launch-status page.
 
-The published backend now serves `FRONTEND_ORIGIN=https://borngifted.github.io/air/` and `PUBLIC_API_ORIGIN=https://airplatform-6feozlue.manus.space`. Post-deployment checks returned HTTP 200 for the root, four-path public catalog, and anonymous session query; production CORS returned the exact GitHub origin with credentials enabled. `/api/oauth/start` now emits `https://airplatform-6feozlue.manus.space/api/oauth/callback`, preserves a GitHub Pages dashboard return in signed state, and sets the short-lived OAuth state cookie with `Secure` and `SameSite=None`. Missing callback parameters return 400 and a state without the matching cookie returns 403.
-
-Connected artifact commit `9fadc3079f17a19bc0a6b84ee2eee96cb1f38557` includes the production API origin, connected launch-status message, and static fallback for temporary API errors.
-
-GitHub Pages build `1f51cf3b822d20c387dc17c9471cbe91170aec4c` completed successfully with the connected artifact at the repository root. The live JavaScript bundle contains the production AiR API origin. The deployed `/air/launch` route now states that the secure server is connected and that members can sign in and continue their learning journey.
-
-The first live sign-in check exposed an obsolete `api.manus.ai/app-auth` route that returned 404. AiR now builds the canonical `https://manus.im/login` authorization URL with `app_id`, `redirect_url`, and signed `state`. A second live click on **Join free** opened the real Manus sign-in/sign-up page. Its URL contained the stable AiR callback and a signed return value for the originating GitHub Pages route. No credentials were entered during verification.
-
-Final Pages build `5b357af18dd43e487e5cc76b3b235b10522d1a8f` completed successfully after the OAuth correction. The deployed homepage rendered the branded hero, campaign media, navigation, and footer. After the production catalog request settled, the live page displayed all four backend-supplied learning paths: Clear, Direct, Judge, and Make.
-
-The deployed `/air/community` route queried the connected backend and, for an anonymous visitor, rendered the intended **Free member access** gate with a clear **Join free** action. It did not expose community data or fail into an empty route.
-
-The final `/air/curriculum` route rendered the four connected learning paths and the age-adaptive Explore, Create, and Build entry levels. The `/air/paths/clear` deep link rendered all three Clear lessons with valid `/air/learn/` destinations, durations, and the secure **Join to start** action.
-
-The final live bundle contains the production API origin and canonical `manus.im` login host, with no remaining `app-auth` reference. The production catalog endpoint returns the exact GitHub Pages origin and credential allowance. All eleven packaged media assets returned HTTP 200 with browser-correct SVG, PNG, JPEG, or MP4 MIME types, including the theme-aware marks, African American male hero/course footage and poster, three campaign images, and supporting lesson video clips.
+The server must be started with `FRONTEND_ORIGIN=https://borngifted.github.io/air/`, its own `PUBLIC_API_ORIGIN`, and the Google OAuth client values. `/api/oauth/start` then emits `<PUBLIC_API_ORIGIN>/api/oauth/callback` as the Google redirect URI, preserves the originating GitHub Pages route in signed state, and sets the short-lived state cookie with `Secure` and `SameSite=None`. A missing state returns 400 and a state without the matching cookie returns 403. After Google returns, the session is handed to the Pages route in a URL fragment that the client removes immediately and keeps in session storage.
 
 Post-bridge protected-route checks confirmed that `/air/learn/clear-the-air`, `/air/trainers`, and `/air/studio` each settle into an appropriate **Free member access** gate for an anonymous visitor. The trainer gate specifically explains that the separate knowledge base and facilitator materials require sign-in; the camera gate does not expose browser camera controls before membership is established.
 

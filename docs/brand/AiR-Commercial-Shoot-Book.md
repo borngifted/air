@@ -3,8 +3,7 @@
 ## Four human moves · Four 30-second films
 
 **Version 1.0 · September 2026**  
-Prepared for **AiR — AI Readiness** and **Digi2U.org**  
-Prepared by **Manus AI**
+Prepared for **AiR — AI Readiness** and **Digi2U.org**
 
 This shoot book turns the AiR method into four connected commercials: **Clear, Direct, Judge, and Make**. Each film is designed as a 30-second hero edit with a 15-second cutdown and 6-second bumper. Together they form a single story about an intergenerational team learning to use AI with purpose and judgment.[1] [2]
 

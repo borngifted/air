@@ -12,7 +12,7 @@ AiR is a free, mindset-first AI learning and community platform designed for lea
 | Brand and themes | Official-logo-first header and hero treatment, persistent accessible light/dark modes, and three Higgsfield campaign placements |
 | Curriculum | Four learning paths, four modules, twelve lessons, sixty interactive checkpoints, and thirty-six mode-specific exercises |
 | Lesson experience | Protected video lessons, stories, big ideas, saved checkpoints, Explore/Create/Build exercises, completion, next-lesson actions, and linked discussions |
-| Accounts | Google-first sign-in through the secure hosted identity screen, verified-Google callback enforcement, automatic onboarding, child-safe display names, learning preferences, and persistent profiles |
+| Accounts | Direct Google sign-in (OAuth 2.0 / OpenID Connect handled by the AiR server), verified-email enforcement, automatic onboarding, child-safe display names, learning preferences, and persistent profiles |
 | Progress | Enrollments, resumable lesson status, checkpoint answers, exercise submissions, path completion, and artifacts |
 | Community | Persistent topic rooms, social feed, reactions, threaded replies, recent member cues, profiles, reporting, moderation, and private-information checks |
 | Trainer knowledge base | Separate protected route family with persistent facilitator guides, frameworks, exercises, delivery notes, video guidance, and source references |
@@ -57,9 +57,9 @@ Every lesson uses the same five-beat rhythm: **See it, Name it, Try it, Check it
 
 ## Technical architecture
 
-The application uses React 19, Tailwind CSS 4, Wouter, tRPC 11, Express, Drizzle ORM, MySQL/TiDB, secure hosted OAuth with Google as the required member provider, and managed S3 storage. Public curriculum data is read through typed procedures. Learner, community, trainer, and media operations use protected or administrator-only procedures.
+The application uses React 19, Tailwind CSS 4, Wouter, tRPC 11, Express, Drizzle ORM, any MySQL 8 compatible database, direct Google OAuth 2.0 / OpenID Connect sign-in, and any S3-compatible bucket for uploaded media. It has no dependency on a hosting platform SDK or proxy and runs on any Node.js host (see `Dockerfile` and `docs/independent-hosting.md`). Public curriculum data is read through typed procedures. Learner, community, trainer, and media operations use protected or administrator-only procedures.
 
-Every visible member entry uses one shared **Continue with Google** control. It opens the hosted sign-in screen, where Google is the first provider action. The backend preserves the nonce-bound callback and GitHub Pages return state, then accepts the identity only when the verified login method is Google. Member continuity remains keyed to the provider `openId`; AiR does not silently merge a different identity by email. A normalized-email conflict returns a clear help message instead of creating a second account.
+Every visible member entry uses one shared **Continue with Google** control. It sends the browser to the AiR server, which redirects straight to Google's account chooser. The server preserves the nonce-bound callback and GitHub Pages return state, exchanges the code with Google itself, and verifies the ID token's signature, issuer, audience, nonce, and verified email before creating a session. Member continuity remains keyed to the provider `openId`; AiR does not silently merge a different identity by email. A normalized-email conflict returns a clear help message instead of creating a second account.
 
 Curriculum content is authoritatively defined in `server/content.ts` and idempotently persisted to the database. `learningPaths` are the canonical course entities; each contains modules, lessons, checkpoints, and exercises. User responses and progress are stored separately from the authored curriculum.
 
@@ -81,7 +81,7 @@ The application seeds seven persistent rooms: Start Here, Clear, Direct, Check, 
 
 ## Verification
 
-The project passes TypeScript checking, **27 Vitest tests**, and the production build. Automated tests cover curriculum completeness, age-accessible copy constraints, progress calculation, resume logic, community safety, channels, reactions, threaded replies, theme selection, presentation sequencing, hand-to-scene mapping, automatic hand-tracking status, camera fallback messages, trainer authentication, administrator boundaries, Google provider normalization, OAuth return state, openId continuity, duplicate-email conflict handling, media access, and logout behavior.
+The project passes TypeScript checking, **36 Vitest tests**, the full-stack production build, and the GitHub Pages build. Automated tests cover curriculum completeness, age-accessible copy constraints, progress calculation, resume logic, community safety, channels, reactions, threaded replies, theme selection, presentation sequencing, hand-to-scene mapping, automatic hand-tracking status, camera fallback messages, trainer authentication, administrator boundaries, Google authorization URL construction, ID-token claim validation, token exchange, AiR session signing, return-URL allowlisting, OAuth return state, openId continuity, duplicate-email conflict handling, media access, and logout behavior.
 
 Responsive visual checks were completed at desktop, tablet, and mobile sizes across public, dashboard, lesson, community, camera, trainer, administrator, media, and presentation routes. The light/dark control was exercised interactively in the browser. Live camera approval remains a person-controlled browser action; unsupported, denied, missing-device, and unknown failure messages are covered by tests.
 
@@ -97,7 +97,8 @@ Responsive visual checks were completed at desktop, tablet, and mobile sizes acr
 | `docs/source-audit.md` | Reuse decisions from the original GitHub repository |
 | `docs/higgsfield-campaign-assets.md` | Generated campaign asset manifest and placement intent |
 | `docs/enhancement-verification.md` | Theme, responsive, access, camera, presentation, and release verification notes |
-| `docs/google-signin-audit.md` | Google provider, hosted login, account continuity, and conflict-handling audit |
+| `docs/google-signin-audit.md` | Direct Google sign-in flow, account continuity, and conflict handling |
+| `docs/independent-hosting.md` | Every external service AiR needs, how to configure each, and how to deploy the server and the public site |
 
 ## Local commands
 
@@ -114,4 +115,4 @@ Database migrations are stored in `drizzle/`. Do not use destructive reset comma
 
 The public AiR frontend is deployed from the repository root on `main` to [https://borngifted.github.io/air/](https://borngifted.github.io/air/). The Pages build uses `/air/` routing, a static fallback for the complete public curriculum, a `404.html` SPA fallback, and public media packaged from the `air-pages-media-v1` release. The existing branch-based `main /` source is used because the connected GitHub App can push content but cannot create workflow files or change Pages settings.
 
-GitHub Pages is static hosting and cannot execute AiR’s Express, tRPC, OAuth, database, S3, or community backend. With no API origin, the public learning site remains available and protected actions show a clear launch-status page. To activate sign-in, saved progress, community, uploads, and administrator tools, publish the Node server separately and rebuild with `VITE_API_ORIGIN` set to its stable HTTPS origin. Full configuration and the `main /` release process are documented in `docs/github-pages-launch.md`.
+GitHub Pages is static hosting and cannot execute AiR’s Express, tRPC, OAuth, database, S3, or community backend. With no API origin, the public learning site remains available and protected actions show a clear launch-status page. To activate sign-in, saved progress, community, uploads, and administrator tools, deploy the Node server (`docs/independent-hosting.md`) and put its HTTPS origin in the root `air-config.js`; no rebuild is required. The `main /` release process is documented in `docs/github-pages-launch.md`.

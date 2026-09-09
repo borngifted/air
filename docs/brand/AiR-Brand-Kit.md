@@ -1,8 +1,7 @@
 # AiR Brand Kit
 
 **Version 1.0 · September 2026**  
-Prepared for **AiR — AI Readiness** and **Digi2U.org**  
-Prepared by **Manus AI**
+Prepared for **AiR — AI Readiness** and **Digi2U.org**
 
 ![AiR — AI Readiness](https://borngifted.github.io/air/media/AiR_Logo-MAIN.svg)
 

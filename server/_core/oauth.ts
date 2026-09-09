@@ -1,13 +1,19 @@
 import { COOKIE_NAME, ONE_YEAR_MS, OAUTH_STATE_COOKIE, decodeOAuthState, encodeOAuthState } from "@shared/const";
-import { hasConflictingIdentity, isGoogleLoginMethod, type AuthReturnError } from "@shared/auth";
-import { buildOAuthLoginUrl } from "@shared/oauth";
+import { hasConflictingIdentity, type AuthReturnError } from "@shared/auth";
 import { parse as parseCookieHeader } from "cookie";
 import type { Express, Request, Response } from "express";
 import { randomUUID } from "node:crypto";
 import * as db from "../db";
 import { getSessionCookieOptions } from "./cookies";
 import { ENV } from "./env";
-import { sdk } from "./sdk";
+import {
+  GoogleClaimsValidationError,
+  buildGoogleAuthUrl,
+  exchangeGoogleCode,
+  verifyGoogleIdToken,
+} from "./googleAuth";
+import { resolveAllowedReturns, safeReturnUrl } from "./returnUrl";
+import { signSession } from "./session";
 
 function getQueryParam(req: Request, key: string): string | undefined {
   const value = req.query[key];
@@ -15,26 +21,17 @@ function getQueryParam(req: Request, key: string): string | undefined {
 }
 
 function externalOrigin(req: Request) {
-  const configured = process.env.PUBLIC_API_ORIGIN?.replace(/\/$/, "");
-  if (configured) return configured;
+  if (ENV.publicApiOrigin) return ENV.publicApiOrigin;
   const forwarded = req.headers["x-forwarded-proto"];
   const protocol = typeof forwarded === "string" ? forwarded.split(",")[0] : req.protocol;
   return `${protocol}://${req.get("host")}`;
 }
 
 function safeFrontendReturn(raw?: string) {
-  if (!raw) return undefined;
-  const allowed = [process.env.FRONTEND_ORIGIN, "https://borngifted.github.io/air/"]
-    .filter((value): value is string => Boolean(value));
-  try {
-    const target = new URL(raw);
-    return allowed.some(value => {
-      const base = new URL(value);
-      return target.origin === base.origin && target.pathname.startsWith(base.pathname);
-    }) ? target.toString() : undefined;
-  } catch {
-    return undefined;
-  }
+  return safeReturnUrl(raw, resolveAllowedReturns({
+    frontendOrigin: ENV.frontendOrigin,
+    publicApiOrigin: ENV.publicApiOrigin,
+  }));
 }
 
 function returnAuthError(res: Response, returnTo: string | undefined, code: AuthReturnError) {
@@ -48,11 +45,23 @@ function returnAuthError(res: Response, returnTo: string | undefined, code: Auth
   res.redirect(302, destination.toString());
 }
 
+function isSameOrigin(req: Request, target: string) {
+  try {
+    return new URL(target).origin === externalOrigin(req);
+  } catch {
+    return false;
+  }
+}
+
 export function registerOAuthRoutes(app: Express) {
   app.get("/api/oauth/start", (req: Request, res: Response) => {
     const returnTo = safeFrontendReturn(getQueryParam(req, "returnTo"));
     if (!returnTo) {
       res.status(400).json({ error: "valid returnTo is required" });
+      return;
+    }
+    if (!ENV.googleClientId || !ENV.googleClientSecret) {
+      res.status(503).json({ error: "Google sign-in is not configured (GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET)" });
       return;
     }
 
@@ -67,19 +76,25 @@ export function registerOAuthRoutes(app: Express) {
       maxAge: 600_000,
     });
 
-    res.redirect(302, buildOAuthLoginUrl(ENV.oAuthPortalUrl, ENV.appId, redirectUri, state));
+    res.redirect(302, buildGoogleAuthUrl({
+      clientId: ENV.googleClientId,
+      redirectUri,
+      state,
+      nonce,
+    }));
   });
 
   app.get("/api/oauth/callback", async (req: Request, res: Response) => {
     const code = getQueryParam(req, "code");
     const state = getQueryParam(req, "state");
+    const providerError = getQueryParam(req, "error");
 
-    if (!code || !state) {
-      res.status(400).json({ error: "code and state are required" });
+    if (!state) {
+      res.status(400).json({ error: "state is required" });
       return;
     }
 
-    const { nonce, returnTo } = decodeOAuthState(state);
+    const { nonce, returnTo, redirectUri } = decodeOAuthState(state);
     const expectedNonce = parseCookieHeader(req.headers.cookie ?? "")[OAUTH_STATE_COOKIE];
     if (!nonce || nonce !== expectedNonce) {
       res.status(403).json({ error: "invalid oauth state" });
@@ -87,41 +102,49 @@ export function registerOAuthRoutes(app: Express) {
     }
     res.clearCookie(OAUTH_STATE_COOKIE, { path: "/", secure: true, sameSite: "none" });
 
+    if (providerError || !code) {
+      // The member closed or cancelled the Google screen.
+      returnAuthError(res, returnTo, "sign_in_cancelled");
+      return;
+    }
+
     try {
-      const tokenResponse = await sdk.exchangeCodeForToken(code, state);
-      const userInfo = await sdk.getUserInfo(tokenResponse.accessToken);
+      const { idToken } = await exchangeGoogleCode({
+        code,
+        redirectUri,
+        clientId: ENV.googleClientId,
+        clientSecret: ENV.googleClientSecret,
+      });
 
-      if (!userInfo.openId) {
-        res.status(400).json({ error: "openId missing from user info" });
-        return;
-      }
-
-      const loginMethod = userInfo.loginMethod ?? userInfo.platform ?? null;
-      if (!isGoogleLoginMethod(loginMethod)) {
-        returnAuthError(res, returnTo, "google_required");
-        return;
-      }
-
-      if (userInfo.email) {
-        const matchingEmailUsers = await db.getUsersByNormalizedEmail(userInfo.email);
-        if (hasConflictingIdentity(matchingEmailUsers, userInfo.openId)) {
-          returnAuthError(res, returnTo, "identity_conflict");
+      let identity;
+      try {
+        identity = await verifyGoogleIdToken(idToken, { clientId: ENV.googleClientId, nonce });
+      } catch (error) {
+        if (error instanceof GoogleClaimsValidationError && error.code === "email_unverified") {
+          returnAuthError(res, returnTo, "email_unverified");
           return;
         }
+        throw error;
+      }
+
+      const matchingEmailUsers = await db.getUsersByNormalizedEmail(identity.email);
+      if (hasConflictingIdentity(matchingEmailUsers, identity.openId)) {
+        returnAuthError(res, returnTo, "identity_conflict");
+        return;
       }
 
       await db.upsertUser({
-        openId: userInfo.openId,
-        name: userInfo.name || null,
-        email: userInfo.email ?? null,
-        loginMethod,
+        openId: identity.openId,
+        name: identity.name,
+        email: identity.email,
+        loginMethod: "google",
         lastSignedIn: new Date(),
       });
 
-      const sessionToken = await sdk.createSessionToken(userInfo.openId, {
-        name: userInfo.name || "",
-        expiresInMs: ONE_YEAR_MS,
-      });
+      const sessionToken = await signSession(
+        { openId: identity.openId, name: identity.name ?? "" },
+        { expiresInMs: ONE_YEAR_MS },
+      );
 
       const cookieOptions = getSessionCookieOptions(req);
       res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: ONE_YEAR_MS });
@@ -129,14 +152,18 @@ export function registerOAuthRoutes(app: Express) {
       const frontendReturn = safeFrontendReturn(returnTo);
       if (frontendReturn) {
         const destination = new URL(frontendReturn);
-        destination.hash = new URLSearchParams({ air_session: sessionToken }).toString();
+        if (!isSameOrigin(req, frontendReturn)) {
+          // Cross-origin frontend (GitHub Pages): hand the session over in the
+          // URL fragment, which never reaches any server log.
+          destination.hash = new URLSearchParams({ air_session: sessionToken }).toString();
+        }
         res.redirect(302, destination.toString());
         return;
       }
       res.redirect(302, "/");
     } catch (error) {
       console.error("[OAuth] Callback failed", error);
-      res.status(500).json({ error: "OAuth callback failed" });
+      returnAuthError(res, returnTo, "sign_in_failed");
     }
   });
 }
