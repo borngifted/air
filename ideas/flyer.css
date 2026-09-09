@@ -89,3 +89,5 @@
 .air-fact-link strong { font-size: 26px; }
 .air-fact-link span { display: block; margin-top: 6px; font-size: 14px; color: var(--air-muted); }
 .air-fact-link:hover { border-color: var(--air-mint); }
+
+[hidden] { display: none !important; }
