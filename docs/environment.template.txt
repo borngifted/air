@@ -17,7 +17,7 @@ OWNER_EMAIL=
 OWNER_OPEN_ID=
 
 # Public deployment origins
-FRONTEND_ORIGIN=https://borngifted.github.io/air/
+FRONTEND_ORIGIN=https://aireadiness.me/
 PUBLIC_API_ORIGIN=https://your-api.example.com
 # Optional build-time API origin for the static site; air-config.js can override it at runtime
 VITE_API_ORIGIN=

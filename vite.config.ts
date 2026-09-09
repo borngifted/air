@@ -4,9 +4,12 @@ import path from "node:path";
 import { defineConfig } from "vite";
 
 const IS_GITHUB_PAGES = process.env.GITHUB_PAGES === "true";
+// The public site is served at the root of https://aireadiness.me/. Set
+// PAGES_BASE=/air/ to build for the legacy borngifted.github.io/air/ path.
+const PAGES_BASE = process.env.PAGES_BASE || "/";
 
 export default defineConfig({
-  base: IS_GITHUB_PAGES ? "/air/" : "/",
+  base: IS_GITHUB_PAGES ? PAGES_BASE : "/",
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

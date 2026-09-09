@@ -3,7 +3,11 @@
  * has declared: the public frontend, the API host itself (single-host
  * deployments), and the GitHub Pages site.
  */
-export const DEFAULT_ALLOWED_RETURNS = ["https://borngifted.github.io/air/"] as const;
+export const DEFAULT_ALLOWED_RETURNS = [
+  "https://aireadiness.me/",
+  "https://www.aireadiness.me/",
+  "https://borngifted.github.io/air/",
+] as const;
 
 export function resolveAllowedReturns(input: { frontendOrigin?: string; publicApiOrigin?: string }) {
   return [input.frontendOrigin, input.publicApiOrigin, ...DEFAULT_ALLOWED_RETURNS]

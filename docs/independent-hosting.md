@@ -10,7 +10,7 @@ AiR runs anywhere Node.js runs. This guide lists every external service the plat
 | Database | MySQL 8, MariaDB 10.6+, PlanetScale, TiDB Cloud, Railway MySQL, Aiven | `DATABASE_URL` |
 | Uploaded course video | AWS S3, Cloudflare R2, Backblaze B2, DigitalOcean Spaces, MinIO | `S3_*` |
 | Server hosting | Render, Railway, Fly.io, a VPS with Docker, Cloud Run | `Dockerfile` or `pnpm start` |
-| Public site hosting | GitHub Pages (already enabled for `borngifted/air`, source `main /`) | `air-config.js` |
+| Public site hosting | GitHub Pages (already enabled for `borngifted/air`, source `main /`, custom domain `aireadiness.me`) | `air-config.js`, `CNAME` |
 
 Nothing else is required. Analytics is optional.
 
@@ -73,7 +73,7 @@ Copy `docs/environment.template.txt` to `.env` locally, or set the same names in
 | `GOOGLE_CLIENT_ID` | yes | OAuth client ID from step 2 |
 | `GOOGLE_CLIENT_SECRET` | yes | OAuth client secret from step 2 |
 | `PUBLIC_API_ORIGIN` | yes in production | Exact HTTPS origin of this server, e.g. `https://api.air.example.org` |
-| `FRONTEND_ORIGIN` | yes in production | Where members are returned after sign-in, e.g. `https://borngifted.github.io/air/` |
+| `FRONTEND_ORIGIN` | yes in production | Where members are returned after sign-in: `https://aireadiness.me/` |
 | `OWNER_EMAIL` or `OWNER_OPEN_ID` | recommended | First administrator |
 | `S3_BUCKET`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` | for uploads | Bucket credentials |
 | `S3_ENDPOINT`, `S3_REGION`, `S3_FORCE_PATH_STYLE` | provider-specific | See step 4 |
@@ -81,7 +81,7 @@ Copy `docs/environment.template.txt` to `.env` locally, or set the same names in
 | `VITE_API_ORIGIN` | build-time, optional | Bakes the API origin into the static build; `air-config.js` can override it later |
 | `VITE_ANALYTICS_ENDPOINT`, `VITE_ANALYTICS_WEBSITE_ID` | optional | Umami-compatible analytics |
 
-The server allows cross-origin requests and sign-in returns only from `FRONTEND_ORIGIN`, `PUBLIC_API_ORIGIN`, and the GitHub Pages site.
+The server allows cross-origin requests and sign-in returns only from `FRONTEND_ORIGIN`, `PUBLIC_API_ORIGIN`, `https://aireadiness.me/`, `https://www.aireadiness.me/`, and the legacy GitHub Pages address.
 
 ## 7. Deploy the server
 
@@ -117,10 +117,20 @@ Edit that one line, commit, and push to `main`. No rebuild is needed; sign-in, s
 To ship code changes to the public site:
 
 ```bash
-pnpm build:pages      # builds with the /air/ base path and copies media/
+pnpm build:pages      # builds for the site root (aireadiness.me) and copies media/
 pnpm pages:publish    # copies dist/public to the repository root, keeping your air-config.js
 git add -A && git commit -m "Publish AiR site" && git push origin main
 ```
+
+## 8a. Custom domain
+
+`aireadiness.me` is the public address. Three things make it work and all three are already in place:
+
+- The repository root contains a `CNAME` file with `aireadiness.me` (GitHub Pages reads it on every deploy; keep it when publishing).
+- GoDaddy DNS for `aireadiness.me` has four `A` records for `@` pointing to GitHub Pages (`185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`) and a `CNAME` for `www` pointing to `borngifted.github.io`.
+- **Enforce HTTPS** is turned on in the repository's Pages settings once GitHub has issued the certificate.
+
+The old `https://borngifted.github.io/air/…` links keep working: GitHub forwards them to the custom domain and the client drops the `/air` prefix.
 
 ## 9. Moving existing members
 

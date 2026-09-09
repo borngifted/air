@@ -1,6 +1,6 @@
 # AiR GitHub Pages Launch
 
-AiR’s public frontend is deployed to **[https://borngifted.github.io/air/](https://borngifted.github.io/air/)** from the repository root on `main`, which is the Pages source already enabled for this repository. The release process (`pnpm build:pages && pnpm pages:publish`) builds the React application with the `/air/` base path, copies the repository's `media/` folder into the artifact, creates a `404.html` SPA fallback, and copies the deployable artifact to the repository root alongside the editable source.
+AiR’s public frontend is deployed to **[https://aireadiness.me/](https://aireadiness.me/)** (custom domain; `borngifted.github.io/air/` forwards there) from the repository root on `main`, which is the Pages source already enabled for this repository. The release process (`pnpm build:pages && pnpm pages:publish`) builds the React application for the site root (`PAGES_BASE=/air/` reproduces the legacy subpath build), copies the repository's `media/` folder into the artifact, creates a `404.html` SPA fallback, and copies the deployable artifact to the repository root alongside the editable source.
 
 ## What GitHub Hosts
 

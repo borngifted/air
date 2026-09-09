@@ -45,8 +45,15 @@ describe("GitHub Pages launch contract", () => {
     expect(allowed).toEqual([
       "https://air.example.org/",
       "https://api.example.org",
+      "https://aireadiness.me/",
+      "https://www.aireadiness.me/",
       "https://borngifted.github.io/air/",
     ]);
+
+    expect(safeReturnUrl("https://aireadiness.me/dashboard", allowed))
+      .toBe("https://aireadiness.me/dashboard");
+    expect(safeReturnUrl("https://www.aireadiness.me/", allowed))
+      .toBe("https://www.aireadiness.me/");
 
     expect(safeReturnUrl("https://borngifted.github.io/air/community", allowed))
       .toBe("https://borngifted.github.io/air/community");
@@ -65,6 +72,7 @@ describe("GitHub Pages launch contract", () => {
   it("derives the CORS allowlist from the same declared origins", () => {
     const origins = resolveAllowedOrigins(resolveAllowedReturns({ frontendOrigin: "https://air.example.org/" }));
     expect(origins.has("https://air.example.org")).toBe(true);
+    expect(origins.has("https://aireadiness.me")).toBe(true);
     expect(origins.has("https://borngifted.github.io")).toBe(true);
     expect(origins.has("https://evil.example.com")).toBe(false);
   });

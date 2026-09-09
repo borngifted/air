@@ -55,6 +55,6 @@ pnpm dev
 
 ## Deployment boundaries
 
-GitHub Pages hosts the public React frontend at `https://borngifted.github.io/air/` from the repository root on `main`. The Node/tRPC backend is deployed separately by the AiR team on any Node host; its HTTPS origin goes into the root `air-config.js` (no rebuild needed) or `VITE_API_ORIGIN` at build time. Authentication, database operations, uploads, community mutations, progress, trainer resources, and administrator functions require the backend.
+GitHub Pages hosts the public React frontend at `https://aireadiness.me/` (custom domain via the root `CNAME` file; `borngifted.github.io/air/` forwards there) from the repository root on `main`. The Node/tRPC backend is deployed separately by the AiR team on any Node host; its HTTPS origin goes into the root `air-config.js` (no rebuild needed) or `VITE_API_ORIGIN` at build time. Authentication, database operations, uploads, community mutations, progress, trainer resources, and administrator functions require the backend.
 
 Read `docs/independent-hosting.md` before changing deployment, authentication, assets, or database behavior.

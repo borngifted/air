@@ -11,6 +11,13 @@ import { startLogin } from "./const";
 import "./index.css";
 import { apiUrl, HAS_PLATFORM_API } from "./lib/runtime";
 
+// Legacy links: the site used to live at borngifted.github.io/air/. GitHub
+// forwards those to aireadiness.me/air/..., so drop the old prefix here.
+if (import.meta.env.BASE_URL === "/" && /^\/air(\/|$)/.test(window.location.pathname)) {
+  const stripped = window.location.pathname.replace(/^\/air/, "") || "/";
+  window.history.replaceState({}, document.title, `${stripped}${window.location.search}${window.location.hash}`);
+}
+
 const hashParams = new URLSearchParams(window.location.hash.slice(1));
 const sessionFromHash = hashParams.get("air_session");
 const authReturnError = getAuthReturnErrorMessage(hashParams.get("air_auth_error"));
