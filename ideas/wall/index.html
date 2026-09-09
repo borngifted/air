@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AiR Idea Wall</title>
+  <meta name="description" content="Ideas submitted by the Junior and Senior class for the AiR session on Friday, Sept 11, 2026." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="/media/AiR_Logo-MAIN.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;1,800&family=Manrope:wght@400;600;800&display=swap" />
+  <link rel="stylesheet" href="/ideas/flyer.css" />
+  <style>body{margin:0}.air-nav a{display:inline-flex}</style>
+</head>
+<body>
+<div class="air">
+  <header class="air-nav">
+    <a href="/ideas/"><img src="/media/AiR_Logo-MAIN.png" alt="AiR: AI Readiness" /></a>
+    <span>Idea wall</span>
+  </header>
+  <section class="air-section">
+    <h1 class="air-h2 air-display">The class <em>idea wall</em></h1>
+    <p class="air-p" id="count">Loading ideas...</p>
+    <a class="air-cta" href="/ideas/#submit">Add yours</a>
+    <p class="air-empty" id="empty" hidden>Be the first. It takes two minutes.</p>
+    <div class="air-wall" id="wall"></div>
+  </section>
+  <footer class="air-footer"><a href="/">aireadiness.me</a></footer>
+</div>
+<script>
+(function () {
+  var API = "https://air-idea-lab.higgsfield.app/api/ideas";
+  var wall = document.getElementById("wall");
+  var count = document.getElementById("count");
+  var empty = document.getElementById("empty");
+  function esc(s) { var d = document.createElement("div"); d.textContent = s == null ? "" : String(s); return d.innerHTML; }
+  fetch(API)
+    .then(function (r) { return r.json(); })
+    .then(function (j) {
+      var ideas = (j && j.ideas) || [];
+      if (!ideas.length) {
+        count.textContent = "No ideas yet.";
+        empty.hidden = false;
+        return;
+      }
+      count.textContent = ideas.length + (ideas.length === 1 ? " idea" : " ideas") + " so far. Friday, Sept 11 at 12:30 PM in Room 201 we make a first move on them.";
+      wall.innerHTML = ideas.map(function (it) {
+        return '<article class="air-card"><div class="who"><b>' + esc(it.first_name) + '</b><span>' + esc(it.grade) + '</span></div><p>' + esc(it.idea) + '</p>' +
+          (it.learn ? '<p class="learn">Wants to learn: ' + esc(it.learn) + '</p>' : '') + '</article>';
+      }).join("");
+    })
+    .catch(function () { count.textContent = "Could not load the idea wall right now. Refresh to try again."; });
+})();
+</script>
+</body>
+</html>

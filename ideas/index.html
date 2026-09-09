@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AiR Idea Lab · Junior & Senior Class · Sept 11</title>
+  <meta name="description" content="Junior and Senior class: Learning AI, learn to move with it. Friday, Sept 11, 2026, 12:30 to 1:30 PM, W.D. Mohammed High School Room 201. Free pizza. Submit your idea." />
+  <meta property="og:title" content="AiR Idea Lab" />
+  <meta property="og:description" content="Junior and Senior class: Learning AI, learn to move with it. Friday, Sept 11, 2026, 12:30 to 1:30 PM, Room 201. Free pizza. Submit your idea." />
+  <meta property="og:image" content="https://aireadiness.me/ideas/assets/flyer-hero.jpg" />
+  <meta property="og:url" content="https://aireadiness.me/ideas/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://aireadiness.me/ideas/" />
+  <link rel="icon" href="/media/AiR_Logo-MAIN.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;1,800&family=Manrope:wght@400;600;800&display=swap" />
+  <link rel="stylesheet" href="/ideas/flyer.css" />
+  <style>body{margin:0}.air-nav a{display:inline-flex}</style>
+</head>
+<body>
+<div class="air">
+  <header class="air-nav">
+    <a href="/"><img src="/media/AiR_Logo-MAIN.png" alt="AiR: AI Readiness" /></a>
+    <span>Always free</span>
+  </header>
+
+  <section class="air-hero">
+    <div class="air-hero-bg" style="background-image:url(/ideas/assets/flyer-hero.jpg)"></div>
+    <div class="air-hero-fade"></div>
+    <div class="air-hero-inner">
+      <span class="air-eyebrow">Junior and Senior class session</span>
+      <h1 class="air-h1 air-display">Learning AI.<br /><em>Learn to move with it.</em></h1>
+      <p class="air-sub">One hour, hands on, no experience needed. Bring one idea you would build, fix, or make easier with AI. We will work on it together.</p>
+      <div class="air-facts">
+        <div class="air-fact"><small>When</small><strong>Fri, Sept 11, 2026</strong></div>
+        <div class="air-fact"><small>Time</small><strong>12:30 to 1:30 PM</strong></div>
+        <div class="air-fact pizza"><small>Refreshments</small><strong>Free pizza</strong></div>
+        <a class="air-fact air-fact-link" href="https://maps.google.com/?q=735+Fayetteville+Rd+SE,+Atlanta,+GA+30316" target="_blank" rel="noreferrer">
+          <small>Where</small>
+          <strong>W.D. Mohammed High School, Room 201</strong>
+          <span>735 Fayetteville Rd SE, Atlanta, GA 30316</span>
+        </a>
+      </div>
+      <a class="air-cta" href="#submit">Submit your idea <span aria-hidden="true">↓</span></a>
+    </div>
+  </section>
+
+  <div class="air-band" aria-hidden="true">
+    <span>Bring your idea</span><span>Free pizza</span><span>Sept 11, 12:30 PM</span><span>Room 201</span><span>No tech skills required</span>
+    <span>Bring your idea</span><span>Free pizza</span><span>Sept 11, 12:30 PM</span><span>Room 201</span><span>No tech skills required</span>
+  </div>
+
+  <section class="air-section" id="submit">
+    <div class="air-two">
+      <div>
+        <h2 class="air-h2 air-display">What would <em>you</em> build?</h2>
+        <p class="air-p">You do not need to be a tech genius. You just need a mission. Before class, tell us one thing in your life, school, or community that AI could help with.</p>
+        <ol class="air-steps">
+          <li><b>01</b><p>Fill out the form.<small>Takes about two minutes.</small></p></li>
+          <li><b>02</b><p>Show up Friday at 12:30 in Room 201.<small>W.D. Mohammed High School. Grab a slice of pizza.</small></p></li>
+          <li><b>03</b><p>We pick ideas from the class and make a first move on them live.<small>See everyone's ideas on the <a href="/ideas/wall/">idea wall</a>.</small></p></li>
+        </ol>
+      </div>
+
+      <form class="air-form" id="idea-form" novalidate>
+        <h3>Submit your idea</h3>
+        <div class="air-row">
+          <div class="air-field"><label for="first">First name</label><input id="first" name="firstName" required maxlength="60" autocomplete="given-name" /></div>
+          <div class="air-field"><label for="last">Last name</label><input id="last" name="lastName" required maxlength="60" autocomplete="family-name" /></div>
+        </div>
+        <div class="air-field">
+          <label>Grade</label>
+          <div class="air-grades" role="radiogroup" aria-label="Grade">
+            <button type="button" role="radio" aria-checked="false" class="air-grade" data-grade="Junior" data-on="false">Junior</button>
+            <button type="button" role="radio" aria-checked="false" class="air-grade" data-grade="Senior" data-on="false">Senior</button>
+          </div>
+        </div>
+        <div class="air-field"><label for="idea">Your idea</label><textarea id="idea" name="idea" required maxlength="1500" placeholder="What would you build, fix, or make easier with AI? Big or small, school or life."></textarea></div>
+        <div class="air-field"><label for="learn">One thing you want to learn (optional)</label><input id="learn" name="learn" maxlength="600" placeholder="Example: how to make AI write in my voice" /></div>
+        <p class="air-error" id="form-error" hidden></p>
+        <button class="air-submit" type="submit" id="submit-btn">Send my idea</button>
+        <p class="air-note">Only your first name and idea show on the class idea wall.</p>
+      </form>
+
+      <div class="air-form air-done" id="done" hidden>
+        <h3>You're in.</h3>
+        <p class="air-p" id="done-text">Thanks. Your idea is saved. See you Friday at 12:30 in Room 201.</p>
+        <a class="air-cta" href="/ideas/wall/">See the idea wall</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="air-section" style="padding-top:0">
+    <div class="air-two">
+      <div>
+        <h2 class="air-h2 air-display">The <em>flyer</em></h2>
+        <p class="air-p">Print it, post it, or share this page. Everything you need is on it.</p>
+        <a class="air-cta" href="/ideas/assets/flyer-poster-print.png" target="_blank" rel="noreferrer">Download print-size poster</a>
+        <div class="air-qr">
+          <img src="/ideas/assets/qr.png" alt="QR code linking to this page" />
+          <p>Scan to open this page and submit your idea.<small>aireadiness.me/ideas</small></p>
+        </div>
+      </div>
+      <div class="air-poster">
+        <img src="/ideas/assets/flyer-poster.jpg" alt="AiR class flyer: Friday, September 11, 2026, 12:30 to 1:30 PM, W.D. Mohammed High School Room 201, free pizza, bring your idea" />
+      </div>
+    </div>
+  </section>
+
+  <footer class="air-footer">AiR is a free, hands-on AI learning community. <a href="/">aireadiness.me</a></footer>
+</div>
+
+<script>
+(function () {
+  var API = "https://air-idea-lab.higgsfield.app/api/ideas";
+  var form = document.getElementById("idea-form");
+  var done = document.getElementById("done");
+  var errEl = document.getElementById("form-error");
+  var btn = document.getElementById("submit-btn");
+  var grade = "";
+  var grades = form.querySelectorAll(".air-grade");
+  grades.forEach(function (g) {
+    g.addEventListener("click", function () {
+      grade = g.getAttribute("data-grade");
+      grades.forEach(function (x) {
+        var on = x === g;
+        x.setAttribute("data-on", on ? "true" : "false");
+        x.setAttribute("aria-checked", on ? "true" : "false");
+      });
+    });
+  });
+  function showError(msg) { errEl.textContent = msg; errEl.hidden = false; }
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    errEl.hidden = true;
+    var data = {
+      firstName: form.firstName.value.trim(),
+      lastName: form.lastName.value.trim(),
+      grade: grade,
+      idea: form.idea.value.trim(),
+      learn: form.learn.value.trim()
+    };
+    if (!data.firstName || !data.lastName) return showError("Add your first and last name.");
+    if (!grade) return showError("Pick Junior or Senior.");
+    if (data.idea.length < 5) return showError("Tell us a little more about your idea.");
+    btn.disabled = true; btn.textContent = "Saving...";
+    fetch(API, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(data) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok && j.ok, j: j }; }); })
+      .then(function (res) {
+        if (res.ok) {
+          document.getElementById("done-text").textContent = "Thanks, " + data.firstName + ". Your idea is saved. See you Friday at 12:30 in Room 201.";
+          form.hidden = true; done.hidden = false;
+          done.scrollIntoView({ behavior: "smooth", block: "center" });
+        } else {
+          showError((res.j && res.j.error) || "Something went wrong. Try again in a moment.");
+        }
+      })
+      .catch(function () { showError("Something went wrong. Try again in a moment."); })
+      .then(function () { btn.disabled = false; btn.textContent = "Send my idea"; });
+  });
+})();
+</script>
+</body>
+</html>
