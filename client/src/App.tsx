@@ -1,7 +1,8 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Router as WouterRouter, Switch } from "wouter";
+import { Route, Router as WouterRouter, Switch, useLocation } from "wouter";
+import { useEffect } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
@@ -23,6 +24,24 @@ import AdminCommunity from "./pages/AdminCommunity";
 import CameraLab from "./pages/CameraLab";
 import PresentationMode from "./pages/PresentationMode";
 import LaunchStatus from "./pages/LaunchStatus";
+import ForYou from "./pages/ForYou";
+import Partner from "./pages/Partner";
+
+// Scroll to the #hash target (or the top) after each client-side navigation.
+function ScrollManager() {
+  const [location] = useLocation();
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    const scroll = () => {
+      const target = hash ? document.getElementById(hash) : null;
+      if (target) target.scrollIntoView({ block: "start" });
+      else window.scrollTo({ top: 0 });
+    };
+    const frame = window.requestAnimationFrame(() => window.setTimeout(scroll, 0));
+    return () => window.cancelAnimationFrame(frame);
+  }, [location]);
+  return null;
+}
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -30,6 +49,8 @@ function Router() {
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/curriculum"} component={Curriculum} />
+      <Route path={"/for"} component={ForYou} />
+      <Route path={"/partner"} component={Partner} />
       <Route path="/paths/:slug">{params => <PathDetail slug={params.slug} />}</Route>
       <Route path="/learn/:slug">{params => <Lesson slug={params.slug} />}</Route>
       <Route path={"/onboarding"} component={Onboarding} />
@@ -68,7 +89,7 @@ function App() {
       >
         <TooltipProvider>
           <Toaster />
-          <WouterRouter base={routerBase}><OnboardingGate><Router /></OnboardingGate></WouterRouter>
+          <WouterRouter base={routerBase}><ScrollManager /><OnboardingGate><Router /></OnboardingGate></WouterRouter>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
