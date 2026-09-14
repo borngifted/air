@@ -20,6 +20,7 @@ import {
 } from "../drizzle/schema";
 import { curriculum, trainerResourceSeeds } from "./content";
 import { ENV } from "./_core/env";
+import { databaseOptions } from "../scripts/database-config.mjs";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 let contentSeedPromise: Promise<void> | null = null;
@@ -33,9 +34,9 @@ function isOwnerIdentity(openId: string, email: string | null | undefined) {
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      _db = drizzle(process.env.DATABASE_URL);
+      _db = drizzle({ connection: { ...databaseOptions(), connectionLimit: 5, maxIdle: 2, idleTimeout: 60000 } });
     } catch (error) {
-      console.warn("[Database] Failed to connect:", error);
+      console.warn("[Database] Invalid connection configuration. Check the server environment.");
       _db = null;
     }
   }

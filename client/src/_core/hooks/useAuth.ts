@@ -1,5 +1,6 @@
 import { startLogin } from "@/const";
 import { trpc } from "@/lib/trpc";
+import { useQueryClient } from "@tanstack/react-query";
 import { TRPCClientError } from "@trpc/client";
 import { useCallback, useEffect, useMemo } from "react";
 import { appPath, HAS_PLATFORM_API } from "@/lib/runtime";
@@ -17,6 +18,7 @@ export function useAuth(options?: UseAuthOptions) {
   // desync it from an in-flight login's `state`.
   const { redirectOnUnauthenticated = false, redirectPath } = options ?? {};
   const utils = trpc.useUtils();
+  const queryClient = useQueryClient();
 
   const meQuery = trpc.auth.me.useQuery(undefined, {
     enabled: HAS_PLATFORM_API,
@@ -46,11 +48,15 @@ export function useAuth(options?: UseAuthOptions) {
       // cleared by the logout mutation.
       try {
         sessionStorage.removeItem(SESSION_STORAGE_KEY);
+        for (const key of Object.keys(sessionStorage)) {
+          if (key.startsWith("air_project_draft:")) sessionStorage.removeItem(key);
+        }
       } catch {}
+      await queryClient.cancelQueries();
+      queryClient.clear();
       utils.auth.me.setData(undefined, null);
-      await utils.auth.me.invalidate();
     }
-  }, [logoutMutation, utils]);
+  }, [logoutMutation, queryClient, utils]);
 
   const state = useMemo(() => {
     return {

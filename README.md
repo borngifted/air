@@ -4,6 +4,12 @@ AiR is a free, mindset-first AI learning and community platform designed for lea
 
 > **Clear the noise. Give useful direction. Challenge the result. Put the work in the world.**
 
+## Guided project workspace
+
+Members can now save an idea, build a result, and review their own process backward after finishing. Projects and reflections are private and resumable from the dashboard. See [the project workspace and setup guide](docs/project-workspace.md) for the flow, database migration, deployment requirements, and verification limits.
+
+The selected classroom deployment uses [Render Free and TiDB Cloud Starter](docs/free-tier-hosting.md). The guide covers the $0 spending limit, Google setup, and connecting the existing GitHub Pages site.
+
 ## What is included
 
 | Area | Implementation |

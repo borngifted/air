@@ -29,6 +29,13 @@
       "when": 1788495284434,
       "tag": "0003_right_doomsday",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1789386194606,
+      "tag": "0004_foamy_tombstone",
+      "breakpoints": true
     }
   ]
 }

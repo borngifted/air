@@ -26,6 +26,7 @@ import PresentationMode from "./pages/PresentationMode";
 import LaunchStatus from "./pages/LaunchStatus";
 import ForYou from "./pages/ForYou";
 import Partner from "./pages/Partner";
+import Projects, { NewProject, ProjectDetail } from "./pages/Projects";
 
 // Scroll to the #hash target (or the top) after each client-side navigation.
 function ScrollManager() {
@@ -55,6 +56,9 @@ function Router() {
       <Route path="/learn/:slug">{params => <Lesson slug={params.slug} />}</Route>
       <Route path={"/onboarding"} component={Onboarding} />
       <Route path={"/dashboard"} component={Dashboard} />
+      <Route path="/projects/new" component={NewProject} />
+      <Route path="/projects/:id">{params => <ProjectDetail id={Number(params.id)} />}</Route>
+      <Route path="/projects" component={Projects} />
       <Route path={"/community"} component={Community} />
       <Route path={"/studio"} component={CameraLab} />
       <Route path={"/present"} component={PresentationMode} />

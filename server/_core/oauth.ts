@@ -2,9 +2,9 @@ import { COOKIE_NAME, ONE_YEAR_MS, OAUTH_STATE_COOKIE, decodeOAuthState, encodeO
 import { hasConflictingIdentity, type AuthReturnError } from "@shared/auth";
 import { parse as parseCookieHeader } from "cookie";
 import type { Express, Request, Response } from "express";
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import * as db from "../db";
-import { getSessionCookieOptions } from "./cookies";
+import { getSessionCookieOptions, isSecureRequest } from "./cookies";
 import { ENV } from "./env";
 import {
   GoogleClaimsValidationError,
@@ -53,6 +53,15 @@ function isSameOrigin(req: Request, target: string) {
   }
 }
 
+function stateCookie(req: Request) {
+  const secure = isSecureRequest(req);
+  return { name: secure ? OAUTH_STATE_COOKIE : "air_oauth_state_local", options: {
+    httpOnly: true, secure, sameSite: "lax" as const, path: "/",
+  } };
+}
+
+const stateDigest = (state: string) => createHash("sha256").update(state).digest("hex");
+
 export function registerOAuthRoutes(app: Express) {
   app.get("/api/oauth/start", (req: Request, res: Response) => {
     const returnTo = safeFrontendReturn(getQueryParam(req, "returnTo"));
@@ -60,19 +69,18 @@ export function registerOAuthRoutes(app: Express) {
       res.status(400).json({ error: "valid returnTo is required" });
       return;
     }
-    if (!ENV.googleClientId || !ENV.googleClientSecret) {
-      res.status(503).json({ error: "Google sign-in is not configured (GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET)" });
+    if (!ENV.googleClientId || !ENV.googleClientSecret || !ENV.databaseUrl || ENV.cookieSecret.length < 32) {
+      res.status(503).json({ error: "Sign-in is not ready yet. Please try again after AiR setup is complete." });
       return;
     }
 
     const nonce = randomUUID();
     const redirectUri = `${externalOrigin(req)}/api/oauth/callback`;
     const state = encodeOAuthState({ redirectUri, nonce, returnTo });
-    res.cookie(OAUTH_STATE_COOKIE, nonce, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      path: "/",
+    const cookie = stateCookie(req);
+    // Bind the entire return state to this browser, including its destination.
+    res.cookie(cookie.name, stateDigest(state), {
+      ...cookie.options,
       maxAge: 600_000,
     });
 
@@ -95,12 +103,13 @@ export function registerOAuthRoutes(app: Express) {
     }
 
     const { nonce, returnTo, redirectUri } = decodeOAuthState(state);
-    const expectedNonce = parseCookieHeader(req.headers.cookie ?? "")[OAUTH_STATE_COOKIE];
-    if (!nonce || nonce !== expectedNonce) {
+    const cookie = stateCookie(req);
+    const expectedState = parseCookieHeader(req.headers.cookie ?? "")[cookie.name];
+    if (typeof nonce !== "string" || !nonce || stateDigest(state) !== expectedState || redirectUri !== `${externalOrigin(req)}/api/oauth/callback` || !safeFrontendReturn(returnTo)) {
       res.status(403).json({ error: "invalid oauth state" });
       return;
     }
-    res.clearCookie(OAUTH_STATE_COOKIE, { path: "/", secure: true, sameSite: "none" });
+    res.clearCookie(cookie.name, cookie.options);
 
     if (providerError || !code) {
       // The member closed or cancelled the Google screen.
@@ -140,6 +149,9 @@ export function registerOAuthRoutes(app: Express) {
         loginMethod: "google",
         lastSignedIn: new Date(),
       });
+
+      // Never report success if the account could not actually be persisted.
+      if (!await db.getUserByOpenId(identity.openId)) throw new Error("Account could not be saved");
 
       const sessionToken = await signSession(
         { openId: identity.openId, name: identity.name ?? "" },

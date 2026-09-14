@@ -4,6 +4,7 @@ import {
   int,
   json,
   mysqlEnum,
+  mediumtext,
   mysqlTable,
   primaryKey,
   text,
@@ -301,3 +302,23 @@ export type CommunityPost = typeof communityPosts.$inferSelect;
 export type CommunityComment = typeof communityComments.$inferSelect;
 export type CommunityChannel = typeof communityChannels.$inferSelect;
 export type TrainerResource = typeof trainerResources.$inferSelect;
+
+// Private member projects. Work and reflection stay separate from public profiles.
+export const projects = mysqlTable("projects", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  title: varchar("title", { length: 160 }).notNull(),
+  idea: text("idea").notNull(),
+  audience: text("audience").notNull(),
+  success: text("success").notNull(),
+  status: mysqlEnum("status", ["idea", "building", "completed"]).default("idea").notNull(),
+  notes: json("notes").$type<import("../shared/projects").ProjectNotes>().notNull(),
+  resultText: mediumtext("resultText").notNull(),
+  resultUrl: text("resultUrl").notNull(),
+  reflections: json("reflections").$type<import("../shared/projects").ProjectReflections>().notNull(),
+  version: int("version").default(1).notNull(),
+  completedAt: timestamp("completedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, table => ({ userUpdatedIdx: index("projects_user_updated_idx").on(table.userId, table.updatedAt) }));
+export type Project = typeof projects.$inferSelect;

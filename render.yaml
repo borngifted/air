@@ -1,0 +1,33 @@
+# Classroom pilot: one free server; database lives in TiDB Cloud Starter.
+# Keep the TiDB spending limit at $0. No paid Render database is provisioned.
+services:
+  - type: web
+    name: air-platform
+    runtime: docker
+    plan: free
+    region: virginia
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    # Free services cannot run a separate pre-deploy migration job.
+    dockerCommand: sh -c 'node scripts/migrate.mjs && exec node dist/index.js'
+    healthCheckPath: /api/health
+    autoDeployTrigger: "off"
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_SSL
+        value: "true"
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: FRONTEND_ORIGIN
+        value: https://aireadiness.me
+      - key: OWNER_EMAIL
+        sync: false
+# PUBLIC_API_ORIGIN defaults to Render's assigned HTTPS URL. Set it manually
+# when connecting a custom subdomain (see docs/free-tier-hosting.md).

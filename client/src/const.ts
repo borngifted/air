@@ -12,7 +12,9 @@ export const startLogin = () => {
   }
 
   const startUrl = new URL(apiUrl("/api/oauth/start"), API_ORIGIN || window.location.origin);
-  startUrl.searchParams.set("returnTo", window.location.href);
+  const memberPath = /\/(dashboard|projects|learn|community|studio|members|trainers|present|onboarding)(\/|$)/.test(window.location.pathname);
+  const destination = memberPath ? window.location.pathname + window.location.search : appPath(window.location.pathname.endsWith("/admin/login") ? "/admin" : "/dashboard");
+  startUrl.searchParams.set("returnTo", new URL(destination, window.location.origin).toString());
   window.location.href = startUrl.toString();
 };
 

@@ -26,7 +26,7 @@ export const ENV = {
 
   // Public origins
   frontendOrigin: process.env.FRONTEND_ORIGIN ?? "",
-  publicApiOrigin: (process.env.PUBLIC_API_ORIGIN ?? "").replace(/\/$/, ""),
+  publicApiOrigin: (process.env.PUBLIC_API_ORIGIN || process.env.RENDER_EXTERNAL_URL || "").replace(/\/$/, ""),
 
   // S3-compatible object storage for uploaded course media
   s3Bucket: process.env.S3_BUCKET ?? "",

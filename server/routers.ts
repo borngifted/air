@@ -10,6 +10,8 @@ import { profileRouter } from "./routers/profile";
 import { trainerRouter } from "./routers/trainer";
 import { adminRouter } from "./routers/admin";
 
+import { projectsRouter } from "./routers/projects";
+
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
@@ -23,6 +25,7 @@ export const appRouter = router({
       } as const;
     }),
   }),
+  projects: projectsRouter,
   catalog: catalogRouter,
   profile: profileRouter,
   learning: learningRouter,

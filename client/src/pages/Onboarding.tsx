@@ -12,6 +12,7 @@ import { useLocation } from "wouter";
 import { toast } from "sonner";
 
 export default function Onboarding() {
+  const utils = trpc.useUtils();
   const [, navigate] = useLocation();
   const { data: catalog = [] } = trpc.catalog.list.useQuery();
   const [displayName, setDisplayName] = useState("");
@@ -27,6 +28,7 @@ export default function Onboarding() {
     try {
       await update.mutateAsync({ displayName, publicRole, learningMode: mode, currentPathSlug: pathSlug, safetyAcknowledged: true, onboardingComplete: true });
       await enroll.mutateAsync({ pathSlug, mode });
+      await utils.auth.me.invalidate();
       navigate("/dashboard");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "We could not save your start.");

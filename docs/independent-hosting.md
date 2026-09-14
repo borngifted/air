@@ -2,6 +2,8 @@
 
 AiR runs anywhere Node.js runs. This guide lists every external service the platform needs, how to configure each one, and how to publish both halves of the product: the static public site on GitHub Pages and the full-stack server that powers member features.
 
+For the selected classroom pilot, follow [the free-tier setup](free-tier-hosting.md): Render Free plus TiDB Cloud Starter, with a $0 database spending limit.
+
 ## 1. What AiR depends on
 
 | Need | Any of these work | Configured with |
@@ -34,7 +36,7 @@ Create an empty MySQL-compatible database and put its connection string in `DATA
 mysql://USER:PASSWORD@HOST:3306/air?ssl={"rejectUnauthorized":true}
 ```
 
-Apply the migrations in order (they live in `drizzle/0000_*.sql` … `drizzle/0003_*.sql`):
+Apply the migrations in order (they live in `drizzle/0000_*.sql` … `drizzle/0004_*.sql`):
 
 ```bash
 DATABASE_URL='mysql://…' pnpm db:migrate
@@ -64,15 +66,16 @@ The first administrator is bootstrapped from configuration; every later administ
 
 ## 6. Full environment
 
-Copy `docs/environment.template.txt` to `.env` locally, or set the same names in your host's dashboard.
+Copy `.env.example` to `.env` for localhost development. For production, use `docs/environment.template.txt` and set the actual origins in your host's dashboard. Run `pnpm check:setup` to check configuration and the account/project tables without exposing credentials.
 
 | Variable | Required | Purpose |
 |---|---|---|
 | `DATABASE_URL` | yes | MySQL connection string |
+| `DATABASE_SSL` | hosted databases | Set `true` for verified TLS. TiDB Cloud always enables verified TLS. |
 | `JWT_SECRET` | yes | 32+ random characters; signs AiR sessions. `openssl rand -base64 48` |
 | `GOOGLE_CLIENT_ID` | yes | OAuth client ID from step 2 |
 | `GOOGLE_CLIENT_SECRET` | yes | OAuth client secret from step 2 |
-| `PUBLIC_API_ORIGIN` | yes in production | Exact HTTPS origin of this server, e.g. `https://api.air.example.org` |
+| `PUBLIC_API_ORIGIN` | yes in production | Exact HTTPS origin of this server; defaults to `RENDER_EXTERNAL_URL` on Render |
 | `FRONTEND_ORIGIN` | yes in production | Where members are returned after sign-in: `https://aireadiness.me/` |
 | `OWNER_EMAIL` or `OWNER_OPEN_ID` | recommended | First administrator |
 | `S3_BUCKET`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` | for uploads | Bucket credentials |
@@ -92,7 +95,7 @@ docker build -t air-platform .
 docker run -p 3000:3000 --env-file .env air-platform
 ```
 
-The image runs `node dist/index.js`, which serves the built client and the API from one process. Run `pnpm db:migrate` once against the production database before the first start (or add it as a release command).
+The image runs `node dist/index.js`, which serves the built client and the API from one process. Run `pnpm db:migrate` once against the production database before the first start (or add it as a release command). The migration command uses the production Drizzle runtime, so it also works inside the image without development packages. With Docker, run `docker run --rm --env-file .env air-platform pnpm db:migrate` as the release step before starting the server.
 
 ### Without Docker
 

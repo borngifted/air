@@ -8,7 +8,7 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { ENV } from "./env";
 import { resolveAllowedOrigins, resolveAllowedReturns } from "./returnUrl";
-import { serveStatic, setupVite } from "./vite";
+import { serveStatic } from "./static";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -33,6 +33,8 @@ async function startServer() {
   const app = express();
   const server = createServer(app);
   app.set("trust proxy", 1);
+  // Liveness only: do not spend database quota on the host's frequent probes.
+  app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 
   const allowedOrigins = resolveAllowedOrigins(resolveAllowedReturns({
     frontendOrigin: ENV.frontendOrigin,
@@ -67,6 +69,7 @@ async function startServer() {
   );
   // development mode uses Vite, production mode uses static files
   if (process.env.NODE_ENV === "development") {
+    const { setupVite } = await import("./vite");
     await setupVite(app, server);
   } else {
     serveStatic(app);
