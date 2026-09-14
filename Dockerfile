@@ -19,6 +19,6 @@ COPY patches ./patches
 RUN pnpm install --frozen-lockfile --prod
 COPY --from=build /app/dist ./dist
 COPY drizzle ./drizzle
-COPY scripts/migrate.mjs scripts/check-setup.mjs scripts/database-config.mjs ./scripts/
+COPY scripts/start.mjs scripts/migrate.mjs scripts/check-setup.mjs scripts/database-config.mjs ./scripts/
 EXPOSE 3000
-CMD ["node", "dist/index.js"]
+CMD ["node", "scripts/start.mjs"]
