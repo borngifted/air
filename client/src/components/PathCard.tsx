@@ -14,6 +14,7 @@ type PathCardProps = {
   };
 };
 
+// One card per move (Clear, Direct, Judge, Make). Each move holds three lessons.
 export function PathCard({ path }: PathCardProps) {
   const lessonCount = path.modules.reduce((total, module) => total + module.lessons.length, 0);
   return (
@@ -23,12 +24,12 @@ export function PathCard({ path }: PathCardProps) {
         <ArrowUpRight className="size-6 transition-transform duration-200 group-hover:-translate-y-1 group-hover:translate-x-1" />
       </div>
       <div className="mt-14">
-        <p className="eyebrow">{path.kicker}</p>
+        <p className="eyebrow">Move {path.number} · {path.kicker}</p>
         <h3 className="display mt-3 text-5xl sm:text-6xl">{path.title}</h3>
         <p className="mt-5 max-w-sm text-sm leading-7 text-mist">{path.summary}</p>
       </div>
       <div className="mt-10 flex items-center justify-between border-t border-white/10 pt-5 text-[11px] font-bold uppercase tracking-[.14em]">
-        <span>{lessonCount} moves</span><span>Start path</span>
+        <span>{lessonCount} lessons</span><span>See the lessons</span>
       </div>
     </Link>
   );

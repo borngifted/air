@@ -10,55 +10,250 @@ export const SITE = {
   // All contact / partnership buttons go here until AiR has its own inbox.
   contactUrl: "https://digi2u.org/contact-us/",
   shortDescription:
-    "AiR — AI Readiness is a free, mindset-first learning community for ages eight through adulthood. Learners practice four human moves—Clear, Direct, Judge, and Make—to use AI purposefully, check its work, protect their information, and create something useful.",
-  socialBio: ["Complex AI work. Simple human moves.", "Free AI-readiness learning for ages 8 to adult.", "Clear. Direct. Judge. Make."],
+    "AiR — AI Readiness is a free learning protocol for ages eight through adulthood. We do not explain AI. We create situations, watch what you do, capture your decisions, and change the situation so you have to decide again. The goal is adaptive thinking.",
+  socialBio: ["We don’t explain AI. We create situations.", "Free for ages 8 to adult.", "Expose. Disrupt. Explore. Collide. Reflect. Evolve."],
 };
 
 export const HERO = {
   pill: "Free for everyone",
   eyebrow: "Ages 8 to adult",
-  title: ["Stop learning AI.", "Learn to move with it."],
-  lead: "AI is moving fast—but you don’t have to feel left behind.",
-  body: "AiR is a free, hands-on AI learning community for students, families, educators, creators, entrepreneurs, working adults, returning citizens, and anyone ready to build new skills.",
-  reassurance: "You don’t need to be a tech genius. You don’t need expensive equipment. And you definitely don’t need to memorize every new AI tool.",
-  close: "You just need a mission—and the willingness to make your first move.",
+  rule: "Start with one rule: we don’t explain AI.",
+  prompt: "You have 10 seconds. Choose.",
+  challenge: "The challenge: make one thing today that helps one real person.",
+  stations: [
+    { id: "myself", title: "Do it myself", line: "No AI. Hands, paper, people." },
+    { id: "with", title: "Do it with AI", line: "AI is one tool on the table." },
+    { id: "ai", title: "Let AI do it", line: "Hand it over and see." },
+  ] as const,
+  afterChoice: "Noted. Nobody will tell you if that was right.",
+  afterChoiceBody: "Try one challenge. Then come back and choose again. Whether you move is the lesson.",
+  again: "Choose again",
+  returning: (station: string) => `Last time you chose “${station}.”`,
+  moved: "You moved. That is the data.",
+  same: "Same choice. Also data.",
+  timeUp: "Time’s up. Not choosing is a choice too.",
   join: "Join AiR free",
-  choose: "Choose your path",
+  see: "See the protocol",
 };
 
-export const WHAT_IS_AIR = {
-  eyebrow: "What is AiR?",
-  title: ["AI is fast.", "Your judgment is the real work."],
-  intro: "AiR stands for AI Readiness. It is a mindset-first learning program that teaches people how to use artificial intelligence with purpose, confidence, creativity, and good judgment.",
-  breakdown: "AiR makes complicated AI work easier to understand by breaking it down into four simple human moves:",
-  moves: "Clear. Direct. Judge. Make.",
-  helpsYouDecide: [
-    "What you want AI to help you accomplish",
-    "How to give AI clear directions",
-    "How to check whether the answer is accurate, fair, safe, and useful",
-    "How to turn an AI-generated idea into something real",
+// The one rule, in the words we use in the room.
+export const RULE = {
+  eyebrow: "The rule",
+  title: ["We don’t", "explain AI."],
+  nots: ["No presentation.", "No “What is AI?” lesson.", "No vocabulary sheet.", "No tutorial.", "Nobody at the front of the room explaining prompting."],
+  instead: ["Create situations.", "Watch what people do.", "Capture their decisions.", "Change the situation so they have to decide again."],
+  close: "The teaching material comes from what happens in the room, not from information prepared beforehand.",
+};
+
+// The six actions. Every AiR session runs this loop.
+export const ACTIONS = {
+  eyebrow: "The method",
+  title: ["Six actions.", "One loop."],
+  intro: "Not a lesson plan. A loop you can run in any room, with any people, with whatever is on the table.",
+  steps: [
+    { name: "Expose", line: "Reveal how you think now, without asking you to explain it.", detail: "You get an unfamiliar problem. We watch what you reach for first." },
+    { name: "Disrupt", line: "Take away your normal solution.", detail: "Everyone grabs ChatGPT? ChatGPT is gone. Everyone wants search? No search. You lean on written prompts? No written prompts." },
+    { name: "Explore", line: "Lots of materials. Very few instructions.", detail: "People, AI, cameras, objects, markers, computers. Whatever is in the room is fair game." },
+    { name: "Collide", line: "Put ideas together that never meet.", detail: "A filmmaker works with a sports kid. Someone who draws works with someone who hates drawing. A human answer collides with an AI answer." },
+    { name: "Reflect", line: "Not a worksheet. Evidence.", detail: "Voice notes, screenshots, the attempts you threw away, recordings, drawings, prompts, conversations." },
+    { name: "Evolve", line: "Run the same challenge again.", detail: "Did your behavior change? That is the only way we know a mindset moved." },
   ],
-  close: "AI can create a draft, suggest an idea, organize information, or speed up a task. But you are still the one in charge.",
+  close: "Don’t ask questions. Create decisions.",
+};
+
+// The room is the interface.
+export const ROOM = {
+  eyebrow: "The room is the interface",
+  title: ["No rows", "of chairs."],
+  intro: "Walk into AiR and there are objects, QR codes, images, unfinished artwork, screens, headphones, strange instructions, and open floor. Three walls have words on them.",
+  walls: [
+    { id: "know", label: "I know." },
+    { id: "think", label: "I think I know." },
+    { id: "noidea", label: "I have no idea." },
+  ] as const,
+  statements: ["AI understands you.", "AI is creative.", "AI will replace jobs.", "AI makes you smarter.", "AI can have original ideas."],
+  instruction: "Read a statement. Put it on a wall. Nobody will tell you if you are right.",
+  photo: "In the room we photograph where everyone stands. That photo is the dataset. Later we repeat it and see whether people moved.",
+  saved: "Saved on this device. Come back after a challenge and place them again.",
+  replay: "Place them again",
+  compare: "Compared with last time",
+  movedCount: (n: number) => (n === 0 ? "Nothing moved. Yet." : n === 1 ? "One statement moved." : `${n} statements moved.`),
+};
+
+// Situations: the challenge library. Conditions, not content.
+export type Situation = {
+  slug: string;
+  name: string;
+  kicker: string;
+  setup: string;
+  say: string;
+  watch: string[];
+  twist: string;
+  again: string;
+};
+
+export const SITUATIONS: { eyebrow: string; title: string[]; intro: string; items: Situation[]; test: { label: string; question: string; rule: string } } = {
+  eyebrow: "Situations",
+  title: ["Conditions,", "not content."],
+  intro: "Each situation is a set of conditions a facilitator puts in a room. What happens next is the material. Run one. Watch. Change one condition. Run it again.",
+  items: [
+    {
+      slug: "three-stations",
+      name: "Three stations",
+      kicker: "Expose · Evolve",
+      setup: "Three spots in the room, marked on the floor: DO IT MYSELF. DO IT WITH AI. LET AI DO IT.",
+      say: "“You have 10 seconds. Choose.”",
+      watch: ["Where each person goes", "Who hesitates", "Who follows a friend"],
+      twist: "Give them a real challenge for 45 minutes. Say nothing about the stations.",
+      again: "Repeat the exact same choice. The movement of the room is your data. No survey needed.",
+    },
+    {
+      slug: "the-walls",
+      name: "The walls",
+      kicker: "Expose · Reflect",
+      setup: "Three walls: I KNOW. I THINK I KNOW. I HAVE NO IDEA.",
+      say: "“AI understands you.” “AI is creative.” “AI will replace jobs.” “AI makes you smarter.” “AI can have original ideas.” Go stand where you belong.",
+      watch: ["Where people stand", "Who moves when a friend moves", "Who stays alone"],
+      twist: "Do not tell anyone whether they are right. Photograph the room.",
+      again: "At the end, read the same statements. Photograph again. Now you can see whether perspectives moved.",
+    },
+    {
+      slug: "controlled-confusion",
+      name: "Controlled confusion",
+      kicker: "Disrupt · Explore",
+      setup: "Five teams get the same mysterious output. Nobody is told how it was made.",
+      say: "“Your job is not to name the software. Your job is to figure out what happened.”",
+      watch: ["Who searches", "Who asks AI", "Who inspects the file", "Who asks a person", "Who tries to recreate it", "Who decides the question itself is wrong"],
+      twist: "School tries to remove confusion. We create safe confusion on purpose.",
+      again: "Give a second mystery. See whether the first approach comes back or a new one shows up.",
+    },
+    {
+      slug: "impossible-instructions",
+      name: "Impossible instructions",
+      kicker: "Disrupt · Collide",
+      setup: "One instruction on the wall. Materials everywhere.",
+      say: "“Make something you have never seen before.”",
+      watch: ["Who searches for references first", "Who starts with their hands", "Who asks AI for an example"],
+      twist: "Stop the searcher: “If you are looking at somebody else’s solution, how will you make something you have never seen?” Then hand them AI with one condition: you cannot ask it for an example.",
+      again: "Now AI has to be a thinking partner, not an imitation machine. Watch whether the next request changes.",
+    },
+    {
+      slug: "ai-cannot-answer",
+      name: "AI cannot answer",
+      kicker: "Disrupt · Reflect",
+      setup: "Flip the relationship. For fifteen minutes, AI is not allowed to answer. It can only ask.",
+      say: "You: “Help me make a clothing brand.” AI: “Who should want to wear it?” You answer. AI: “What should someone feel when they see it?” You answer. AI: “What do you hate about the brands that exist?”",
+      watch: ["Who gets frustrated", "Who starts answering faster", "Whose idea gets sharper"],
+      twist: "AI stops being the answer machine. It becomes the thinking machine.",
+      again: "Give AI its answers back. See whether people still ask it to think with them.",
+    },
+    {
+      slug: "collision",
+      name: "Collision",
+      kicker: "Collide",
+      setup: "Pair people who would never work together. Give both a human tool and an AI tool.",
+      say: "“Make one thing together. Both of you have to be able to explain why it is good.”",
+      watch: ["Who leads", "Which tool gets picked first", "What gets thrown away"],
+      twist: "Halfway through, swap the tools.",
+      again: "Run it with a new partner. Compare what each person kept from the first round.",
+    },
+  ],
+  test: {
+    label: "The test for every activity",
+    question: "Could this activity exist in a normal classroom?",
+    rule: "If the answer is yes, redesign it.",
+  },
+};
+
+// What we watch. Behavior, not answers.
+export const EVIDENCE = {
+  eyebrow: "What we watch",
+  title: ["Behavior,", "not answers."],
+  intro: "We are not grading you. We are watching how you learn. That is the research that builds AiR.",
+  rows: [
+    { evidence: "Your first action", reveals: "Your default way of solving a problem" },
+    { evidence: "Your first AI request", reveals: "How you think of AI" },
+    { evidence: "Attempts you abandoned", reveals: "How much experimenting you can stand" },
+    { evidence: "Tool switching", reveals: "Adaptability" },
+    { evidence: "Questions you ask other people", reveals: "Collaboration" },
+    { evidence: "What you save", reveals: "What you value" },
+    { evidence: "Your final decision", reveals: "Judgment" },
+    { evidence: "Your second attempt", reveals: "Whether learning happened" },
+  ],
+  close: "Nobody has to know these are being watched. There is no grade. There is only what you did, and what you do next time.",
+};
+
+// The protocol, against the usual shape of school.
+export const PROTOCOL = {
+  eyebrow: "The AiR Learning Protocol",
+  title: ["Not a curriculum.", "A protocol."],
+  school: { label: "School usually runs", chain: ["Information", "Instruction", "Assignment", "Answer", "Grade"], roles: ["Teacher", "Student"] },
+  air: { label: "AiR runs", chain: ["Unknown", "Choice", "Attempt", "Friction", "Discovery", "Creation", "Change"], roles: ["Environment designer", "Explorer"] },
+  body: [
+    "The facilitator’s job is to design conditions where discovery happens. AI is not the subject. AI is one of the things inside the environment.",
+    "The real thing being built is adaptive thinking. If AiR is supposed to change how people think, the way they learn has to change first.",
+  ],
+};
+
+export const IDEA = {
+  eyebrow: "The idea",
+  title: ["AI is fast.", "Your judgment is the real work."],
+  lever: ["AI is a lever.", "It is not a hand."],
+  intro: "A hammer does not build a house. A hammer plus a person who knows what they want builds a house. Push nothing into AI, you get nothing. Push something clear into it, you get something enormous. AiR is the gym for the lever. Four moves, in order, every time, with any tool.",
+  close: "The tools will change. These four moves stay useful. Each one is a decision only a human can make.",
+  lessonsLabel: (count: number) => `See the ${count} lessons`,
 };
 
 export const WHY_AIR = {
   eyebrow: "Why AiR exists",
-  title: ["You are not", "too late."],
-  intro: "A lot of people hear about AI and immediately feel pressure. They may think:",
-  fears: [
-    "Everybody knows more about AI than I do.",
-    "I’m already too late.",
-    "AI is going to replace me.",
-    "I need to learn every tool.",
-    "I’m not good with technology.",
-    "This isn’t for people like me.",
+  title: ["You were born", "in winter."],
+  intro: "Someone probably told you AI is coming for your job. They have the story backwards. Not because AI is harmless. Because of when you were born.",
+  seasons: [
+    { name: "Spring", line: "Everybody builds. New roads, new schools. Things feel solid." },
+    { name: "Summer", line: "People get comfortable and ask if any of it means anything." },
+    { name: "Fall", line: "Trust breaks down. Everybody picks a team." },
+    { name: "Winter", line: "Everything hollow gets knocked down. Something new gets built in its place." },
   ],
-  shift: "AiR changes that mindset.",
+  thisWinter: "History moves in seasons. This winter started in 2008. It is expected to end around 2033. If you were born near 2008, you have never lived through a normal year. Adults call that sad. It is the whole point of you.",
+  lastSpring: {
+    label: "The last winter ended in 1946. Look at what got built right after.",
+    items: ["1947 · The transistor", "1955 · The polio vaccine", "1956 · The interstate highways", "1958 · NASA"],
+    close: "Spring is not a nap. Spring is a construction site.",
+  },
+  builders: {
+    label: "Who built the last spring?",
+    people: [
+      { name: "Martin Luther King Jr.", note: "17 when that winter ended" },
+      { name: "Neil Armstrong", note: "16 when that winter ended" },
+      { name: "Gordon Moore", note: "17 when that winter ended. Co-founded Intel." },
+    ],
+    close: "They were you. Sitting in a gym, being told the world was ending. Then they were the ones standing there with a blank page.",
+  },
+  shift: "Winter kids build spring.",
   body: [
-    "You do not have to know everything about AI. You need to know how to ask better questions, check the information, make smart decisions, and use the technology to move your life forward.",
-    "Whether you are finishing a school assignment, developing a business, searching for a job, creating content, organizing your ideas, or starting over after incarceration, AiR helps you take one clear step at a time.",
+    "The people who grow up while everything is being rebuilt are the ones who decide what the rebuilt thing looks like. Not because they are smarter. Because they are not attached to the old version.",
+    "This is not a disadvantage. It is a superpower with bad marketing. And it is not only for teenagers. Anyone starting over, at any age, is standing on the same moving ground.",
   ],
-  close: "No hype. No pressure. No secret tricks. Just real skills you can use.",
+  choice: {
+    label: "In winter there are two kinds of people.",
+    wait: { title: "Wait", vibe: "The group chat where nobody picks the restaurant.", behavior: "Keep your head down. Scroll. Let somebody else figure it out.", outcome: "You get somebody else’s spring." },
+    plant: { title: "Plant", vibe: "The one person who drops a pin and says “be there at seven.”", behavior: "Make one small thing, on purpose, for a real person. Find out what happens.", outcome: "You build the spring." },
+  },
+  close: "Spring is coming. Nobody has the blueprints yet. You do.",
+};
+
+// The power of "yet". Tap a fixed sentence and watch it turn into a growth sentence.
+export const YET = {
+  eyebrow: "Try it",
+  title: "Add one word.",
+  intro: "A fixed mindset says “I can’t.” A growth mindset says “not yet.” Tap a sentence to change it.",
+  statements: [
+    { fixed: "I’m not a tech person, so I can’t do this.", growth: "I’m not a tech person yet. I can learn one move at a time." },
+    { fixed: "The AI gave me a bad answer. I’m terrible at this.", growth: "The AI gave me a bad answer. I haven’t fixed my directions yet." },
+    { fixed: "AI changes too fast for me.", growth: "I don’t know every tool yet. I don’t need to. I know the four moves." },
+    { fixed: "I don’t know how to code, so I can’t build anything.", growth: "I don’t know how to code yet. I can still make something real this week." },
+  ],
+  note: "Abilities grow like muscles. Every hard try builds the connection.",
 };
 
 export type Move = {
@@ -84,7 +279,7 @@ export const METHOD: { eyebrow: string; title: string[]; moves: Move[] } = {
       number: "01",
       slug: "clear",
       title: "Clear",
-      tagline: "Start with your purpose.",
+      tagline: "Get one thing in your head instead of eleven.",
       intro: "Before opening an AI tool, decide what you are trying to accomplish.",
       promptLabel: "Ask yourself:",
       prompts: ["Who am I helping?", "What problem am I solving?", "What should be better when I finish?", "What does a good result look like?"],
@@ -100,7 +295,7 @@ export const METHOD: { eyebrow: string; title: string[]; moves: Move[] } = {
       number: "02",
       slug: "direct",
       title: "Direct",
-      tagline: "Tell AI what you actually need.",
+      tagline: "Tell it exactly what you want, like a smart friend who has never met you.",
       intro: "AI works better when you provide clear instructions, useful details, limits, and a finish line.",
       promptLabel: "Tell it:",
       prompts: [
@@ -123,7 +318,7 @@ export const METHOD: { eyebrow: string; title: string[]; moves: Move[] } = {
       number: "03",
       slug: "judge",
       title: "Judge",
-      tagline: "Check before you trust.",
+      tagline: "Never trust the first answer. Push back.",
       intro: "AI can sound confident and still be wrong. You must check important facts, dates, sources, calculations, recommendations, and claims before using or sharing them.",
       promptLabel: "Ask:",
       prompts: [
@@ -136,7 +331,7 @@ export const METHOD: { eyebrow: string; title: string[]; moves: Move[] } = {
         "Could someone be harmed by this answer?",
         "Does the result actually fit my purpose?",
       ],
-      principle: "The greater the consequence, the more carefully you should check.",
+      principle: "The greater the consequence, the more carefully you should check. This is the move that makes you the builder, not the passenger.",
       move: "Challenge the result before accepting it.",
       close: "Confidence is not evidence.",
     },
@@ -144,7 +339,7 @@ export const METHOD: { eyebrow: string; title: string[]; moves: Move[] } = {
       number: "04",
       slug: "make",
       title: "Make",
-      tagline: "Turn the idea into something useful.",
+      tagline: "Finish something. Let a real person use it.",
       intro: "Don’t get stuck preparing forever. Create a small version, test it, improve it, and share it with someone you trust.",
       promptLabel: "You might make:",
       prompts: [
@@ -160,6 +355,7 @@ export const METHOD: { eyebrow: string; title: string[]; moves: Move[] } = {
         "A community resource",
         "A personal action plan",
       ],
+      principle: "Quantity breeds quality. Make many small versions. Most will be noise. One will be the signal.",
       move: "Finish something small enough to test.",
       exampleLabel: "Remember",
       example: ["Your first version does not have to be perfect. It has to be useful enough to help you learn what comes next."],
@@ -168,77 +364,47 @@ export const METHOD: { eyebrow: string; title: string[]; moves: Move[] } = {
   ],
 };
 
-export type LearningPath = {
+export type Level = {
   slug: "explore" | "create" | "build";
   title: string;
   tagline: string;
   intro: string;
   learn: string[];
-  note?: string;
   bestFor: string;
-  cta: string;
 };
 
-export const PATHS: { eyebrow: string; title: string[]; intro: string; paths: LearningPath[] } = {
-  eyebrow: "Choose your AiR path",
-  title: ["Start where", "you are."],
-  intro: "There is no single “right” way to begin. Choose the path that fits where you are right now.",
-  paths: [
+export const LEVELS: { eyebrow: string; title: string[]; intro: string; levels: Level[]; note: string; cta: string } = {
+  eyebrow: "Choose your level",
+  title: ["Same lessons.", "Your kind of support."],
+  intro: "Every lesson has three levels. Pick the one that fits you today. Switch any time, inside any lesson. Nobody is ranked by age.",
+  levels: [
     {
       slug: "explore",
       title: "Explore",
       tagline: "See what AI can do.",
-      intro: "This path is great for younger learners, first-time users, families, and anyone curious about AI.",
-      learn: [
-        "Understand AI in plain language",
-        "Ask useful questions",
-        "Create stories, pictures, plans, and ideas",
-        "Recognize when AI makes a mistake",
-        "Protect your privacy",
-        "Use AI with a trusted adult or instructor",
-      ],
-      bestFor: "Beginners and learners who want to start simple.",
-      cta: "Start exploring",
+      intro: "More guidance and a finished thing at the end. Great for a first time, for younger learners, or for learning with a kid.",
+      learn: ["Understand AI in plain words", "Ask useful questions", "Spot when AI makes a mistake", "Keep your private details private"],
+      bestFor: "Beginners, families, and anyone who wants to start simple.",
     },
     {
       slug: "create",
       title: "Create",
-      tagline: "Turn your ideas into something real.",
-      intro: "This path helps students, artists, content creators, and community storytellers use AI to develop and improve original work.",
-      learn: [
-        "Brainstorm stronger ideas",
-        "Write and revise content",
-        "Plan videos and presentations",
-        "Develop visual concepts",
-        "Organize creative projects",
-        "Compare multiple options",
-        "Keep your personal voice in the work",
-      ],
-      note: "AI should support your creativity—not erase what makes your work yours.",
-      bestFor: "Creators, storytellers, artists, and students with ideas to develop.",
-      cta: "Start creating",
+      tagline: "Turn an idea into something real.",
+      intro: "A real project with real choices. You keep your own voice in the work and get feedback from a real person.",
+      learn: ["Brainstorm stronger ideas", "Write, plan, and revise", "Compare options and choose", "Keep your voice in the work"],
+      bestFor: "Students, creators, storytellers, and artists with ideas to develop.",
     },
     {
       slug: "build",
       title: "Build",
       tagline: "Use AI to move your goals forward.",
-      intro: "This path helps entrepreneurs, professionals, job seekers, working adults, and returning citizens apply AI to real-life opportunities.",
-      learn: [
-        "Develop a business idea",
-        "Research customers and industries",
-        "Create business plans and proposals",
-        "Improve a résumé or professional profile",
-        "Prepare for interviews",
-        "Organize daily tasks",
-        "Create marketing content",
-        "Improve customer communication",
-        "Build practical workflows",
-        "Turn experience into new opportunities",
-      ],
-      bestFor: "People who want to build income, employment, a business, or a stronger future.",
-      cta: "Start building",
+      intro: "Go under the hood. Workflows, research, plans, and production decisions for real opportunities.",
+      learn: ["Develop a business or job plan", "Research customers and industries", "Improve a résumé or proposal", "Build a workflow you can repeat"],
+      bestFor: "Entrepreneurs, job seekers, working adults, and returning citizens.",
     },
   ],
+  note: "Not difficulty tiers. Age does not decide depth. An eight-year-old and a developer can both start in Explore. Every level ends in a finished thing.",
+  cta: "Open the lessons",
 };
 
 export type Audience = {
@@ -479,17 +645,29 @@ export const WHAT_YOU_LEARN = {
   close: "These are not just AI skills. They are communication, critical-thinking, creativity, business, and leadership skills.",
 };
 
-export const HOW_IT_WORKS = {
-  eyebrow: "How AiR learning works",
-  title: ["Progress,", "not perfection."],
+export const HOW = {
+  eyebrow: "How it works",
+  title: ["One mission.", "One move at a time."],
   steps: [
-    { title: "Short lessons", body: "Learn one useful idea at a time without being buried in technical language." },
-    { title: "Hands-on practice", body: "Use the AiR method to solve problems connected to school, work, creativity, business, or community life." },
-    { title: "Live learning", body: "Join instructors and other learners for demonstrations, conversations, and group activities." },
-    { title: "Community feedback", body: "Show what you made, explain what changed, and receive useful feedback." },
-    { title: "Real-world projects", body: "Create something that can be tested, improved, and used outside the lesson." },
-    { title: "No grades. No pressure.", body: "AiR is about progress, not perfection or popularity." },
+    { title: "Choose one mission", body: "Pick one person to help and one thing to make better. That is your mission. Everything starts there.", beats: [] },
+    { title: "Make one move", body: "Open a short video lesson. Each lesson is one move. Twelve lessons cover all four moves, and every lesson follows the same five beats.", beats: ["See it", "Name it", "Try it", "Check it", "Share it"] },
+    { title: "Show what changed", body: "Post what you made in the community. Say what you tried and what you would change. Real people reply. No grades. No scores.", beats: [] },
   ],
+  mission: {
+    label: "Clear is one sentence.",
+    parts: ["I want to make", "so that", "can"],
+    examples: [
+      "I want to make a schedule app so that my mom can stop texting me forty times a day.",
+      "I want to make a video so that next year’s freshmen understand the tryout rules.",
+      "I want to make a Spanish version of the handbook so that my grandmother can read it.",
+    ],
+    note: "You do not need a big idea. You need a real person on the other side of that sentence.",
+    cta: "Drop a pin: write your one thing",
+    href: "/ideas",
+  },
+  start: "Start with lesson one",
+  all: "See all twelve lessons",
+  photoCaption: "Learning together. One idea, one move, one useful thing.",
 };
 
 export const SAFETY = {
@@ -522,14 +700,45 @@ export const NOT_AIR = {
   close: "AiR teaches a durable method that learners can use as technology continues to change.",
 };
 
+// Judge: read the "tells" in an AI draft the way an investigator reads a room.
+export const SEAMS = {
+  eyebrow: "Read the tells",
+  title: ["An AI draft has", "body language too."],
+  intro: "An investigator does not look for one magic sign of a lie. They look for spots where behavior shifts under pressure. An AI draft has the same spots: a confident detail with no source, a request that crosses a line, a promise nobody could keep. Tap each highlighted part.",
+  signals: [
+    { name: "Fit", question: "Does it answer the task for the people it is for?" },
+    { name: "Evidence", question: "Which dates, names, numbers, or claims need checking?" },
+    { name: "People", question: "Could this leave someone out, stereotype them, or mislead them?" },
+    { name: "Privacy", question: "Did it expose private details without permission?" },
+  ],
+  draft: [
+    { text: "We will host the neighborhood workshop next Tuesday at " },
+    { text: "6:00 p.m. Free parking is behind the library.", tell: "evidence" },
+    { text: " Everyone should " },
+    { text: "bring their medical records", tell: "privacy" },
+    { text: " so we can make a personal safety plan. " },
+    { text: "Our tools guarantee 100% accurate results.", tell: "fit" },
+  ],
+  tells: {
+    evidence: { title: "The detail tell", body: "It sounds sure about the time and the parking. Nobody checked the library schedule. Confident is not the same as true.", action: "Verify the details before you send." },
+    privacy: { title: "The boundary tell", body: "It casually asks for private medical records. That crosses a line a careful person would never cross.", action: "Pause and protect. Never put private details into a public tool." },
+    fit: { title: "The overconfidence tell", body: "“100% accurate” is a promise no tool can keep. Big words are covering a gap.", action: "Treat it as a draft, never as the answer." },
+  },
+  prompt: "Tap a highlighted part of the draft.",
+};
+
 export const FAQ: Array<{ q: string; a: string }> = [
   { q: "Is AiR free?", a: "Yes. AiR is designed as a free AI-readiness learning community." },
   { q: "Who can participate?", a: "AiR welcomes learners from age eight through adulthood. Programs and activities may be adjusted for different ages and experience levels." },
-  { q: "Do I need AI experience?", a: "No. Beginners are welcome. We start with simple language and practical activities." },
+  { q: "Do I need AI experience?", a: "No. Nobody explains AI to you here anyway. You walk into a situation and decide what to do." },
   { q: "Do I need to know how to code?", a: "No. Coding may be explored in certain activities, but it is not required to begin." },
   { q: "Do I need my own computer?", a: "Not always. Some AiR activities can be completed through conversation, paper exercises, group instruction, or shared devices. Specific program locations may have different equipment arrangements." },
   { q: "Is AiR only for students?", a: "No. AiR is for students, families, educators, creators, entrepreneurs, working adults, community organizations, and returning citizens." },
-  { q: "Will AiR teach me every AI tool?", a: "No—and that is intentional. AI tools change constantly. AiR teaches you how to think, direct, check, and create across different tools." },
+  { q: "Will AiR teach me the AI tools?", a: "No. We don’t explain AI. Tools change every month. We put you in situations where you have to decide when to use one, when to put it down, and how to check what it gives you." },
+  { q: "So what do I actually do at AiR?", a: "You choose. You try. You hit friction. You find something out. You make a thing. Then you run it again and see what changed." },
+  { q: "Is there a test?", a: "No. We watch what you do: your first move, what you throw away, what you save, and what you do differently the second time. That is not a grade. It is how we learn what works." },
+  { q: "Isn’t using AI cheating?", a: "Using a calculator on a test where it is not allowed is cheating. Using one to build a bridge is engineering. AiR is the bridge class. Always follow your school’s AI policy." },
+  { q: "Isn’t AI going to take my job anyway?", a: "Maybe some jobs. It will not take the job of the person who knows what to build and can check the result. That is the job we practice." },
   { q: "Can AI do my schoolwork for me?", a: "AI can help you understand a topic, practice, organize ideas, and improve your work. It should not replace your learning or be used to misrepresent work as your own. Always follow your school’s AI policy." },
   { q: "Is everything AI generates accurate?", a: "No. AI can produce incorrect, incomplete, biased, or fabricated information. AiR teaches you to check before you trust." },
   { q: "Can AiR help me start a business?", a: "AiR can help you develop ideas, research questions, organize plans, create drafts, and improve business communication. Results depend on your decisions, effort, resources, market conditions, and follow-through." },
@@ -538,30 +747,28 @@ export const FAQ: Array<{ q: string; a: string }> = [
 ];
 
 export const FINAL_CTA = {
-  eyebrow: "Ready to make your first move?",
-  title: ["You do not need to", "learn everything today."],
-  steps: ["Choose one mission.", "Give clear direction.", "Check the result.", "Make something useful."],
+  eyebrow: "Ready?",
+  title: ["Don’t ask questions.", "Create decisions."],
+  steps: ["Walk into a situation.", "Choose.", "Hit friction.", "Make something.", "Run it again."],
   way: "That’s the AiR way.",
-  moves: "Clear. Direct. Judge. Make.",
+  moves: "Expose. Disrupt. Explore. Collide. Reflect. Evolve.",
   tagline: "Stop learning AI. Learn to move with it.",
-  bring: "Bring AiR to your school or community",
+  bring: "Bring AiR to your room",
 };
 
 export const PARTNER = {
   eyebrow: "Partner with AiR",
   title: ["Expand responsible", "AI learning."],
-  intro: "Schools, nonprofits, community organizations, workforce programs, libraries, businesses, faith communities, and reentry organizations can partner with AiR to expand responsible AI learning.",
-  listLabel: "Partnership opportunities may include:",
+  intro: "AiR needs rooms, not classrooms. Schools, nonprofits, libraries, rec centers, workforce programs, faith communities, and reentry organizations can host a session or train their own environment designers.",
+  listLabel: "What a partnership can look like:",
   opportunities: [
-    "Student workshops",
-    "Educator training",
-    "Family AI-readiness sessions",
-    "Entrepreneurship workshops",
-    "Workforce-development programs",
-    "Returning-citizen learning sessions",
-    "Community AI labs",
-    "Creative and media projects",
-    "Custom group learning experiences",
+    "A one-day AiR session in your space",
+    "Training your staff as environment designers",
+    "A room you keep: walls, stations, objects, QR codes",
+    "Family sessions where kids and adults choose side by side",
+    "Workforce and reentry cohorts that run the loop weekly",
+    "A shared dataset: photos of the room, before and after",
+    "Creative and media collisions with local makers",
   ],
   become: "Become an AiR partner",
   request: "Request a program",
@@ -578,10 +785,10 @@ export const EVENT_INTRO = {
   eyebrow: "What an AiR session sounds like",
   lines: [
     "Welcome to AiR.",
-    "Today is not about learning every AI tool. It is about learning what only you can decide.",
-    "We will choose one mission, give AI clear direction, check what comes back, and make one useful thing.",
-    "AI can help create the draft. You decide what is accurate, responsible, and ready to use.",
-    "Let’s make a move.",
+    "Nobody is going to explain AI to you today.",
+    "There are three spots on the floor. You have ten seconds. Choose.",
+    "Now here is the challenge. Use anything in this room.",
+    "In forty-five minutes we do the choice again.",
   ],
 };
 
@@ -590,11 +797,19 @@ export const FOOTER = {
   tagline: "Stop learning AI. Learn to move with it.",
   line: "Free community learning for ages 8 to adult.",
   partnership: "Presented in partnership with",
-  links: [
-    { label: "Explore", href: "/curriculum#explore" },
-    { label: "Create", href: "/curriculum#create" },
-    { label: "Build", href: "/curriculum#build" },
-    { label: "Partner", href: "/partner" },
+  learn: [
+    { label: "The rule", href: "/#rule" },
+    { label: "Six actions", href: "/#actions" },
+    { label: "Situations", href: "/situations" },
+    { label: "Why AiR exists", href: "/why" },
+    { label: "Who AiR is for", href: "/for" },
+  ],
+  more: [
+    { label: "Community", href: "/community" },
+    { label: "Lessons (members)", href: "/curriculum" },
+    { label: "Camera studio", href: "/studio" },
+    { label: "For trainers", href: "/trainers" },
+    { label: "Partner with AiR", href: "/partner" },
     { label: "Contact", href: "/partner#contact" },
   ],
   copyright: "© 2026 AiR — AI Readiness. All rights reserved.",

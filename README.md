@@ -1,8 +1,10 @@
 # AiR — AI Readiness
 
-AiR is a free, mindset-first AI learning and community platform designed for learners beginning at age eight while preserving meaningful depth for adults, educators, creators, and teams.
+AiR is a free learning protocol and community for learners beginning at age eight, with the same depth for adults, educators, creators, and teams.
 
-> **Clear the noise. Give useful direction. Challenge the result. Put the work in the world.**
+> **We don’t explain AI. We create situations.**
+
+The method is six actions: **Expose → Disrupt → Explore → Collide → Reflect → Evolve.** The facilitator is an Environment Designer. See [the AiR Learning Protocol](docs/air-learning-protocol.md) and the [Environment Designer training](docs/environment-designer-training.md). The four-move curriculum below is AiR’s first version and remains available to members.
 
 ## Guided project workspace
 

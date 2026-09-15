@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { clampPresentationIndex, formatPresentationTime, resolveAirTheme, sceneFromHandX } from "../shared/presentation";
+import { AIR_PALETTES, DEFAULT_PALETTE, resolveAirPalette } from "../shared/palettes";
 import { appRouter } from "./routers";
 import type { TrpcContext } from "./_core/context";
 import { cameraFailureMessage, cameraIsAvailable, handTrackingMessage } from "../shared/camera";
@@ -18,6 +19,15 @@ describe("theme and presentation helpers", () => {
     expect(resolveAirTheme("light", false)).toBe("light");
     expect(resolveAirTheme(null, true)).toBe("dark");
     expect(resolveAirTheme(null, false)).toBe("dark");
+  });
+
+  it("keeps a stored colour palette and falls back to AiR Green otherwise", () => {
+    expect(resolveAirPalette("ocean")).toBe("ocean");
+    expect(resolveAirPalette("not-a-palette")).toBe(DEFAULT_PALETTE);
+    expect(resolveAirPalette(null)).toBe("air");
+    expect(AIR_PALETTES[0].id).toBe(DEFAULT_PALETTE);
+    expect(new Set(AIR_PALETTES.map(palette => palette.id)).size).toBe(AIR_PALETTES.length);
+    for (const palette of AIR_PALETTES) expect(palette.swatches).toHaveLength(3);
   });
 
   it("maps hand position and controls to safe scene indexes", () => {

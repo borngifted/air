@@ -1,6 +1,6 @@
 # AiR Claude Code Instructions
 
-AiR is a free, mindset-first AI learning and community platform for learners beginning at age eight. The product teaches four durable human moves—**Clear, Direct, Judge, and Make**—through courses, interactive lessons, a member community, a camera studio, and facilitator presentation tools.
+AiR is a free learning protocol and community for learners beginning at age eight. **AiR does not explain AI.** It creates situations, watches what people do, captures their decisions, and changes the situation so they have to decide again. The method is six actions—**Expose, Disrupt, Explore, Collide, Reflect, Evolve**—and the facilitator is an Environment Designer, not a teacher. Read `docs/air-learning-protocol.md` first; it is the source of truth. The four moves (Clear, Direct, Judge, Make) and the twelve video lessons are AiR’s first version and remain available to members while the situations library grows.
 
 AiR is fully self-hosted. It depends only on open, replaceable services: Google for sign-in, any MySQL 8 compatible database, any S3-compatible bucket, and any Node.js host. There is no third-party platform SDK, identity portal, or proxy in the stack.
 
@@ -17,13 +17,14 @@ AiR is fully self-hosted. It depends only on open, replaceable services: Google 
 9. Preserve the public static curriculum fallback when the production API is unavailable.
 10. Store user-uploaded file bytes in S3-compatible storage, not in the database or local deployment filesystem.
 11. Do not reintroduce any vendor-specific runtime, SDK, or hosted proxy. New integrations must be plain HTTP or a standard, self-configurable SDK.
+12. Do not explain AI. Public pages and new activities create situations and decisions, not lessons about AI. Test every new activity with “Could this exist in a normal classroom?” If yes, redesign it.
 
 ## Primary commands
 
 ```bash
 pnpm install --frozen-lockfile
 pnpm check          # TypeScript
-pnpm test           # Vitest (36 tests)
+pnpm test           # Vitest (52 tests)
 pnpm build          # full-stack server + client into dist/
 pnpm build:pages    # static GitHub Pages client into dist/public
 pnpm pages:publish  # copy the Pages build to the repository root
@@ -35,7 +36,11 @@ pnpm dev
 | Area | Location |
 |---|---|
 | React routes and UI | `client/src/` |
-| Global design system | `client/src/index.css` |
+| Global design system | `client/src/index.css` (palette base tokens on `:root`; every other colour derives from them) |
+| Colour palettes and the header picker | `shared/palettes.ts`, `client/src/components/PalettePicker.tsx`, `client/src/contexts/ThemeContext.tsx` (`data-palette` on `<html>`, saved per device) |
+| Public-site copy | `client/src/content/siteCopy.ts` (edit words here, not in pages) |
+| The protocol and facilitator training | `docs/air-learning-protocol.md`, `docs/environment-designer-training.md` |
+| Situations on the site | `client/src/components/Stations.tsx`, `client/src/components/RoomWalls.tsx`, `client/src/pages/Situations.tsx` (choices saved per device only) |
 | Runtime config for the static site | `client/public/air-config.js` → `window.AIR_CONFIG.apiOrigin` |
 | Google sign-in (server) | `server/_core/googleAuth.ts`, `server/_core/oauth.ts` |
 | Sessions | `server/_core/session.ts` |

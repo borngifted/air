@@ -2,23 +2,30 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { GoogleSignInButton } from "./GoogleSignInButton";
 import { AirMark } from "./AirMark";
+import { PalettePicker } from "./PalettePicker";
 import { Link, useLocation } from "wouter";
-import { Menu, Moon, ShieldCheck, Sun, X } from "lucide-react";
+import { Menu, ShieldCheck, X } from "lucide-react";
 import { useState } from "react";
-import { useTheme } from "@/contexts/ThemeContext";
 
+// Public doors. Member tools (lessons, camera studio, trainer guides, admin)
+// live behind sign-in and in the footer, so a first visit is a situation, not a menu.
 const links = [
-  { href: "/curriculum", label: "Learn" },
+  { href: "/situations", label: "Situations" },
+  { href: "/why", label: "Why" },
   { href: "/for", label: "For you" },
   { href: "/community", label: "Community" },
-  { href: "/studio", label: "Camera" },
   { href: "/partner", label: "Partner" },
+];
+
+const memberLinks = [
+  { href: "/dashboard", label: "My AiR" },
+  { href: "/curriculum", label: "Lessons" },
+  { href: "/studio", label: "Camera studio" },
   { href: "/trainers", label: "For trainers" },
 ];
 
 export function SiteHeader() {
   const { user, isAuthenticated, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
   const [location] = useLocation();
   const [open, setOpen] = useState(false);
 
@@ -39,9 +46,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <button className="theme-toggle" onClick={toggleTheme} aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`} title={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}>
-            {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
-          </button>
+          <PalettePicker />
           <span className="free-pill">Always free</span>
           {isAuthenticated ? (
             <>
@@ -50,16 +55,14 @@ export function SiteHeader() {
               <button className="signout-link" onClick={() => logout()}>Sign out</button>
             </>
           ) : (
-            <GoogleSignInButton label="Continue with Google" />
+            <GoogleSignInButton label="Join free" />
           )}
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
-          <button className="theme-toggle" onClick={toggleTheme} aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}>
-            {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
-          </button>
-          <button className="menu-toggle" onClick={() => setOpen(value => !value)} aria-label="Toggle menu">
-          {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          <PalettePicker />
+          <button className="menu-toggle" onClick={() => setOpen(value => !value)} aria-label="Toggle menu" aria-expanded={open}>
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
         </div>
       </div>
@@ -70,11 +73,11 @@ export function SiteHeader() {
             {links.map(link => <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="mobile-nav-link">{link.label}</Link>)}
             {isAuthenticated ? (
               <>
-                <Link href="/dashboard" onClick={() => setOpen(false)} className="mobile-nav-link">My AiR</Link>
+                {memberLinks.map(link => <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="mobile-nav-link">{link.label}</Link>)}
+                {user?.role === "admin" && <Link href="/admin" onClick={() => setOpen(false)} className="mobile-nav-link">Admin workspace</Link>}
                 <button className="mobile-nav-link text-left" onClick={() => logout()}>Sign out</button>
               </>
-            ) : <GoogleSignInButton className="mt-3 w-full" />}
-            {user?.role === "admin" && <Link href="/admin" onClick={() => setOpen(false)} className="mobile-nav-link">Admin workspace</Link>}
+            ) : <GoogleSignInButton label="Join AiR free" className="mt-3 w-full" />}
           </nav>
         </div>
       )}

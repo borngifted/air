@@ -26,6 +26,8 @@ import PresentationMode from "./pages/PresentationMode";
 import LaunchStatus from "./pages/LaunchStatus";
 import ForYou from "./pages/ForYou";
 import Partner from "./pages/Partner";
+import Situations from "./pages/Situations";
+import Why from "./pages/Why";
 import Projects, { NewProject, ProjectDetail } from "./pages/Projects";
 
 // Scroll to the #hash target (or the top) after each client-side navigation.
@@ -52,6 +54,8 @@ function Router() {
       <Route path={"/curriculum"} component={Curriculum} />
       <Route path={"/for"} component={ForYou} />
       <Route path={"/partner"} component={Partner} />
+      <Route path={"/situations"} component={Situations} />
+      <Route path={"/why"} component={Why} />
       <Route path="/paths/:slug">{params => <PathDetail slug={params.slug} />}</Route>
       <Route path="/learn/:slug">{params => <Lesson slug={params.slug} />}</Route>
       <Route path={"/onboarding"} component={Onboarding} />

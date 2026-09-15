@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { PublicShell } from "@/components/PublicShell";
-import { AUDIENCES } from "@/content/siteCopy";
-import { ArrowRight, Check } from "lucide-react";
+import { AUDIENCES, NOT_AIR } from "@/content/siteCopy";
+import { ArrowRight, Check, X } from "lucide-react";
 import { Link } from "wouter";
 
 export default function ForYou() {
@@ -51,11 +51,20 @@ export default function ForYou() {
         </section>
       ))}
 
+      <section className="bg-[var(--ink)] py-20 text-white lg:py-28" id="not">
+        <div className="container grid gap-10 lg:grid-cols-[.85fr_1.15fr]">
+          <div><p className="eyebrow">{NOT_AIR.eyebrow}</p><h2 className="display mt-4 text-5xl leading-[.92] sm:text-7xl">{NOT_AIR.title[0]}<br />{NOT_AIR.title[1]}</h2><p className="mt-7 max-w-md text-base leading-8 text-mist">{NOT_AIR.close}</p></div>
+          <ul className="grid gap-2 sm:grid-cols-2">
+            {NOT_AIR.items.map(item => <li key={item} className="flex gap-3 rounded-2xl border border-white/10 p-4 text-sm font-semibold leading-6"><X className="mt-0.5 size-4 shrink-0 text-[var(--destructive)]" aria-hidden="true" />{item}</li>)}
+          </ul>
+        </div>
+      </section>
+
       <section className="community-band">
         <div className="container grid gap-8 py-20 lg:grid-cols-[1fr_auto] lg:items-center">
           <div><p className="eyebrow dark">Ready?</p><h2 className="display mt-4 text-5xl text-[var(--deep)] sm:text-7xl">Choose one mission.<br />Make your first move.</h2></div>
           <div className="flex flex-wrap gap-3">
-            <Link href="/#paths"><Button className="big bg-[var(--deep)] text-white hover:bg-[var(--ink)]">Choose your path <ArrowRight /></Button></Link>
+            <Link href="/curriculum"><Button className="big bg-[var(--deep)] text-white hover:bg-[var(--ink)]">Open the lessons <ArrowRight /></Button></Link>
             <Link href="/partner"><Button variant="outline" className="big border-[var(--deep)] bg-transparent text-[var(--deep)] hover:bg-[var(--deep)] hover:text-white">Bring AiR to your community</Button></Link>
           </div>
         </div>
