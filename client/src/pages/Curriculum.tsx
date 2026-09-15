@@ -13,10 +13,10 @@ export default function Curriculum() {
     <PublicShell>
       <section className="page-hero">
         <div className="container py-20 sm:py-28">
-          <p className="eyebrow">Lessons · members · from AiR’s first version</p>
-          <h1 className="display mt-5 max-w-5xl text-7xl leading-[.88] sm:text-8xl lg:text-[9rem]">Four moves.<br /><em>{total || "Twelve"} lessons.</em></h1>
-          <p className="mt-8 max-w-2xl text-lg leading-8 text-mist">Each move has three short video lessons. Start with Clear and go in order, or open the move you need today. Every lesson has an Explore, Create, and Build level inside it.</p>
-          <div className="mt-8 max-w-2xl rounded-2xl border border-white/15 bg-white/5 p-5 text-sm leading-7 text-mist">These twelve lessons come from AiR’s first version, where the four moves were explained. The AiR Learning Protocol replaces explanation with situations. The lessons stay open for members while the situations library grows. <Link href="/situations" className="font-bold text-white underline underline-offset-4">Open the situations</Link></div>
+          <p className="eyebrow">Lessons · members · twelve situations</p>
+          <h1 className="display mt-5 max-w-5xl text-7xl leading-[.88] sm:text-8xl lg:text-[9rem]">Four moves.<br /><em>{total || "Twelve"} situations.</em></h1>
+          <p className="mt-8 max-w-2xl text-lg leading-8 text-mist">Each move has three situations. Each one walks you into a room, gives you ten seconds to choose, takes something away, and runs the choice again. Do each one alone, with one real person, or run it for a room.</p>
+          <div className="mt-8 max-w-2xl rounded-2xl border border-white/15 bg-white/5 p-5 text-sm leading-7 text-mist">These twelve lessons have been rewritten as situations under the AiR Learning Protocol. The video is the walk-in. Nobody explains AI. The room is the lesson. <Link href="/situations" className="font-bold text-white underline underline-offset-4">Open the situations</Link></div>
         </div>
       </section>
       <section className="paths-section py-20">

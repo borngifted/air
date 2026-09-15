@@ -77,5 +77,5 @@ No rows of chairs. Objects, QR codes, images, unfinished artwork, screens, headp
 
 - The public site runs situations (three stations, the walls) instead of explaining the method. See `client/src/pages/Home.tsx` and `client/src/content/siteCopy.ts`.
 - `/situations` is the facilitator-facing library of conditions. `/why` holds the “born in winter” story for events.
-- The twelve video lessons and the four moves (Clear, Direct, Judge, Make) are the first version of AiR. They remain available to members at `/curriculum` but are no longer the front door. Rewriting them as situations is open work.
+- The twelve member lessons at `/curriculum` (four moves: Clear, Direct, Judge, Make) were rewritten as situations on 2026-09-15 in `server/content.ts`. Each checkpoint follows the chain Unknown → Choice → Friction → Creation → Change; the three levels are alone, with one real person, or run it for a room. The video is the walk-in, not the lesson.
 - Facilitators are Environment Designers. Their training is in `docs/environment-designer-training.md`.
