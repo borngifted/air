@@ -5,4 +5,4 @@
 // Leave it empty to run the public learning site on its own.
 //
 // Example: window.AIR_CONFIG = { apiOrigin: "https://api.your-domain.org" };
-window.AIR_CONFIG = { apiOrigin: "" };
+window.AIR_CONFIG = { apiOrigin: "https://app.aireadiness.me" };
