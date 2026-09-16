@@ -22,7 +22,6 @@ export const PROGRAM_FILES = {
 };
 
 export const HERO = {
-  pill: "Free for everyone",
   eyebrow: "AiR · Artificial Intelligence Readiness",
   title: ["Clear the AiR.", "Then make something."],
   intro: "AiR teaches you how to communicate with artificial intelligence, not simply how to use it.",
@@ -35,6 +34,7 @@ export const HERO = {
   ],
   join: "Join AiR free",
   see: "See the one-hour class",
+  schools: "For schools and teams",
 };
 
 // The opening situation from the former protocol, kept as an optional warm-up on /situations.
@@ -929,8 +929,8 @@ export const FOOTER = {
   partnership: "Presented in partnership with",
   learn: [
     { label: "The one-hour class", href: "/class" },
-    { label: "Four moves", href: "/#moves" },
-    { label: "The Prompt Relay", href: "/#relay" },
+    { label: "Four moves", href: "/program#moves" },
+    { label: "The Prompt Relay", href: "/program#relay" },
     { label: "Why AiR exists", href: "/why" },
     { label: "Who AiR is for", href: "/for" },
   ],
