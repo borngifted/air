@@ -737,7 +737,6 @@ export const SEAMS = {
 export type Situation = {
   slug: string;
   name: string;
-  kicker: string;
   setup: string;
   say: string;
   watch: string[];
@@ -754,7 +753,6 @@ export const SITUATIONS: { eyebrow: string; title: string[]; intro: string; item
     {
       slug: "three-stations",
       name: "Three stations",
-      kicker: "Expose · Evolve",
       setup: "Three spots in the room, marked on the floor: DO IT MYSELF. DO IT WITH AI. LET AI DO IT.",
       say: "“You have 10 seconds. Choose.”",
       watch: ["Where each person goes", "Who hesitates", "Who follows a friend"],
@@ -764,7 +762,6 @@ export const SITUATIONS: { eyebrow: string; title: string[]; intro: string; item
     {
       slug: "the-walls",
       name: "The walls",
-      kicker: "Expose · Reflect",
       setup: "Three walls: I KNOW. I THINK I KNOW. I HAVE NO IDEA.",
       say: "“AI understands you.” “AI is creative.” “AI will replace jobs.” “AI makes you smarter.” “AI can have original ideas.” Go stand where you belong.",
       watch: ["Where people stand", "Who moves when a friend moves", "Who stays alone"],
@@ -774,7 +771,6 @@ export const SITUATIONS: { eyebrow: string; title: string[]; intro: string; item
     {
       slug: "controlled-confusion",
       name: "Controlled confusion",
-      kicker: "Disrupt · Explore",
       setup: "Five teams get the same mysterious output. Nobody is told how it was made.",
       say: "“Your job is not to name the software. Your job is to figure out what happened.”",
       watch: ["Who searches", "Who asks AI", "Who inspects the file", "Who asks a person", "Who tries to recreate it", "Who decides the question itself is wrong"],
@@ -784,7 +780,6 @@ export const SITUATIONS: { eyebrow: string; title: string[]; intro: string; item
     {
       slug: "impossible-instructions",
       name: "Impossible instructions",
-      kicker: "Disrupt · Collide",
       setup: "One instruction on the wall. Materials everywhere.",
       say: "“Make something you have never seen before.”",
       watch: ["Who searches for references first", "Who starts with their hands", "Who asks AI for an example"],
@@ -794,7 +789,6 @@ export const SITUATIONS: { eyebrow: string; title: string[]; intro: string; item
     {
       slug: "ai-cannot-answer",
       name: "AI cannot answer",
-      kicker: "Disrupt · Reflect",
       setup: "Flip the relationship. For fifteen minutes, AI is not allowed to answer. It can only ask.",
       say: "You: “Help me make a clothing brand.” AI: “Who should want to wear it?” You answer. AI: “What should someone feel when they see it?” You answer. AI: “What do you hate about the brands that exist?”",
       watch: ["Who gets frustrated", "Who starts answering faster", "Whose idea gets sharper"],
@@ -804,7 +798,6 @@ export const SITUATIONS: { eyebrow: string; title: string[]; intro: string; item
     {
       slug: "collision",
       name: "Collision",
-      kicker: "Collide",
       setup: "Pair people who would never work together. Give both a human tool and an AI tool.",
       say: "“Make one thing together. Both of you have to be able to explain why it is good.”",
       watch: ["Who leads", "Which tool gets picked first", "What gets thrown away"],

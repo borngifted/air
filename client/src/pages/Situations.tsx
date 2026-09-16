@@ -33,7 +33,7 @@ export default function Situations() {
         <section key={item.slug} id={item.slug} className={`scroll-mt-24 py-16 lg:py-24 ${index % 2 === 0 ? "bg-[var(--background)]" : "bg-[var(--surface-soft)]"}`}>
           <div className="container grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
             <div>
-              <p className="eyebrow">{String(index + 1).padStart(2, "0")} · {item.kicker}</p>
+              <p className="eyebrow">{String(index + 1).padStart(2, "0")}</p>
               <h2 className="display mt-4 text-5xl leading-[.92] sm:text-7xl">{item.name}</h2>
               <p className="mt-6 max-w-md text-base leading-8 text-mist">{item.setup}</p>
             </div>
