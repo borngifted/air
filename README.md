@@ -1,10 +1,10 @@
 # AiR — AI Readiness
 
-AiR is a free learning protocol and community for learners beginning at age eight, with the same depth for adults, educators, creators, and teams.
+AiR is a free AI-readiness program and community for learners beginning at age eight, with the same depth for adults, educators, creators, and teams.
 
-> **We don’t explain AI. We create situations.**
+> **Clear the AiR. Then make something.**
 
-The method is six actions: **Expose → Disrupt → Explore → Collide → Reflect → Evolve.** The facilitator is an Environment Designer. See [the AiR Learning Protocol](docs/air-learning-protocol.md) and the [Environment Designer training](docs/environment-designer-training.md). The four-move curriculum below is AiR’s first version and remains available to members.
+**AiR: Flow With AI** teaches students how to communicate with artificial intelligence, not simply how to use it. Four moves: **Clear** (know what you want), **Direct** (explain it clearly to AI), **Judge** (check what AI got right or wrong), **Make** (improve and complete the result). The flagship is a one-hour class: four teams of five recreate a car or a house with written prompts only in the Prompt Relay, revise once, present for one minute, and are scored on a thirty-point rubric. See [the program](docs/air-flow-with-ai.md); the class plan and instructor talking points ship as PDFs in `media/` and download from `/class`. The earlier Learning Protocol is [superseded](docs/air-learning-protocol.md); its situations remain at `/situations` as optional warm-ups.
 
 ## Guided project workspace
 
@@ -35,10 +35,10 @@ The product contains no sound-only program, player, route, or media type. Course
 
 | Path | Lessons |
 |---|---|
-| Clear | Clear the Air; Machines Make Guesses; Choose One Mission |
-| Direct | Be the Director; Give Useful Context; Ask for Options |
-| Judge | Spot the Guess; Check the Stakes; Make It Fit People |
-| Make | Make a First Version; Build Your Way; Put It in the World |
+| Clear | A Cool Car Is Not a Prompt; The Observer; Decide What Matters Most |
+| Direct | The Designer’s Structure; Say It So AI Can See It; Limited Generations |
+| Judge | The Quality Checker; The Largest Difference; Closest Match, Not Prettiest |
+| Make | The Finisher; Keep Everything Else the Same, But…; Present and Connect |
 
 Every lesson uses the same five-beat rhythm: **See it, Name it, Try it, Check it, Share it**. Each lesson also provides Explore, Create, and Build exercises so learners can change the level of support without being ranked by age.
 

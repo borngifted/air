@@ -27,6 +27,7 @@ import LaunchStatus from "./pages/LaunchStatus";
 import ForYou from "./pages/ForYou";
 import Partner from "./pages/Partner";
 import Situations from "./pages/Situations";
+import ClassPage from "./pages/Class";
 import Why from "./pages/Why";
 import Projects, { NewProject, ProjectDetail } from "./pages/Projects";
 
@@ -54,6 +55,7 @@ function Router() {
       <Route path={"/curriculum"} component={Curriculum} />
       <Route path={"/for"} component={ForYou} />
       <Route path={"/partner"} component={Partner} />
+      <Route path={"/class"} component={ClassPage} />
       <Route path={"/situations"} component={Situations} />
       <Route path={"/why"} component={Why} />
       <Route path="/paths/:slug">{params => <PathDetail slug={params.slug} />}</Route>

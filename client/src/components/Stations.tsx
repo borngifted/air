@@ -1,4 +1,4 @@
-import { HERO } from "@/content/siteCopy";
+import { STATIONS as HERO } from "@/content/siteCopy";
 import { useEffect, useRef, useState } from "react";
 
 // The first situation on the site: three stations, ten seconds, choose.

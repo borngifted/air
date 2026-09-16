@@ -1,6 +1,8 @@
-# Environment Designer Training
+# Environment Designer Training (optional warm-ups)
 
-The AiR facilitator handbook. Read `air-learning-protocol.md` first. This document is how you run it.
+**Kept for the optional warm-ups only.** The AiR program is [AiR: Flow With AI](air-flow-with-ai.md): the one-hour class, the four moves, and the Prompt Relay. Read that first. Use the situations below only if you want a short warm-up before the class; they are not the method, and the class does explain the mission and the moves.
+
+Original handbook follows.
 
 You are not a teacher. You are an Environment Designer. Your job is to design conditions where discovery happens, then get out of the way and watch.
 

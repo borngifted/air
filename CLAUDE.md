@@ -1,6 +1,6 @@
 # AiR Claude Code Instructions
 
-AiR is a free learning protocol and community for learners beginning at age eight. **AiR does not explain AI.** It creates situations, watches what people do, captures their decisions, and changes the situation so they have to decide again. The method is six actions—**Expose, Disrupt, Explore, Collide, Reflect, Evolve**—and the facilitator is an Environment Designer, not a teacher. Read `docs/air-learning-protocol.md` first; it is the source of truth. The four moves (Clear, Direct, Judge, Make) organise twelve member lessons in `server/content.ts`; each lesson is a situation (walk in, ten seconds to choose, something taken away, leave evidence, run it again), never an explanation.
+AiR is a free AI-readiness program and community for learners beginning at age eight. **AiR: Flow With AI** teaches students how to communicate with artificial intelligence, not simply how to use it, through four moves: **Clear** (know what you want), **Direct** (explain it clearly to AI), **Judge** (check what AI got right or wrong), **Make** (improve and complete the result). The flagship is a one-hour class: four teams of five recreate a car or a house with written prompts only in the Prompt Relay, revise once, present for one minute, and are scored on a thirty-point rubric. Theme: **Clear the AiR. Then Make Something.** Read `docs/air-flow-with-ai.md` first; it is the source of truth. The twelve member lessons in `server/content.ts` teach the four moves, three per move, anchored on the relay and carried into personal life, school, and careers. The earlier Learning Protocol is superseded; its situations remain at `/situations` as optional warm-ups only.
 
 AiR is fully self-hosted. It depends only on open, replaceable services: Google for sign-in, any MySQL 8 compatible database, any S3-compatible bucket, and any Node.js host. There is no third-party platform SDK, identity portal, or proxy in the stack.
 
@@ -17,7 +17,7 @@ AiR is fully self-hosted. It depends only on open, replaceable services: Google 
 9. Preserve the public static curriculum fallback when the production API is unavailable.
 10. Store user-uploaded file bytes in S3-compatible storage, not in the database or local deployment filesystem.
 11. Do not reintroduce any vendor-specific runtime, SDK, or hosted proxy. New integrations must be plain HTTP or a standard, self-configurable SDK.
-12. Do not explain AI. Public pages and new activities create situations and decisions, not lessons about AI. Test every new activity with “Could this exist in a normal classroom?” If yes, redesign it.
+12. Keep the four moves and the one-hour class as the front door. New public content explains the mission in the class’s own words (“AI cannot read your mind. The result is only as clear as the direction you give it.”) and connects to the Prompt Relay. Do not reintroduce the retired “don’t explain AI” protocol as the method.
 
 ## Primary commands
 
@@ -39,8 +39,9 @@ pnpm dev
 | Global design system | `client/src/index.css` (palette base tokens on `:root`; every other colour derives from them) |
 | Colour palettes and the header picker | `shared/palettes.ts`, `client/src/components/PalettePicker.tsx`, `client/src/contexts/ThemeContext.tsx` (`data-palette` on `<html>`, saved per device) |
 | Public-site copy | `client/src/content/siteCopy.ts` (edit words here, not in pages) |
-| The protocol and facilitator training | `docs/air-learning-protocol.md`, `docs/environment-designer-training.md` |
-| Situations on the site | `client/src/components/Stations.tsx`, `client/src/components/RoomWalls.tsx`, `client/src/pages/Situations.tsx` (choices saved per device only) |
+| The program (source of truth) and PDFs | `docs/air-flow-with-ai.md`; `media/AiR_Flow_With_AI_One_Hour_Class.pdf`, `media/AiR_Competition_Instructor_Talking_Points.pdf` |
+| The one-hour class page and Prompt Relay | `client/src/pages/Class.tsx`, `client/src/components/PromptBuilder.tsx` (the Designer’s six-blank structure; nothing leaves the browser) |
+| Optional warm-ups (retired protocol) | `client/src/pages/Situations.tsx`, `client/src/components/Stations.tsx`, `client/src/components/RoomWalls.tsx`; docs `air-learning-protocol.md` (superseded), `environment-designer-training.md` |
 | Runtime config for the static site | `client/public/air-config.js` → `window.AIR_CONFIG.apiOrigin` |
 | Google sign-in (server) | `server/_core/googleAuth.ts`, `server/_core/oauth.ts` |
 | Sessions | `server/_core/session.ts` |

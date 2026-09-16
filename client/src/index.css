@@ -718,3 +718,59 @@ button:active, .air-button:active { transform: scale(.97); }
   .actions-grid { grid-template-columns: repeat(3, 1fr); }
   .room { grid-template-columns: 1.6fr .9fr; align-items: start; }
 }
+
+/* ---- Flow With AI: home + class page ---- */
+.hero-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; margin-top: 1.75rem; max-width: 34rem; }
+.hero-facts dt { font-size: clamp(2rem, 4vw, 3rem); line-height: 1; color: var(--spark); }
+.hero-facts dd { margin-top: .25rem; font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--mist); }
+.prompt-compare { border-radius: 1.25rem; padding: 1.5rem; }
+.prompt-compare.weak { background: color-mix(in srgb, var(--deep) 8%, transparent); border: 1px dashed color-mix(in srgb, var(--deep) 40%, transparent); }
+.prompt-compare.clear { background: var(--deep); color: var(--paper); }
+.prompt-compare.clear .eyebrow { color: var(--spark); }
+.actions-grid.four { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.timeline { display: grid; gap: .75rem; margin-top: 2.5rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); counter-reset: block; padding: 0; list-style: none; }
+.timeline-card { display: grid; gap: .35rem; height: 100%; border-radius: 1.25rem; border: 1px solid var(--hairline); background: var(--surface); padding: 1.25rem; transition: transform 160ms cubic-bezier(.23,1,.32,1), border-color 160ms; }
+.timeline-card:hover { transform: translateY(-2px); border-color: var(--go); }
+.timeline-card small { font-size: 10px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--go); }
+.timeline-card b { font-family: "Barlow Condensed"; font-size: 1.5rem; font-weight: 800; line-height: 1; text-transform: uppercase; }
+.timeline-card p { font-size: .85rem; line-height: 1.5; color: var(--mist); }
+.roles-grid { display: grid; gap: .75rem; margin-top: 2.5rem; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); padding: 0; list-style: none; }
+.roles-grid.compact { margin-top: 0; grid-template-columns: 1fr; }
+.role-card { position: relative; display: grid; gap: .35rem; border-radius: 1.25rem; background: var(--deep); color: var(--paper); padding: 1.4rem; }
+.role-card > span { font-size: 11px; font-weight: 800; color: rgba(255,255,255,.34); }
+.role-card small { font-size: 10px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--spark); }
+.role-card b { font-size: 1.6rem; line-height: 1; }
+.role-card p { font-size: .85rem; line-height: 1.55; color: var(--mist); }
+.prompt-builder { border-radius: 1.5rem; background: var(--deep); color: var(--paper); padding: 1.5rem; }
+.prompt-builder .eyebrow { color: var(--spark); }
+.prompt-fields { display: grid; gap: .75rem; margin-top: 1rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.prompt-fields label { display: grid; gap: .3rem; }
+.prompt-fields span { font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--mist); }
+.prompt-fields input { border-radius: .75rem; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.06); color: var(--paper); padding: .7rem .85rem; font-size: .9rem; }
+.prompt-fields input:focus { outline: 2px solid var(--go); outline-offset: 1px; }
+.prompt-output { margin-top: 1.25rem; border-radius: 1rem; background: rgba(0,0,0,.25); padding: 1.1rem; }
+.prompt-output p { font-size: 1.05rem; line-height: 1.7; font-weight: 600; }
+.prompt-output .text-link { margin-top: .75rem; color: var(--spark); }
+.prompt-note { margin-top: .75rem; font-size: 11px; line-height: 1.5; color: var(--mist); }
+.evidence-row.total { border-top: 2px solid var(--spark); font-weight: 800; }
+.recognition { border-radius: 1.25rem; border: 1px solid rgba(255,255,255,.15); padding: 1.25rem; }
+.recognition b { font-size: 1.4rem; line-height: 1; color: var(--spark); }
+.recognition p { margin-top: .4rem; font-size: .85rem; color: var(--mist); }
+.recognition.dark { border-color: var(--hairline); }
+.recognition.dark b { color: var(--go); }
+.life-column { border-radius: 1.25rem; border: 1px solid var(--hairline); background: var(--surface); padding: 1.4rem; }
+.life-column ul { margin-top: .9rem; display: grid; gap: .35rem; }
+.life-column li { font-size: .9rem; line-height: 1.5; padding-left: 1rem; position: relative; }
+.life-column li::before { content: "·"; position: absolute; left: 0; color: var(--go); font-weight: 800; }
+.safety-card { border-radius: 1.25rem; border: 1px solid rgba(255,255,255,.15); padding: 1.25rem; }
+.safety-card b { display: block; font-size: 1rem; }
+.safety-card p { margin-top: .4rem; font-size: .85rem; line-height: 1.55; color: var(--mist); }
+.fill-blank { letter-spacing: -.02em; opacity: .5; }
+.call-response { display: grid; gap: .75rem; margin-top: 2rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.call-response > div { border-radius: 1.25rem; background: color-mix(in srgb, var(--deep) 10%, transparent); padding: 1.1rem 1.25rem; color: var(--deep); }
+.call-response small { display: block; font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; opacity: .6; }
+.call-response p { font-weight: 700; line-height: 1.4; margin-bottom: .6rem; }
+.call-response b { font-size: 1.8rem; line-height: 1; }
+.class-steps { display: grid; gap: .5rem; margin-top: 1.25rem; padding: 0; list-style: none; }
+.class-steps li { display: flex; gap: .9rem; font-size: .95rem; line-height: 1.6; }
+.class-steps span { font-family: "Barlow Condensed"; font-weight: 800; color: var(--go); }

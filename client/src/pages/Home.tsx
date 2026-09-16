@@ -3,17 +3,19 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { GoogleSignInButton } from "@/components/GoogleSignInButton";
 import { AirMark } from "@/components/AirMark";
-import { Stations } from "@/components/Stations";
-import { RoomWalls } from "@/components/RoomWalls";
+import { PromptBuilder } from "@/components/PromptBuilder";
 import { AIR_ASSETS } from "@/lib/assets";
-import { ArrowDown, ArrowRight, X } from "lucide-react";
+import { ArrowDown, ArrowRight, Download } from "lucide-react";
 import { Link } from "wouter";
 import { PublicShell } from "@/components/PublicShell";
-import { ACTIONS, AUDIENCES, EVIDENCE, FAQ, FINAL_CTA, HERO, PROTOCOL, ROOM, RULE, SITUATIONS } from "@/content/siteCopy";
+import { AUDIENCES, CLASS, CLOSE, FAQ, FINAL_CTA, HERO, METHOD, MISSION, PROGRAM_FILES, REAL_LIFE, RELAY, SAFETY, SCORING } from "@/content/siteCopy";
 
-// The home page does not explain AiR. It runs it.
-//   a situation (three stations) → the rule → six actions → the room as interface (a second situation)
-//   → situations library → what we watch → the protocol → who it is for → questions → start.
+// The home page tells the Flow With AI story in the order the class runs:
+//   theme → the mission (why AI doesn't give you what you want) → four moves → the one-hour class
+//   → the Prompt Relay (with the Designer's structure to try) → scoring → real life → safety
+//   → the close (call-and-response) → who it is for → questions → start.
+
+const MEDIA = `${import.meta.env.BASE_URL}media`;
 
 function SectionHead({ eyebrow, title, dark = false, children }: { eyebrow: string; title: string[]; dark?: boolean; children?: React.ReactNode }) {
   return (
@@ -32,18 +34,20 @@ export default function Home() {
 
   return (
     <PublicShell>
-      {/* 1. The first situation. No headline explains anything. */}
+      {/* 1. The theme. */}
       <section className="hero-section">
         <video className="hero-film" autoPlay muted loop playsInline poster={AIR_ASSETS.coursePoster} aria-hidden="true"><source src={AIR_ASSETS.courseVideo} type="video/mp4" /></video>
         <div className="hero-grid" aria-hidden="true" />
         <div className="container relative z-10 grid min-h-[calc(100vh-84px)] items-center gap-12 py-16 lg:grid-cols-[1.15fr_.85fr]">
           <div className="max-w-3xl">
             <div className="flex flex-wrap items-center gap-3"><span className="free-pill bright">{HERO.pill}</span><span className="eyebrow">{HERO.eyebrow}</span></div>
+            <h1 className="display mt-6 text-6xl leading-[.88] sm:text-8xl lg:text-[7.5rem]">{HERO.title[0]}<br /><em>{HERO.title[1]}</em></h1>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-mist">{HERO.intro}</p>
             <p className="hero-rule">{HERO.rule}</p>
-            <Stations />
+            <dl className="hero-facts">{HERO.facts.map(fact => <div key={fact.label}><dt className="display">{fact.value}</dt><dd>{fact.label}</dd></div>)}</dl>
             <div className="mt-8 flex flex-wrap gap-3">
               {primaryAction}
-              <a href="#rule"><Button variant="outline" className="air-button secondary big">{HERO.see} <ArrowDown /></Button></a>
+              <a href="#class"><Button variant="outline" className="air-button secondary big">{HERO.see} <ArrowDown /></Button></a>
             </div>
           </div>
           <div className="hero-mark-wrap">
@@ -53,99 +57,137 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 2. The rule. The one loud band on the page. */}
-      <section className="idea-section py-24 lg:py-32" id="rule">
+      {/* 2. The mission. The one loud band on the page. */}
+      <section className="idea-section py-24 lg:py-32" id="mission">
         <div className="container">
-          <SectionHead eyebrow={RULE.eyebrow} title={RULE.title} dark />
+          <p className="eyebrow dark">{MISSION.eyebrow}</p>
+          <h2 className="display mt-4 max-w-5xl text-5xl leading-[.92] sm:text-7xl">{MISSION.ask}</h2>
+          <p className="mt-8 max-w-3xl text-2xl font-extrabold leading-9 sm:text-3xl">{MISSION.answer}</p>
+          <p className="mt-4 max-w-3xl text-lg leading-8">{MISSION.body}</p>
           <div className="rule-grid">
-            <ul className="rule-nots">{RULE.nots.map(item => <li key={item}><X className="size-4" aria-hidden="true" />{item}</li>)}</ul>
-            <div className="rule-instead">
-              <p className="eyebrow dark">Instead</p>
-              <ol>{RULE.instead.map((item, index) => <li key={item}><span>0{index + 1}</span>{item}</li>)}</ol>
-            </div>
+            <div className="prompt-compare weak"><p className="eyebrow dark">{MISSION.weak.label}</p><p className="display text-3xl sm:text-4xl">“{MISSION.weak.text}”</p></div>
+            <div className="prompt-compare clear"><p className="eyebrow dark">{MISSION.clear.label}</p><p className="text-xl font-bold leading-8 sm:text-2xl">“{MISSION.clear.text}”</p></div>
           </div>
-          <p className="mt-10 max-w-3xl text-lg font-bold leading-8">{RULE.close}</p>
+          <p className="mt-10 max-w-3xl text-lg font-bold leading-8">{MISSION.askAgain}</p>
         </div>
       </section>
 
-      {/* 3. Six actions. */}
-      <section className="steps-section py-24 lg:py-32" id="actions">
+      {/* 3. Four moves. */}
+      <section className="steps-section py-24 lg:py-32" id="moves">
         <div className="container">
-          <SectionHead eyebrow={ACTIONS.eyebrow} title={ACTIONS.title}><p className="text-mist">{ACTIONS.intro}</p></SectionHead>
-          <ol className="actions-grid">
-            {ACTIONS.steps.map((step, index) => (
-              <li key={step.name} className="action-card">
-                <span>{index + 1}</span>
-                <h3 className="display">{step.name}</h3>
-                <p className="action-line">{step.line}</p>
-                <p className="action-detail">{step.detail}</p>
+          <SectionHead eyebrow={METHOD.eyebrow} title={METHOD.title}><p className="text-mist">{METHOD.intro}</p></SectionHead>
+          <ol className="actions-grid four">
+            {METHOD.moves.map(move => (
+              <li key={move.slug} className="action-card">
+                <span>{move.number}</span>
+                <h3 className="display">{move.title}</h3>
+                <p className="action-line">{move.tagline}</p>
+                <p className="action-detail">{move.intro}</p>
+                <Link href={`/paths/${move.slug}`} className="text-link mt-4">The {move.title} lessons <ArrowRight className="size-4" /></Link>
               </li>
             ))}
           </ol>
-          <p className="display mt-10 text-3xl text-[var(--spark)] sm:text-4xl">{ACTIONS.close}</p>
+          <p className="display mt-10 text-3xl text-[var(--spark)] sm:text-4xl">{METHOD.close}</p>
         </div>
       </section>
 
-      {/* 4. The room is the interface. A second situation. */}
-      <section className="room-section py-24 lg:py-32" id="room">
+      {/* 4. The one-hour class. */}
+      <section className="bg-[var(--surface-soft)] py-24 lg:py-32" id="class">
         <div className="container">
-          <SectionHead eyebrow={ROOM.eyebrow} title={ROOM.title}><p className="text-mist">{ROOM.intro}</p></SectionHead>
-          <div className="mt-12"><RoomWalls /></div>
-          <p className="mt-6 max-w-2xl text-sm leading-7 text-mist">{ROOM.photo}</p>
-        </div>
-      </section>
-
-      {/* 5. Situations. */}
-      <section className="bg-[var(--surface-soft)] py-24 lg:py-32" id="situations">
-        <div className="container">
-          <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end"><div><p className="eyebrow">{SITUATIONS.eyebrow}</p><h2 className="display mt-4 text-5xl sm:text-7xl">{SITUATIONS.title[0]}<br />{SITUATIONS.title[1]}</h2></div><Link href="/situations" className="text-link">Open every situation <ArrowRight className="size-4" /></Link></div>
-          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {SITUATIONS.items.map(item => (
-              <Link key={item.slug} href={`/situations#${item.slug}`} className="situation-card">
-                <small>{item.kicker}</small>
-                <b>{item.name}</b>
-                <p>{item.say}</p>
-              </Link>
+          <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end"><div><p className="eyebrow">{CLASS.eyebrow}</p><h2 className="display mt-4 text-5xl sm:text-7xl">{CLASS.title[0]}<br />{CLASS.title[1]}</h2></div><Link href="/class" className="text-link">{CLASS.cta} <ArrowRight className="size-4" /></Link></div>
+          <p className="mt-6 max-w-2xl text-base leading-8 text-mist">{CLASS.intro}</p>
+          <ol className="timeline">
+            {CLASS.blocks.map(block => (
+              <li key={block.slug}>
+                <Link href={`/class#${block.slug}`} className="timeline-card">
+                  <small>{block.time} min</small>
+                  <b>{block.title}</b>
+                  <p>{block.summary}</p>
+                </Link>
+              </li>
             ))}
-          </div>
-          <div className="test-band">
-            <p className="eyebrow">{SITUATIONS.test.label}</p>
-            <p className="display text-3xl sm:text-5xl">{SITUATIONS.test.question}</p>
-            <p className="mt-2 text-lg font-bold">{SITUATIONS.test.rule}</p>
+          </ol>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a href={`${MEDIA}/${PROGRAM_FILES.classPlan.file}`} download className="text-link"><Download className="size-4" /> {PROGRAM_FILES.classPlan.label}</a>
+            <a href={`${MEDIA}/${PROGRAM_FILES.talkingPoints.file}`} download className="text-link"><Download className="size-4" /> {PROGRAM_FILES.talkingPoints.label}</a>
           </div>
         </div>
       </section>
 
-      {/* 6. What we watch. */}
-      <section className="bg-[var(--deep)] py-24 text-white lg:py-32" id="evidence">
+      {/* 5. The Prompt Relay. */}
+      <section className="room-section py-24 lg:py-32" id="relay">
         <div className="container">
-          <SectionHead eyebrow={EVIDENCE.eyebrow} title={EVIDENCE.title}><p className="text-mist">{EVIDENCE.intro}</p></SectionHead>
+          <SectionHead eyebrow={RELAY.eyebrow} title={RELAY.title}><p className="text-mist">{RELAY.intro}</p></SectionHead>
+          <ol className="roles-grid">
+            {RELAY.roles.map(role => (
+              <li key={role.number} className="role-card">
+                <span>{role.number}</span>
+                <small>{role.move}</small>
+                <b className="display">{role.role}</b>
+                <p>{role.job}</p>
+              </li>
+            ))}
+          </ol>
+          <div className="mt-12 grid gap-10 lg:grid-cols-[.9fr_1.1fr]">
+            <div>
+              <p className="eyebrow">Try the Designer’s move</p>
+              <h3 className="display mt-3 text-4xl sm:text-5xl">Turn what you see into the first prompt.</h3>
+              <p className="mt-4 max-w-md text-sm leading-7 text-mist">Fill in the six parts. Read the prompt out loud. If a teammate could not picture it from the words alone, it is not clear yet.</p>
+              <ul className="mt-6 grid gap-2 text-sm leading-6 text-mist">{RELAY.rules.map(rule => <li key={rule} className="flex gap-3"><span className="text-[var(--spark)]">·</span>{rule}</li>)}</ul>
+            </div>
+            <PromptBuilder />
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Scoring. */}
+      <section className="bg-[var(--deep)] py-24 text-white lg:py-32" id="score">
+        <div className="container">
+          <SectionHead eyebrow={SCORING.eyebrow} title={SCORING.title}><p className="text-mist">{SCORING.intro}</p></SectionHead>
           <div className="evidence-table">
-            <div className="evidence-head"><span>Evidence</span><span>What it reveals</span></div>
-            {EVIDENCE.rows.map(row => <div key={row.evidence} className="evidence-row"><b>{row.evidence}</b><span>{row.reveals}</span></div>)}
+            <div className="evidence-head"><span>Category</span><span>Points</span></div>
+            {SCORING.rows.map(row => <div key={row.category} className="evidence-row"><b>{row.category}</b><span>{row.points}</span></div>)}
+            <div className="evidence-row total"><b>Total</b><span>{SCORING.total}</span></div>
           </div>
-          <p className="mt-8 max-w-3xl text-base leading-8 text-mist">{EVIDENCE.close}</p>
+          <div className="mt-8 grid gap-3 sm:grid-cols-3">{SCORING.recognitions.map(item => <div key={item.name} className="recognition"><b className="display">{item.name}</b><p>{item.line}</p></div>)}</div>
         </div>
       </section>
 
-      {/* 7. The protocol against school. */}
-      <section className="bg-[var(--ink)] py-24 text-white lg:py-32" id="protocol">
+      {/* 7. Real life. */}
+      <section className="bg-[var(--background)] py-24 lg:py-32" id="real-life">
         <div className="container">
-          <SectionHead eyebrow={PROTOCOL.eyebrow} title={PROTOCOL.title} />
-          <div className="mt-12 grid gap-4 lg:grid-cols-2">
-            {[PROTOCOL.school, PROTOCOL.air].map((side, index) => (
-              <div key={side.label} className={`protocol-card ${index === 1 ? "air" : ""}`}>
-                <p className="eyebrow">{side.label}</p>
-                <ol className="chain">{side.chain.map(step => <li key={step}>{step}</li>)}</ol>
-                <p className="roles">{side.roles[0]} <ArrowRight className="inline size-4" aria-hidden="true" /> {side.roles[1]}</p>
-              </div>
-            ))}
+          <SectionHead eyebrow={REAL_LIFE.eyebrow} title={REAL_LIFE.title}><p className="text-mist">{REAL_LIFE.intro}</p></SectionHead>
+          <div className="mt-12 grid gap-4 sm:grid-cols-3">
+            {REAL_LIFE.columns.map(column => <div key={column.title} className="life-column"><h3 className="display text-3xl">{column.title}</h3><ul>{column.items.map(item => <li key={item}>{item}</li>)}</ul></div>)}
           </div>
-          <div className="mt-10 max-w-3xl">{PROTOCOL.body.map(paragraph => <p key={paragraph} className="text-base leading-8 text-mist [&+p]:mt-5">{paragraph}</p>)}</div>
         </div>
       </section>
 
-      {/* 8. Who it is for. */}
+      {/* 8. Safety. */}
+      <section className="bg-[var(--ink)] py-20 text-white lg:py-28" id="safety">
+        <div className="container">
+          <SectionHead eyebrow={SAFETY.eyebrow} title={SAFETY.title}><p className="text-mist">{SAFETY.intro}</p></SectionHead>
+          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{SAFETY.rules.map(rule => <div key={rule.title} className="safety-card"><b>{rule.title}</b><p>{rule.body}</p></div>)}</div>
+        </div>
+      </section>
+
+      {/* 9. The close. */}
+      <section className="community-band" id="close">
+        <div className="container py-20 lg:py-28">
+          <p className="eyebrow dark">{CLOSE.eyebrow}</p>
+          <h2 className="display mt-4 max-w-5xl text-5xl leading-[.9] text-[var(--deep)] sm:text-7xl">{CLOSE.sentence[0]} <span className="fill-blank">__________</span>{CLOSE.sentence[1]}</h2>
+          <p className="mt-6 max-w-2xl text-lg font-semibold text-[var(--deep)]">{CLOSE.closing}</p>
+          <div className="call-response">
+            {CLOSE.callResponse.map(line => <div key={line.call}><small>Instructor</small><p>{line.call}</p><small>Students</small><b className="display">{line.response}</b></div>)}
+          </div>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <Link href={CLOSE.pinHref}><Button className="big bg-[var(--deep)] text-white hover:bg-[var(--ink)]">{CLOSE.pinLabel} <ArrowRight /></Button></Link>
+            <Link href="/partner"><Button variant="outline" className="big border-[var(--deep)] bg-transparent text-[var(--deep)] hover:bg-[var(--deep)] hover:text-white">{FINAL_CTA.bring} <ArrowRight /></Button></Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 10. Who it is for. */}
       <section className="bg-[var(--surface-soft)] py-20 lg:py-28" id="for">
         <div className="container">
           <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end"><div><p className="eyebrow">Who AiR is for</p><h2 className="display mt-4 text-5xl sm:text-7xl">Made for<br />people like you.</h2></div><Link href="/for" className="text-link">Read every section <ArrowRight className="size-4" /></Link></div>
@@ -161,7 +203,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 9. Questions. */}
+      {/* 11. Questions. */}
       <section className="bg-[var(--background)] py-24 lg:py-32" id="faq">
         <div className="container grid gap-10 lg:grid-cols-[.7fr_1.3fr]">
           <div><p className="eyebrow">Questions</p><h2 className="display mt-4 text-5xl leading-[.92] sm:text-7xl">Frequently<br />asked.</h2></div>
@@ -171,26 +213,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 10. Start. */}
-      <section className="community-band" id="start">
+      {/* 12. Start. */}
+      <section className="steps-section" id="start">
         <div className="container py-20 lg:py-28">
           <div className="grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
             <div>
-              <p className="eyebrow dark">{FINAL_CTA.eyebrow}</p>
-              <h2 className="display mt-4 text-6xl leading-[.9] text-[var(--deep)] sm:text-8xl">{FINAL_CTA.title[0]}<br />{FINAL_CTA.title[1]}</h2>
+              <p className="eyebrow">{FINAL_CTA.eyebrow}</p>
+              <h2 className="display mt-4 text-6xl leading-[.9] sm:text-8xl">{FINAL_CTA.title[0]}<br /><em>{FINAL_CTA.title[1]}</em></h2>
             </div>
-            <div className="text-[var(--deep)]">
+            <div>
               <ol className="grid gap-2 text-2xl font-extrabold leading-8 sm:text-3xl">{FINAL_CTA.steps.map(step => <li key={step}>{step}</li>)}</ol>
-              <p className="mt-5 text-lg font-semibold">{FINAL_CTA.way}</p>
-              <p className="display mt-2 text-2xl sm:text-3xl">{FINAL_CTA.moves}</p>
+              <p className="mt-5 text-lg font-semibold text-mist">{FINAL_CTA.way}</p>
+              <p className="display mt-2 text-2xl text-[var(--spark)] sm:text-3xl">{FINAL_CTA.moves}</p>
             </div>
           </div>
           <div className="mt-12 flex flex-wrap gap-3">
-            {isAuthenticated ? <Link href="/dashboard"><Button className="big bg-[var(--deep)] text-white hover:bg-[var(--ink)]">Continue <ArrowRight /></Button></Link> : <GoogleSignInButton label={HERO.join} className="big" />}
-            <Link href="/situations"><Button variant="outline" className="big border-[var(--deep)] bg-transparent text-[var(--deep)] hover:bg-[var(--deep)] hover:text-white">Open the situations</Button></Link>
-            <Link href="/partner"><Button variant="outline" className="big border-[var(--deep)] bg-transparent text-[var(--deep)] hover:bg-[var(--deep)] hover:text-white">{FINAL_CTA.bring} <ArrowRight /></Button></Link>
+            {isAuthenticated ? <Link href="/dashboard"><Button className="air-button big">Continue <ArrowRight /></Button></Link> : <GoogleSignInButton label={HERO.join} className="big" />}
+            <Link href="/class"><Button variant="outline" className="air-button secondary big">{CLASS.cta}</Button></Link>
+            <Link href="/partner"><Button variant="outline" className="air-button secondary big">{FINAL_CTA.bring} <ArrowRight /></Button></Link>
           </div>
-          <p className="display mt-10 text-2xl text-[var(--deep)] sm:text-3xl">{FINAL_CTA.tagline}</p>
+          <p className="display mt-10 text-2xl text-mist sm:text-3xl">{FINAL_CTA.tagline}</p>
         </div>
       </section>
     </PublicShell>

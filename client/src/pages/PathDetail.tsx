@@ -65,7 +65,7 @@ export default function PathDetail({ slug }: { slug: string }) {
               ))}
             </div>
             {slug === "judge" ? <div className="mt-12"><SeamsInspector /></div> : null}
-            <p className="mt-6 text-xs leading-6 text-[var(--deep-soft)]">Every lesson has an Explore, Create, and Build level inside it. Lessons open after you join with Google, so your work is saved.</p>
+            <p className="mt-6 text-xs leading-6 text-[var(--deep-soft)]">Every lesson has an Explore, Create, and Build level inside it. Practice the move in the Prompt Relay first, then carry it into school, personal life, and future careers. Lessons open after you join with Google, so your work is saved.</p>
             {nextPath ? <Link href={`/paths/${nextPath.slug}`} className="text-link mt-8">Next move: {nextPath.title} <ArrowRight className="size-4" /></Link> : <Link href="/community" className="text-link mt-8">Then show what changed in the community <ArrowRight className="size-4" /></Link>}
           </div>
         </div>

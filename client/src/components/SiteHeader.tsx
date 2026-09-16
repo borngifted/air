@@ -8,9 +8,10 @@ import { Menu, ShieldCheck, X } from "lucide-react";
 import { useState } from "react";
 
 // Public doors. Member tools (lessons, camera studio, trainer guides, admin)
-// live behind sign-in and in the footer, so a first visit is a situation, not a menu.
+// live behind sign-in and in the footer.
 const links = [
-  { href: "/situations", label: "Situations" },
+  { href: "/class", label: "The class" },
+  { href: "/curriculum", label: "Four moves" },
   { href: "/why", label: "Why" },
   { href: "/for", label: "For you" },
   { href: "/community", label: "Community" },
@@ -19,7 +20,6 @@ const links = [
 
 const memberLinks = [
   { href: "/dashboard", label: "My AiR" },
-  { href: "/curriculum", label: "Lessons" },
   { href: "/studio", label: "Camera studio" },
   { href: "/trainers", label: "For trainers" },
 ];
