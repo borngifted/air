@@ -21,10 +21,10 @@ describe("theme and presentation helpers", () => {
     expect(resolveAirTheme(null, false)).toBe("dark");
   });
 
-  it("keeps a stored colour palette and falls back to AiR Green otherwise", () => {
+  it("keeps a stored colour palette and falls back to Ocean Depths otherwise", () => {
     expect(resolveAirPalette("ocean")).toBe("ocean");
     expect(resolveAirPalette("not-a-palette")).toBe(DEFAULT_PALETTE);
-    expect(resolveAirPalette(null)).toBe("air");
+    expect(resolveAirPalette(null)).toBe("ocean");
     expect(AIR_PALETTES[0].id).toBe(DEFAULT_PALETTE);
     expect(new Set(AIR_PALETTES.map(palette => palette.id)).size).toBe(AIR_PALETTES.length);
     for (const palette of AIR_PALETTES) expect(palette.swatches).toHaveLength(3);

@@ -11,23 +11,23 @@
    data-palette on <html>; light/dark with the .dark class.
 --------------------------------------------------------------------------- */
 :root {
-  --deep: #132a24;
-  --deep-soft: #355047;
-  --paper: #f7fff8;
-  --go: #18c98b;
-  --spark: #d8ff45;
-  --ink: #0b1613;
-  --mist: #c9ded4;
-  --light-signal: #0d5d45;
-  --light-bg: #f2f3e9;
-  --light-raised: #fffdf6;
-  --light-soft: #e3ebe5;
-  --light-fg: #10231d;
-  --light-muted: #50685f;
-  --dark-bg: #081510;
-  --dark-raised: #10271f;
-  --dark-soft: #17372d;
-  --dark-muted: #bed1c8;
+  --deep: #14202e;
+  --deep-soft: #3b4f63;
+  --paper: #f1faee;
+  --go: #2fb3a6;
+  --spark: #a8dadc;
+  --ink: #0a1119;
+  --mist: #c3d6da;
+  --light-signal: #17605a;
+  --light-bg: #eef3f1;
+  --light-raised: #fbfdfb;
+  --light-soft: #e1eae7;
+  --light-fg: #132030;
+  --light-muted: #4f6472;
+  --dark-bg: #0b1420;
+  --dark-raised: #142131;
+  --dark-soft: #1b2b3e;
+  --dark-muted: #bfcbd6;
   --destructive: #ff715b;
   --radius: 1rem;
 
@@ -88,7 +88,7 @@
 }
 
 /* Palettes: only the base tokens change. */
-:root[data-palette="ocean"] { --deep: #14202e; --deep-soft: #3b4f63; --paper: #f1faee; --go: #2fb3a6; --spark: #a8dadc; --ink: #0a1119; --mist: #c3d6da; --light-signal: #17605a; --light-bg: #eef3f1; --light-raised: #fbfdfb; --light-soft: #e1eae7; --light-fg: #132030; --light-muted: #4f6472; --dark-bg: #0b1420; --dark-raised: #142131; --dark-soft: #1b2b3e; --dark-muted: #bfcbd6; }
+:root[data-palette="air"] { --deep: #132a24; --deep-soft: #355047; --paper: #f7fff8; --go: #18c98b; --spark: #d8ff45; --ink: #0b1613; --mist: #c9ded4; --light-signal: #0d5d45; --light-bg: #f2f3e9; --light-raised: #fffdf6; --light-soft: #e3ebe5; --light-fg: #10231d; --light-muted: #50685f; --dark-bg: #081510; --dark-raised: #10271f; --dark-soft: #17372d; --dark-muted: #bed1c8; }
 :root[data-palette="sunset"] { --deep: #264653; --deep-soft: #4a6572; --paper: #fff7ef; --go: #f4a261; --spark: #e9c46a; --ink: #14262e; --mist: #d9d3c7; --light-signal: #c9502a; --light-bg: #f6f0e6; --light-raised: #fffaf3; --light-soft: #ece3d6; --light-fg: #1f3540; --light-muted: #5f6b63; --dark-bg: #10202a; --dark-raised: #1d3340; --dark-soft: #26414f; --dark-muted: #cfc9bd; }
 :root[data-palette="galaxy"] { --deep: #2b1e3e; --deep-soft: #55496b; --paper: #f3f0fa; --go: #b39ddb; --spark: #dcd2ff; --ink: #150e21; --mist: #cfc6dd; --light-signal: #5b3fa0; --light-bg: #f1eef5; --light-raised: #fbfaff; --light-soft: #e6e1ef; --light-fg: #221836; --light-muted: #5d5470; --dark-bg: #120c1d; --dark-raised: #221834; --dark-soft: #2f2247; --dark-muted: #c8bfd8; }
 :root[data-palette="golden"] { --deep: #4a403a; --deep-soft: #6e625a; --paper: #fff8ec; --go: #f4a900; --spark: #ffe08a; --ink: #2a221e; --mist: #dcd2c5; --light-signal: #9a6500; --light-bg: #f5efe3; --light-raised: #fffcf5; --light-soft: #ebe2d3; --light-fg: #33291f; --light-muted: #6b5f52; --dark-bg: #231c18; --dark-raised: #352c26; --dark-soft: #43382f; --dark-muted: #d2c7b8; }

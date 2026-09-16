@@ -14,16 +14,16 @@ export type AirPalette = {
 };
 
 export const AIR_PALETTES: AirPalette[] = [
-  { id: "air", name: "AiR Green", note: "The original. Deep green, bright go, one lime shout.", swatches: ["#132a24", "#18c98b", "#d8ff45"] },
-  { id: "ocean", name: "Ocean Depths", note: "Calm navy with teal actions.", swatches: ["#14202e", "#2fb3a6", "#a8dadc"] },
+  { id: "ocean", name: "Ocean Depths", note: "The default. Calm navy with teal actions.", swatches: ["#14202e", "#2fb3a6", "#a8dadc"] },
+  { id: "air", name: "AiR Green", note: "The original green. Deep green, bright go, one lime shout.", swatches: ["#132a24", "#18c98b", "#d8ff45"] },
   { id: "sunset", name: "Sunset Boulevard", note: "Warm slate with orange and sand.", swatches: ["#264653", "#f4a261", "#e9c46a"] },
   { id: "galaxy", name: "Midnight Galaxy", note: "Deep purple with lavender light.", swatches: ["#2b1e3e", "#b39ddb", "#dcd2ff"] },
   { id: "golden", name: "Golden Hour", note: "Chocolate brown with mustard and cream.", swatches: ["#4a403a", "#f4a900", "#ffe08a"] },
   { id: "electric", name: "Tech Innovation", note: "Near-black with electric blue and cyan.", swatches: ["#1e1e1e", "#3d8bff", "#00e5ff"] },
 ];
 
-export const DEFAULT_PALETTE: AirPaletteId = "air";
-export const PALETTE_STORAGE_KEY = "air-palette-v1";
+export const DEFAULT_PALETTE: AirPaletteId = "ocean";
+export const PALETTE_STORAGE_KEY = "air-palette-v2"; // v2: Ocean Depths became the default for everyone on 2026-09-16
 
 export function isAirPaletteId(value: unknown): value is AirPaletteId {
   return typeof value === "string" && AIR_PALETTES.some(palette => palette.id === value);
